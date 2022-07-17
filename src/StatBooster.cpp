@@ -1,50 +1,44 @@
 #include "StatBooster.h"
 
-class StatBoosterPlayer : public PlayerScript
+void StatBoosterPlayer::OnLogin(Player* player)
 {
-public:
-    StatBoosterPlayer() : PlayerScript("StatBoosterPlayer") { }
-
-    void OnLogin(Player* player) override
-    {
-		if(BoosterConfig.OnLoginEnable)
-		{
-			ChatHandler(player->GetSession()).SendSysMessage("This server is running the StatBooster module.");
-		}
+	if(BoosterConfig.OnLoginEnable)
+	{
+		ChatHandler(player->GetSession()).SendSysMessage("This server is running the StatBooster module.");
 	}
+}
 
-    void OnLootItem(Player* player, Item* item, uint32 /*count*/, ObjectGuid /*lootguid*/) override
+void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/, ObjectGuid /*lootguid*/)
+{
+    if (BoosterConfig.OnLootItemEnable)
     {
-        if (BoosterConfig.OnLootItemEnable)
-        {
 
-        }
     }
+}
 
-    void OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/) override
+void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/)
+{
+    if (BoosterConfig.OnQuestRewardItemEnable)
     {
-        if (BoosterConfig.OnQuestRewardItemEnable)
-        {
 
-        }
     }
+}
 
-    void OnCreateItem(Player* player, Item* item, uint32 /*count*/) override
+void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*/)
+{
+    if (BoosterConfig.OnCraftItemEnable)
     {
-        if (BoosterConfig.OnCraftItemEnable)
-        {
 
-        }
     }
+}
 
-    void OnRollRewardItem(Player* player, Item* item, uint32 /*count*/)
+void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*count*/)
+{
+    if (BoosterConfig.OnLootItemEnable)
     {
-        if (BoosterConfig.OnLootItemEnable)
-        {
-
-        }
+        statBoostMgr.BoostItem(item);
     }
-};
+}
 
 void AddSCStatBoosterScripts()
 {
