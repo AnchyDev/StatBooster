@@ -9,6 +9,12 @@
 struct StatBoosterConfig
 {
 	bool OnLoginEnable;
+    bool OnLootItemEnable;
+    bool OnQuestRewardItemEnable;
+    bool OnCraftItemEnable;
+
+    uint32 MinQuality;
+    uint32 MaxQuality;
 } BoosterConfig;
 
 #endif
