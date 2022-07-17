@@ -3,6 +3,15 @@
 
 #include "Player.h"
 
+enum StatType
+{
+    STAT_TYPE_NONE = 0,
+    STAT_TYPE_TANK = 1,
+    STAT_TYPE_PHYS = 2,
+    STAT_TYPE_HYBRID = 4,
+    STAT_TYPE_SPELL = 8
+};
+
 class StatBoostMgr
 {
 public:
@@ -10,6 +19,8 @@ public:
 
 private:
     bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
+    StatType AnalyzeItem(Item* item);
+    bool IsEquipment(Item* item);
 };
 
 #endif
