@@ -1,4 +1,11 @@
 [worldserver]
 
 StatBooster.Enable = 0
+
 StatBooster.OnLoginEnable = 1
+StatBooster.OnLootItemEnable = 1
+StatBooster.OnQuestRewardItemEnable = 1
+StatBooster.OnCraftItemEnable = 1
+
+StatBooster.MinQuality = 2
+StatBooster.MaxQuality = 4
