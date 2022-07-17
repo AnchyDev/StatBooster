@@ -1,25 +1,12 @@
-# SKELETON - Module template
+# Azeroth Core Module - Stat Booster
+This module is inspired by the RandomEnchants module. I am developing this module to put it in a slightly different direction and to fix some bugs that are included in the original module.
 
-[English](README.md) | [Español](README_ES.md)
+This is my first C++ project so any tips are appreciated and welcome! :)
 
-
-## How to create your own module
-
-1. Use the script `create_module.sh` located in [`modules/`](https://github.com/azerothcore/azerothcore-wotlk/tree/master/modules) to start quickly with all the files you need and your git repo configured correctly (heavily recommended).
-1. You can then use these scripts to start your project: https://github.com/azerothcore/azerothcore-boilerplates
-1. Do not hesitate to compare with some of our newer/bigger/famous modules.
-1. Edit the `README.md` and other files (`include.sh` etc...) to fit your module. Note: the README is automatically created from `README_example.md` when you use the script `create_module.sh`.
-1. Publish your module to our [catalogue](https://github.com/azerothcore/modules-catalogue).
-
-
-## How to test your module?
-
-Disable PCH (precompiled headers) and try to compile. To disable PCH, set `-DNOPCH=1` with Cmake (more info [here](http://www.azerothcore.org/wiki/CMake-options)).
-
-If you forgot some headers, it is time to add them!
-
-## Licensing
-
-The default license of the skeleton-module template is the MIT but you can use a different license for your own modules.
-
-So modules can also be kept private. However, if you need to add new hooks to the core, as well as improving existing ones, you have to share your improvements because the main core is released under the AGPL license. Please [provide a PR](https://www.azerothcore.org/wiki/How-to-create-a-PR) if that is the case.
+## Features
+The features I have planned for this module that differ from the original are:
+ - Stat Analysis - Items are analyzed and enchanted based on stats already on the item. (I.e. No more strength on cloth spell gear)
+ - Group Rolling - Items that have been rolled for will be enchanted as well.
+ 
+## Contact
+If you would like to help out with the mod or just need help there is a [Discord Server](https://discord.gg/xdVPGcpJ8C) you can join.
