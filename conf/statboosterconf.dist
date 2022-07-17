@@ -1,0 +1,4 @@
+[worldserver]
+
+StatBooster.Enable = 0
+StatBooster.OnLoginEnable = 1
