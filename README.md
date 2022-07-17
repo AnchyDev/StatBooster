@@ -1,5 +1,5 @@
 # Azeroth Core Module - Stat Booster
-This module is inspired by the RandomEnchants module. I am developing this module to put it in a slightly different direction and to fix some bugs that are included in the original module.
+This module is inspired by the [RandomEnchants](https://github.com/azerothcore/mod-random-enchants) module. I am developing this module to put it in a slightly different direction and to fix some bugs that are included in the original module.
 
 This is my first C++ project so any tips are appreciated and welcome! :)
 
