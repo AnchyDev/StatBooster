@@ -36,8 +36,16 @@ void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*co
 {
     if (BoosterConfig.OnLootItemEnable)
     {
-        statBoostMgr.BoostItem(item);
+        statBoostMgr.BoostItem(player, item);
     }
+}
+
+void PlaySoundForPlayer(Player* player, uint32 soundId)
+{
+    uint32 enhanceSound = soundId;
+    WorldPacket soundPacket(SMSG_PLAY_SOUND, 4);
+    soundPacket << enhanceSound;
+    player->GetSession()->SendPacket(&soundPacket);
 }
 
 void AddSCStatBoosterScripts()
