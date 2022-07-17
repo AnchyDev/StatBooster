@@ -9,7 +9,7 @@ public:
     bool BoostItem(Player* player, Item* item);
 
 private:
-    void EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId);
+    bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
 };
 
 #endif
