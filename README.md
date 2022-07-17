@@ -1,5 +1,5 @@
 # ![Azeroth Core](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Azeroth Core
-
+⚠️ !! This module is not ready yet !! ⚠️
 ## About
 This is a module for the [Azeroth Core](https://github.com/azerothcore/azerothcore-wotlk) inspired by the [RandomEnchants](https://github.com/azerothcore/mod-random-enchants) module. 
 The module will randomly enchant items with stats that compliment the current stats on the item.
