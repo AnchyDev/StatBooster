@@ -36,6 +36,14 @@ public:
 
         }
     }
+
+    void OnRollRewardItem(Player* player, Item* item, uint32 /*count*/)
+    {
+        if (BoosterConfig.OnLootItemEnable)
+        {
+
+        }
+    }
 };
 
 void AddSCStatBoosterScripts()
