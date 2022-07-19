@@ -18,6 +18,12 @@ public:
     bool BoostItem(Player* player, Item* item);
 
 private:
+    struct ScoreData
+    {
+        StatType StatType;
+        uint32 Score;
+    };
+
     bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
     StatType AnalyzeItem(Item* item);
     bool IsEquipment(Item* item);
