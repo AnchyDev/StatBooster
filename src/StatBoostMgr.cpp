@@ -5,7 +5,7 @@ StatType StatBoostMgr::AnalyzeItem(Item* item)
     auto iTemplate = item->GetTemplate();
 
     uint32 spellsCount = 0;
-    for (int i = 0; i < (sizeof(iTemplate->Spells) / sizeof(iTemplate->Spells[0]); i++)
+    for (int i = 0; i < (sizeof(iTemplate->Spells) / sizeof(iTemplate->Spells[0])); i++)
     {
         if (iTemplate->Spells[i].SpellId)
         {
