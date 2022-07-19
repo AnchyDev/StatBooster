@@ -25,6 +25,7 @@ private:
         uint32 Score;
     };
 
+    StatType GetStatTypeFromSubClass(Item* item);
     bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
     StatType AnalyzeItem(Item* item);
     bool IsEquipment(Item* item);
