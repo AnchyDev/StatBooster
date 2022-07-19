@@ -2,6 +2,7 @@
 #define MODULE_STAT_BOOST_MGR
 
 #include "Player.h"
+#include <vector>
 
 enum StatType
 {

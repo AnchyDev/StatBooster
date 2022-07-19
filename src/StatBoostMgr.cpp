@@ -15,6 +15,34 @@ StatType StatBoostMgr::AnalyzeItem(Item* item)
 
     if (iTemplate->StatsCount < 1 && spellsCount < 1)
     {
+        switch (iTemplate->SubClass)
+        {
+        case ITEM_SUBCLASS_ARMOR_CLOTH:
+            return STAT_TYPE_SPELL;
+
+
+        case ITEM_SUBCLASS_ARMOR_LEATHER:
+        case ITEM_SUBCLASS_ARMOR_MAIL:
+        case ITEM_SUBCLASS_ARMOR_PLATE:
+            switch (urand(0, 3))
+            {
+            case 0:
+                return STAT_TYPE_TANK;
+
+            case 1:
+                return STAT_TYPE_PHYS;
+
+            case 2:
+                return STAT_TYPE_HYBRID;
+
+            case 3:
+                return STAT_TYPE_SPELL;
+
+            default:
+                return STAT_TYPE_NONE;
+            }
+        }
+
         return STAT_TYPE_NONE;
     }
 
