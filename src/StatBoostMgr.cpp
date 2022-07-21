@@ -31,6 +31,11 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
     }
 }
 
+uint32 StatBoostMgr::FetchEnchant(std::vector<EnchantDefinition>* pool)
+{
+    return 0;
+}
+
 StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
 {
     ScoreData tankScore { STAT_TYPE_TANK, 0 },
@@ -114,6 +119,7 @@ StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
         }
     }
 
+    //Sometimes stats are stored as additional spell effects and also need to be checked.
     if (hasAdditionalSpells)
     {
         for (int i = 0; i < (sizeof(itemTemplate->Spells) / sizeof(itemTemplate->Spells[0])); i++)
@@ -139,7 +145,23 @@ StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
         }
     }
 
-    return STAT_TYPE_NONE;
+    //Tally up the results, the highest score is picked.
+    auto winningScore = *scores[0];
+    for (int i = 0; i < (sizeof(scores) / sizeof(scores[0])) + 1; i++)
+    {
+        if (scores[i]->Score > winningScore.Score)
+        {
+            winningScore = *scores[i];
+        }
+    }
+
+    //No stats on the items could be scored.
+    if (winningScore.Score < 1)
+    {
+        return STAT_TYPE_NONE;
+    }
+
+    return winningScore.StatType;
 }
 
 StatType StatBoostMgr::AnalyzeItem(Item* item)
@@ -178,6 +200,33 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
 
     //Failed to find a stat type.
     if (statType == STAT_TYPE_NONE)
+    {
+        return false;
+    }
+
+    uint32 enchantId;
+    //Fetch an enchant from the appropriate pool.
+    switch (statType)
+    {
+    case STAT_TYPE_TANK:
+        enchantId = FetchEnchant(&TankEnchantPool);
+        break;
+
+    case STAT_TYPE_PHYS:
+        enchantId = FetchEnchant(&PhysEnchantPool);
+        break;
+
+    case STAT_TYPE_HYBRID:
+        enchantId = FetchEnchant(&HybridEnchantPool);
+        break;
+
+    case STAT_TYPE_SPELL:
+        enchantId = FetchEnchant(&SpellEnchantPool);
+        break;
+    }
+
+    //Failed to find a valid enchant.
+    if (!enchantId)
     {
         return false;
     }

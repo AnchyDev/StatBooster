@@ -25,6 +25,19 @@ private:
         uint32 Score;
     };
 
+    struct EnchantDefinition
+    {
+        uint32 EnchantId;
+        uint32 MinILvl;
+        uint32 MaxILvl;
+    };
+
+    std::vector<EnchantDefinition> TankEnchantPool;
+    std::vector<EnchantDefinition> PhysEnchantPool;
+    std::vector<EnchantDefinition> HybridEnchantPool;
+    std::vector<EnchantDefinition> SpellEnchantPool;
+
+    uint32 FetchEnchant(std::vector<EnchantDefinition>* pool);
     StatType GetStatTypeFromSubClass(Item* item);
     bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
     StatType ScoreItem(Item* item, bool hasAdditionalSpells = false);
