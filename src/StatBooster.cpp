@@ -1,5 +1,14 @@
 #include "StatBooster.h"
 
+
+void PlaySoundForPlayer(Player* player, uint32 soundId)
+{
+    uint32 enhanceSound = soundId;
+    WorldPacket soundPacket(SMSG_PLAY_SOUND, 4);
+    soundPacket << enhanceSound;
+    player->GetSession()->SendPacket(&soundPacket);
+}
+
 void StatBoosterPlayer::OnLogin(Player* player)
 {
 	if(BoosterConfig.OnLoginEnable)
@@ -38,14 +47,6 @@ void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*co
     {
         statBoostMgr.BoostItem(player, item);
     }
-}
-
-void PlaySoundForPlayer(Player* player, uint32 soundId)
-{
-    uint32 enhanceSound = soundId;
-    WorldPacket soundPacket(SMSG_PLAY_SOUND, 4);
-    soundPacket << enhanceSound;
-    player->GetSession()->SendPacket(&soundPacket);
 }
 
 void AddSCStatBoosterScripts()
