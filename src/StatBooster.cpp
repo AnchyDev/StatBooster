@@ -61,8 +61,8 @@ void AddSCStatBoosterScripts()
     BoosterConfig.OnQuestRewardItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnQuestRewardItemEnable", true);
     BoosterConfig.OnCraftItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnCraftItemEnable", true);
 
-    BoosterConfig.MinQuality = sConfigMgr->GetOption<bool>("StatBooster.MinQuality", ITEM_QUALITY_UNCOMMON);
-    BoosterConfig.MaxQuality = sConfigMgr->GetOption<bool>("StatBooster.MaxQuality", ITEM_QUALITY_EPIC);
+    BoosterConfig.MinQuality = sConfigMgr->GetOption<uint32>("StatBooster.MinQuality", ITEM_QUALITY_UNCOMMON);
+    BoosterConfig.MaxQuality = sConfigMgr->GetOption<uint32>("StatBooster.MaxQuality", ITEM_QUALITY_EPIC);
 	
     new StatBoosterPlayer();
 }
