@@ -31,7 +31,7 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
     }
 }
 
-StatType StatBoostMgr::ScoreItem(Item* item)
+StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
 {
     ScoreData tankScore { STAT_TYPE_TANK, 0 },
         physScore { STAT_TYPE_PHYS, 0 },
@@ -46,31 +46,123 @@ StatType StatBoostMgr::ScoreItem(Item* item)
     scores.push_back(&spellScore);
 
     //TODO: IMPLEMENT SCORING
+    auto itemTemplate = item->GetTemplate();
+    auto subClass = itemTemplate->SubClass;
+
+    for (int i = 0; i < itemTemplate->StatsCount; i++)
+    {
+        auto stat = itemTemplate->ItemStat[i];
+        uint32 statType = stat.ItemStatType;
+
+        switch (statType)
+        {
+        case ITEM_MOD_ARMOR_PENETRATION_RATING:
+        case ITEM_MOD_ATTACK_POWER:
+        case ITEM_MOD_STRENGTH:
+        case ITEM_MOD_AGILITY:
+            tankScore.Score += 1;
+            physScore.Score += 2;
+            hybridScore.Score += 1;
+            break;
+
+        case ITEM_MOD_INTELLECT:
+            switch (subClass)
+            {
+            case ITEM_SUBCLASS_ARMOR_CLOTH:
+                spellScore.Score += 1;
+                break;
+
+            case ITEM_SUBCLASS_ARMOR_LEATHER:
+                hybridScore.Score += 1;
+                spellScore.Score += 1;
+                break;
+
+            case ITEM_SUBCLASS_ARMOR_MAIL:
+                tankScore.Score += 1;
+                hybridScore.Score += 1;
+                spellScore.Score += 1;
+                break;
+
+            case ITEM_SUBCLASS_ARMOR_PLATE:
+                tankScore.Score += 1;
+                spellScore.Score += 1;
+                break;
+
+            default:
+                tankScore.Score += 1;
+                hybridScore.Score += 2;
+                spellScore.Score += 3;
+                break;
+            }
+            break;
+
+        case ITEM_MOD_SPIRIT:
+        case ITEM_MOD_MANA_REGENERATION:
+        case ITEM_MOD_SPELL_HEALING_DONE:
+        case ITEM_MOD_SPELL_POWER:
+        case ITEM_MOD_SPELL_PENETRATION:
+        case ITEM_MOD_SPELL_DAMAGE_DONE:
+            spellScore.Score += 1;
+            break;
+
+        case ITEM_MOD_BLOCK_RATING:
+        case ITEM_MOD_PARRY_RATING:
+        case ITEM_MOD_DODGE_RATING:
+        case ITEM_MOD_DEFENSE_SKILL_RATING:
+            tankScore.Score += 3;
+            break;
+        }
+    }
+
+    if (hasAdditionalSpells)
+    {
+        for (int i = 0; i < (sizeof(itemTemplate->Spells) / sizeof(itemTemplate->Spells[0])); i++)
+        {
+            if (itemTemplate->Spells[i].SpellId)
+            {
+                auto spellInfo = sSpellMgr->GetSpellInfo(itemTemplate->Spells[i].SpellId);
+
+                if (spellInfo->HasAura(SPELL_AURA_MOD_ATTACK_POWER))
+                {
+                    tankScore.Score += 1;
+                    physScore.Score += 2;
+                    hybridScore.Score += 1;
+                }
+
+                if (spellInfo->HasAura(SPELL_AURA_MOD_HEALING_DONE) ||
+                    spellInfo->HasAura(SPELL_AURA_MOD_POWER_REGEN) ||
+                    spellInfo->HasAura(SPELL_AURA_MOD_DAMAGE_DONE))
+                {
+                    spellScore.Score += 1;
+                }
+            }
+        }
+    }
 
     return STAT_TYPE_NONE;
 }
 
 StatType StatBoostMgr::AnalyzeItem(Item* item)
 {
-    auto iTemplate = item->GetTemplate();
+    auto itemTemplate = item->GetTemplate();
 
     //The spellids need to be checked because the Spells array is always allocated to a fixed size.
     //Thus we need to count how many VALID spells are in the array.
     uint32 spellsCount = 0;
-    for (int i = 0; i < (sizeof(iTemplate->Spells) / sizeof(iTemplate->Spells[0])); i++)
+    for (int i = 0; i < (sizeof(itemTemplate->Spells) / sizeof(itemTemplate->Spells[0])); i++)
     {
-        if (iTemplate->Spells[i].SpellId)
+        if (itemTemplate->Spells[i].SpellId)
         {
             spellsCount++;
         }
     }
 
-    if (iTemplate->StatsCount < 1 && spellsCount < 1)
+    if (itemTemplate->StatsCount < 1 && spellsCount < 1)
     {
         return GetStatTypeFromSubClass(item);
     }
 
-    return ScoreItem(item);
+    return ScoreItem(item, spellsCount);
 }
 
 bool StatBoostMgr::BoostItem(Player* player, Item* item)
