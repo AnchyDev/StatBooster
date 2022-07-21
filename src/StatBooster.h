@@ -9,6 +9,8 @@
 
 struct StatBoosterConfig
 {
+    bool Enable;
+
 	bool OnLoginEnable;
     bool OnLootItemEnable;
     bool OnQuestRewardItemEnable;
@@ -31,6 +33,15 @@ public:
 
 private:
     StatBoostMgr statBoostMgr;
+};
+
+class StatBoosterWorld : public WorldScript
+{
+public:
+    StatBoosterWorld() : WorldScript("StatBoosterWorld") { }
+
+    void OnAfterConfigLoad(bool reload) override;
+    void LoadEnchantTables();
 };
 
 #endif
