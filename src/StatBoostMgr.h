@@ -3,6 +3,7 @@
 
 #include "StatBoostCfgMgr.h"
 #include "Player.h"
+#include "Chat.h"
 
 enum StatType
 {

@@ -30,6 +30,7 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
 
     if (sBoostConfigMgr->OnLootItemEnable)
     {
+        ChatHandler(player->GetSession()).SendSysMessage("OnLootItem::BoostItem");
         bool result = statBoostMgr.BoostItem(player, item);
 
         if (result)
@@ -170,5 +171,6 @@ void StatBoosterWorld::LoadEnchantTables()
 
 void AddSCStatBoosterScripts()
 {
+    new StatBoosterWorld();
     new StatBoosterPlayer();
 }

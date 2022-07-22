@@ -33,7 +33,7 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
 
 uint32 StatBoostMgr::FetchEnchant(std::vector<EnchantDefinition>* pool)
 {
-    return 0;
+    return pool->at(0).Id;
 }
 
 StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
@@ -195,32 +195,41 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
         return false;
     }
 
+    ChatHandler(player->GetSession()).SendSysMessage("BoostItem::IsEquipment=True");
+
+    ChatHandler(player->GetSession()).SendSysMessage("BoostItem::AnalyzeItem");
     //Fetch the type of stats that should be applied to the piece.
     StatType statType = AnalyzeItem(item);
 
     //Failed to find a stat type.
     if (statType == STAT_TYPE_NONE)
     {
+        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_NONE");
         return false;
     }
 
-    uint32 enchantId;
+    uint32 enchantId = 0;
+
     //Fetch an enchant from the appropriate pool.
     switch (statType)
     {
     case STAT_TYPE_TANK:
+        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_TANK");
         enchantId = FetchEnchant(&sBoostConfigMgr->TankEnchantPool);
         break;
 
     case STAT_TYPE_PHYS:
+        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_PHYS");
         enchantId = FetchEnchant(&sBoostConfigMgr->PhysEnchantPool);
         break;
 
     case STAT_TYPE_HYBRID:
+        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_HYBRID");
         enchantId = FetchEnchant(&sBoostConfigMgr->HybridEnchantPool);
         break;
 
     case STAT_TYPE_SPELL:
+        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_SPELL");
         enchantId = FetchEnchant(&sBoostConfigMgr->SpellEnchantPool);
         break;
     }
@@ -228,10 +237,11 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
     //Failed to find a valid enchant.
     if (!enchantId)
     {
+        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::ENCHANT_ID_0");
         return false;
     }
 
-    return true;
+    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchantId, true);
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)
