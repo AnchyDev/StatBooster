@@ -5,6 +5,9 @@
 #include "Player.h"
 #include "Chat.h"
 
+#include <random>
+#include <algorithm>
+
 enum StatType
 {
     STAT_TYPE_NONE = 0,
@@ -20,13 +23,15 @@ public:
     bool BoostItem(Player* player, Item* item);
 
 private:
+    std::default_random_engine RandomEngine;
+
     struct ScoreData
     {
         StatType StatType;
         uint32 Score;
     };
 
-    uint32 FetchEnchant(std::vector<EnchantDefinition>* pool);
+    uint32 FetchEnchant(std::vector<EnchantDefinition>* pool, uint32 iLvl);
     StatType GetStatTypeFromSubClass(Item* item);
     bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
     StatType ScoreItem(Item* item, bool hasAdditionalSpells = false);
