@@ -1,8 +1,8 @@
 #ifndef MODULE_STAT_BOOST_MGR
 #define MODULE_STAT_BOOST_MGR
 
+#include "StatBoostCfgMgr.h"
 #include "Player.h"
-#include <vector>
 
 enum StatType
 {
@@ -24,18 +24,6 @@ private:
         StatType StatType;
         uint32 Score;
     };
-
-    struct EnchantDefinition
-    {
-        uint32 EnchantId;
-        uint32 MinILvl;
-        uint32 MaxILvl;
-    };
-
-    std::vector<EnchantDefinition> TankEnchantPool;
-    std::vector<EnchantDefinition> PhysEnchantPool;
-    std::vector<EnchantDefinition> HybridEnchantPool;
-    std::vector<EnchantDefinition> SpellEnchantPool;
 
     uint32 FetchEnchant(std::vector<EnchantDefinition>* pool);
     StatType GetStatTypeFromSubClass(Item* item);

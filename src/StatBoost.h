@@ -1,24 +1,9 @@
-#ifndef MODULE_STAT_BOOSTER
-#define MODULE_STAT_BOOSTER
+#ifndef MODULE_STAT_BOOST
+#define MODULE_STAT_BOOST
 
-#include "ScriptMgr.h"
-#include "Player.h"
-#include "Config.h"
-#include "Chat.h"
 #include "StatBoostMgr.h"
-
-struct StatBoosterConfig
-{
-    bool Enable;
-
-	bool OnLoginEnable;
-    bool OnLootItemEnable;
-    bool OnQuestRewardItemEnable;
-    bool OnCraftItemEnable;
-
-    uint32 MinQuality;
-    uint32 MaxQuality;
-} BoosterConfig;
+#include "ScriptMgr.h"
+#include "Chat.h"
 
 class StatBoosterPlayer : public PlayerScript
 {

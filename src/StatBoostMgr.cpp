@@ -209,19 +209,19 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
     switch (statType)
     {
     case STAT_TYPE_TANK:
-        enchantId = FetchEnchant(&TankEnchantPool);
+        enchantId = FetchEnchant(&sBoostConfigMgr->TankEnchantPool);
         break;
 
     case STAT_TYPE_PHYS:
-        enchantId = FetchEnchant(&PhysEnchantPool);
+        enchantId = FetchEnchant(&sBoostConfigMgr->PhysEnchantPool);
         break;
 
     case STAT_TYPE_HYBRID:
-        enchantId = FetchEnchant(&HybridEnchantPool);
+        enchantId = FetchEnchant(&sBoostConfigMgr->HybridEnchantPool);
         break;
 
     case STAT_TYPE_SPELL:
-        enchantId = FetchEnchant(&SpellEnchantPool);
+        enchantId = FetchEnchant(&sBoostConfigMgr->SpellEnchantPool);
         break;
     }
 
