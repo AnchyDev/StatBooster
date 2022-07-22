@@ -2,33 +2,93 @@
 
 StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
 {
-    switch (item->GetTemplate()->SubClass)
+    if (item->GetTemplate()->Class == ITEM_CLASS_WEAPON)
     {
-    case ITEM_SUBCLASS_ARMOR_CLOTH:
-        return STAT_TYPE_SPELL;
-
-
-    case ITEM_SUBCLASS_ARMOR_LEATHER:
-    case ITEM_SUBCLASS_ARMOR_MAIL:
-    case ITEM_SUBCLASS_ARMOR_PLATE:
-        switch (urand(0, 3))
+        switch (item->GetTemplate()->SubClass)
         {
-        case 0:
-            return STAT_TYPE_TANK;
-
-        case 1:
+        case ITEM_SUBCLASS_WEAPON_GUN:
+        case ITEM_SUBCLASS_WEAPON_BOW:
+        case ITEM_SUBCLASS_WEAPON_CROSSBOW:
+        case ITEM_SUBCLASS_WEAPON_THROWN:
             return STAT_TYPE_PHYS;
 
-        case 2:
-            return STAT_TYPE_HYBRID;
+        case ITEM_SUBCLASS_WEAPON_DAGGER:
+        case ITEM_SUBCLASS_WEAPON_STAFF:
+            switch (urand(0, 3))
+            {
+            case 0:
+                return STAT_TYPE_TANK;
 
-        case 3:
+            case 1:
+                return STAT_TYPE_PHYS;
+
+            case 2:
+                return STAT_TYPE_HYBRID;
+
+            case 3:
+                return STAT_TYPE_SPELL;
+            }
+
+        case ITEM_SUBCLASS_WEAPON_AXE:
+        case ITEM_SUBCLASS_WEAPON_AXE2:
+        case ITEM_SUBCLASS_WEAPON_MACE:
+        case ITEM_SUBCLASS_WEAPON_MACE2:
+        case ITEM_SUBCLASS_WEAPON_POLEARM:
+        case ITEM_SUBCLASS_WEAPON_SPEAR:
+        case ITEM_SUBCLASS_WEAPON_SWORD:
+        case ITEM_SUBCLASS_WEAPON_SWORD2:
+        case ITEM_SUBCLASS_WEAPON_FIST:
+            switch (urand(0, 1))
+            {
+            case 0:
+                return STAT_TYPE_TANK;
+
+            case 1:
+                return STAT_TYPE_PHYS;
+            }
+
+        case ITEM_SUBCLASS_WEAPON_WAND:
             return STAT_TYPE_SPELL;
         }
-
-    default:
-        return STAT_TYPE_NONE;
     }
+    else if (item->GetTemplate()->Class == ITEM_CLASS_ARMOR)
+    {
+        switch (item->GetTemplate()->SubClass)
+        {
+        case ITEM_SUBCLASS_ARMOR_CLOTH:
+            return STAT_TYPE_SPELL;
+
+        case ITEM_SUBCLASS_ARMOR_LEATHER:
+        case ITEM_SUBCLASS_ARMOR_MAIL:
+        case ITEM_SUBCLASS_ARMOR_PLATE:
+            switch (urand(0, 3))
+            {
+            case 0:
+                return STAT_TYPE_TANK;
+
+            case 1:
+                return STAT_TYPE_PHYS;
+
+            case 2:
+                return STAT_TYPE_HYBRID;
+
+            case 3:
+                return STAT_TYPE_SPELL;
+            }
+
+        case ITEM_SUBCLASS_ARMOR_BUCKLER:
+        case ITEM_SUBCLASS_ARMOR_SHIELD:
+            switch (urand(0, 1))
+            {
+            case 0:
+                return STAT_TYPE_TANK;
+            case 1:
+                return STAT_TYPE_SPELL;
+            }
+        }
+    }
+
+    return STAT_TYPE_NONE;
 }
 
 uint32 StatBoostMgr::FetchEnchant(std::vector<EnchantDefinition>* pool, uint32 iLvl)
@@ -217,7 +277,12 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
     if (statType == STAT_TYPE_NONE)
     {
         ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_NONE");
-        return false;
+        statType = GetStatTypeFromSubClass(item);
+
+        if (statType == STAT_TYPE_NONE)
+        {
+            return false;
+        }
     }
 
     uint32 enchantId = 0;
