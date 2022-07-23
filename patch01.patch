@@ -1,0 +1,101 @@
+diff --git a/src/server/game/Entities/Player/Player.h b/src/server/game/Entities/Player/Player.h
+index 1ab612d5d..ec93452ad 100644
+--- a/src/server/game/Entities/Player/Player.h
++++ b/src/server/game/Entities/Player/Player.h
+@@ -1268,7 +1268,7 @@ public:
+     [[nodiscard]] InventoryResult CanUseAmmo(uint32 item) const;
+     InventoryResult CanRollForItemInLFG(ItemTemplate const* item, WorldObject const* lootedObject) const;
+     Item* StoreNewItem(ItemPosCountVec const& pos, uint32 item, bool update, int32 randomPropertyId = 0);
+-    Item* StoreNewItem(ItemPosCountVec const& pos, uint32 item, bool update, int32 randomPropertyId, AllowedLooterSet& allowedLooters);
++    Item* StoreNewItem(ItemPosCountVec const& pos, uint32 item, bool update, int32 randomPropertyId, AllowedLooterSet& allowedLooters, bool wonThroughRoll = false);
+     Item* StoreItem(ItemPosCountVec const& pos, Item* pItem, bool update);
+     Item* EquipNewItem(uint16 pos, uint32 item, bool update);
+     Item* EquipItem(uint16 pos, Item* pItem, bool update);
+diff --git a/src/server/game/Entities/Player/PlayerStorage.cpp b/src/server/game/Entities/Player/PlayerStorage.cpp
+index 7e275bd1d..96633d130 100644
+--- a/src/server/game/Entities/Player/PlayerStorage.cpp
++++ b/src/server/game/Entities/Player/PlayerStorage.cpp
+@@ -2556,13 +2556,19 @@ Item* Player::StoreNewItem(ItemPosCountVec const& dest, uint32 item, bool update
+ }
+ 
+ // Return stored item (if stored to stack, it can diff. from pItem). And pItem ca be deleted in this case.
+-Item* Player::StoreNewItem(ItemPosCountVec const& dest, uint32 item, bool update, int32 randomPropertyId, AllowedLooterSet& allowedLooters)
++Item* Player::StoreNewItem(ItemPosCountVec const& dest, uint32 item, bool update, int32 randomPropertyId, AllowedLooterSet& allowedLooters, bool wonThroughRoll)
+ {
+     uint32 count = 0;
+     for (ItemPosCountVec::const_iterator itr = dest.begin(); itr != dest.end(); ++itr)
+         count += itr->count;
+ 
+     Item* pItem = Item::CreateItem(item, count, this, false, randomPropertyId);
++
++    if (wonThroughRoll)
++    {
++        sScriptMgr->OnRollRewardItem(this, pItem, count);
++    }
++
+     if (pItem)
+     {
+         // pussywizard: obtaining blue or better items saves to db
+diff --git a/src/server/game/Groups/Group.cpp b/src/server/game/Groups/Group.cpp
+index d93c476b3..bf243aa52 100644
+--- a/src/server/game/Groups/Group.cpp
++++ b/src/server/game/Groups/Group.cpp
+@@ -1448,7 +1448,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
+                         roll->getLoot()->NotifyItemRemoved(roll->itemSlot);
+                         roll->getLoot()->unlootedCount--;
+                         AllowedLooterSet looters = item->GetAllowedLooters();
+-                        player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, looters);
++                        player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, looters, true);
+                         player->UpdateLootAchievements(item, roll->getLoot());
+                     }
+                     else
+@@ -1516,7 +1516,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
+                             roll->getLoot()->NotifyItemRemoved(roll->itemSlot);
+                             roll->getLoot()->unlootedCount--;
+                             AllowedLooterSet looters = item->GetAllowedLooters();
+-                            player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, looters);
++                            player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, looters, true);
+                             player->UpdateLootAchievements(item, roll->getLoot());
+                         }
+                         else
+diff --git a/src/server/game/Scripting/ScriptDefines/PlayerScript.cpp b/src/server/game/Scripting/ScriptDefines/PlayerScript.cpp
+index 959fc2b35..943645e08 100644
+--- a/src/server/game/Scripting/ScriptDefines/PlayerScript.cpp
++++ b/src/server/game/Scripting/ScriptDefines/PlayerScript.cpp
+@@ -590,6 +590,14 @@ void ScriptMgr::OnQuestRewardItem(Player* player, Item* item, uint32 count)
+     });
+ }
+ 
++void ScriptMgr::OnRollRewardItem(Player* player, Item* item, uint32 count)
++{
++    ExecuteScript<PlayerScript>([&](PlayerScript* script)
++    {
++        script->OnRollRewardItem(player, item, count);
++    });
++}
++
+ void ScriptMgr::OnFirstLogin(Player* player)
+ {
+     ExecuteScript<PlayerScript>([&](PlayerScript* script)
+diff --git a/src/server/game/Scripting/ScriptMgr.h b/src/server/game/Scripting/ScriptMgr.h
+index 66d2eeca1..3fc372023 100644
+--- a/src/server/game/Scripting/ScriptMgr.h
++++ b/src/server/game/Scripting/ScriptMgr.h
+@@ -1172,6 +1172,9 @@ public:
+     // After receiving item as a quest reward
+     virtual void OnQuestRewardItem(Player* /*player*/, Item* /*item*/, uint32 /*count*/) { }
+ 
++    //After receiving item as a group roll reward
++    virtual void OnRollRewardItem(Player* /*player*/, Item* /*item*/, uint32 /*count*/) { }
++
+     // After completed a quest
+     [[nodiscard]] virtual bool OnBeforeQuestComplete(Player* /*player*/, uint32 /*quest_id*/) { return true; }
+ 
+@@ -2244,6 +2247,7 @@ public: /* PlayerScript */
+     void OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid lootguid);
+     void OnCreateItem(Player* player, Item* item, uint32 count);
+     void OnQuestRewardItem(Player* player, Item* item, uint32 count);
++    void OnRollRewardItem(Player* player, Item* item, uint32 count);
+     bool OnBeforePlayerQuestComplete(Player* player, uint32 quest_id);
+     void OnQuestComputeXP(Player* player, Quest const* quest, uint32& xpValue);
+     void OnBeforePlayerDurabilityRepair(Player* player, ObjectGuid npcGUID, ObjectGuid itemGUID, float& discountMod, uint8 guildBank);
