@@ -1,4 +1,4 @@
-# ![Azeroth Core](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Azeroth Core
+# ![Azeroth Core](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Stat Booster
 ⚠️ !! This module is not ready yet !! ⚠️
 ## About
 This is a module for [Azeroth Core](https://github.com/azerothcore/azerothcore-wotlk) inspired by the [RandomEnchants](https://github.com/azerothcore/mod-random-enchants) module. 
