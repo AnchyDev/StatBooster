@@ -35,6 +35,11 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
         if (result)
         {
             ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+
+            if (sBoostConfigMgr->PlaySoundEnable)
+            {
+                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+            }
         }
     }
 }
@@ -53,6 +58,11 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
         if (result)
         {
             ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+
+            if (sBoostConfigMgr->PlaySoundEnable)
+            {
+                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+            }
         }
     }
 }
@@ -71,6 +81,11 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
         if (result)
         {
             ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+
+            if (sBoostConfigMgr->PlaySoundEnable)
+            {
+                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+            }
         }
     }
 }
@@ -89,6 +104,11 @@ void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*co
         if (result)
         {
             ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+
+            if (sBoostConfigMgr->PlaySoundEnable)
+            {
+                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+            }
         }
     }
 }
@@ -108,6 +128,9 @@ void StatBoosterWorld::OnAfterConfigLoad(bool reload)
 
     sBoostConfigMgr->MinQuality = sConfigMgr->GetOption<uint32>("StatBooster.MinQuality", ITEM_QUALITY_UNCOMMON);
     sBoostConfigMgr->MaxQuality = sConfigMgr->GetOption<uint32>("StatBooster.MaxQuality", ITEM_QUALITY_EPIC);
+
+    sBoostConfigMgr->PlaySoundEnable = sConfigMgr->GetOption<bool>("StatBooster.PlaySoundEnable", true);
+    sBoostConfigMgr->SoundId = sConfigMgr->GetOption<uint32>("StatBooster.SoundId", 120);
 
     LoadEnchantTables();
 }

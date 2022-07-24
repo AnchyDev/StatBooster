@@ -28,6 +28,9 @@ public:
     uint32 MinQuality;
     uint32 MaxQuality;
 
+    bool PlaySoundEnable;
+    uint32 SoundId;
+
     std::vector<EnchantDefinition> TankEnchantPool;
     std::vector<EnchantDefinition> PhysEnchantPool;
     std::vector<EnchantDefinition> HybridEnchantPool;
