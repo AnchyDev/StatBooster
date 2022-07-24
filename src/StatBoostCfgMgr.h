@@ -21,6 +21,10 @@ public:
     bool OnQuestRewardItemEnable;
     bool OnCraftItemEnable;
 
+    uint32 LootItemChance;
+    uint32 QuestRewardChance;
+    uint32 CraftItemChance;
+
     uint32 MinQuality;
     uint32 MaxQuality;
 

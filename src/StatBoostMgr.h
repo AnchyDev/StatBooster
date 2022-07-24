@@ -20,7 +20,7 @@ enum StatType
 class StatBoostMgr
 {
 public:
-    bool BoostItem(Player* player, Item* item);
+    bool BoostItem(Player* player, Item* item, uint32 chance);
 
 private:
     std::default_random_engine RandomEngine;

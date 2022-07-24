@@ -302,13 +302,22 @@ StatType StatBoostMgr::AnalyzeItem(Item* item)
     return ScoreItem(item, spellsCount);
 }
 
-bool StatBoostMgr::BoostItem(Player* player, Item* item)
+bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 {
     //Is not weapon or armor.
     if (!IsEquipment(item))
     {
         return false;
     }
+
+    //Roll for the chance to upgrade.
+    uint32 roll = urand(0, 100);
+
+    if (roll > chance)
+    {
+        return false;
+    }
+
     //Fetch the type of stats that should be applied to the piece.
     StatType statType = AnalyzeItem(item);
 

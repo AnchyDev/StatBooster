@@ -30,7 +30,7 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
 
     if (sBoostConfigMgr->OnLootItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item);
+        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->LootItemChance);
 
         if (result)
         {
@@ -48,7 +48,7 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
 
     if (sBoostConfigMgr->OnQuestRewardItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item);
+        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->QuestRewardChance);
 
         if (result)
         {
@@ -66,7 +66,7 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
 
     if (sBoostConfigMgr->OnCraftItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item);
+        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->CraftItemChance);
 
         if (result)
         {
@@ -84,7 +84,7 @@ void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*co
 
     if (sBoostConfigMgr->OnLootItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item);
+        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->LootItemChance);
 
         if (result)
         {
@@ -101,6 +101,10 @@ void StatBoosterWorld::OnAfterConfigLoad(bool reload)
     sBoostConfigMgr->OnLootItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnLootItemEnable", true);
     sBoostConfigMgr->OnQuestRewardItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnQuestRewardItemEnable", true);
     sBoostConfigMgr->OnCraftItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnCraftItemEnable", true);
+
+    sBoostConfigMgr->LootItemChance = sConfigMgr->GetOption<uint32>("StatBooster.LootItemChance", 100);
+    sBoostConfigMgr->QuestRewardChance = sConfigMgr->GetOption<uint32>("StatBooster.QuestRewardChance", 100);
+    sBoostConfigMgr->CraftItemChance = sConfigMgr->GetOption<uint32>("StatBooster.CraftItemChance", 100);
 
     sBoostConfigMgr->MinQuality = sConfigMgr->GetOption<uint32>("StatBooster.MinQuality", ITEM_QUALITY_UNCOMMON);
     sBoostConfigMgr->MaxQuality = sConfigMgr->GetOption<uint32>("StatBooster.MaxQuality", ITEM_QUALITY_EPIC);
