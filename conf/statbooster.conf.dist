@@ -1,25 +1,175 @@
 [worldserver]
+########################################
+# STAT BOOSTER CONFIGURATION
+########################################
+# 
+#	StatBooster.Enable
+#		Description: Enable/Disable the module.
+#		Default:	0 - (Disabled)
+#					1 - (Enabled)
+#
 
 StatBooster.Enable = 0
 
+########################################
+
+########################################
+#
+#	StatBooster.OnLoginEnable
+#		Description: Enable/Disable chat message shown when logging in.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#		Note: This announcement is displayed for the player only.
+#
+
 StatBooster.OnLoginEnable = 1
+
+#
+#	StatBooster.OnLoginMessage
+#		Description: The chat message to be shown when logging in.
+#
+
 StatBooster.OnLoginMessage = "This server is running the StatBooster module."
 
+########################################
+
+########################################
+#
+#	StatBooster.OnLootItemEnable
+#		Description: Enable/Disable receiving boosted items from looting.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#
+
 StatBooster.OnLootItemEnable = 1
+
+#
+#	StatBooster.OnQuestRewardItemEnable
+#		Description: Enable/Disable receiving boosted items from quest rewards.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#
+
 StatBooster.OnQuestRewardItemEnable = 1
+
+#
+#	StatBooster.OnCraftItemEnable
+#		Description: Enable/Disable receiving boosted items from crafting.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#
+
 StatBooster.OnCraftItemEnable = 1
 
+#
+#	StatBooster.LootItemChance
+#		Description: The percent chance that you will receive a boosted item from looting.
+#		Default:	100
+#		Range:		0-100
+#
+
 StatBooster.LootItemChance = 100
+
+#
+#	StatBooster.QuestRewardChance
+#		Description: The percent chance that you will receive a boosted item from quest rewards.
+#		Default:	100
+#		Range:		0-100
+#
+
 StatBooster.QuestRewardChance = 100
+
+#
+#	StatBooster.CraftItemChance
+#		Description: The percent chance that you will receive a boosted item from crafting.
+#		Default:	100
+#		Range:		0-100
+#
+
 StatBooster.CraftItemChance = 100
 
+########################################
+
+########################################
+#
+#	StatBooster.MinQuality
+#		Description: The minimum quality before an item is considered for boosting.
+#					0 - (Junk)
+#					1 - (Common)
+#		Default:	2 - (Uncommon)
+#					3 - (Rare)
+#					4 - (Epic)
+#					5 - (Legendary)
+#
+
 StatBooster.MinQuality = 2
+
+#
+#	StatBooster.MaxQuality
+#		Description: The maximum quality before an item is considered for boosting.
+#					0 - (Junk)
+#					1 - (Common)
+#					2 - (Uncommon)
+#					3 - (Rare)
+#		Default:	4 - (Epic)
+#					5 - (Legendary)
+#
+
 StatBooster.MaxQuality = 4
 
+########################################
+
+########################################
+#
+#	StatBooster.PlaySoundEnable
+#		Description: Enable/Disable playing sound when receiving boosted item.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#
+
 StatBooster.PlaySoundEnable = 1
+
+#
+#	StatBooster.SoundId
+#		Description: The sound id to be played when receiving a boosted item.
+#		Default:	120 - (LOOTWINDOWCOINSOUND)
+#		Note: You can find sound ids at https://wotlkdb.com/?sounds where the number in the url is the id.
+#
+
 StatBooster.SoundId = 120
 
+########################################
+
+########################################
+#
+#	StatBooster.AnnounceBoostEnable
+#		Description: Enable/Disable announcement when receiving a boosted item.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#		Note: This announcement is displayed for the player only.
+#
+
 StatBooster.AnnounceBoostEnable = 1
+
+#
+#	StatBooster.AnnounceLoot
+#		Description: The chat message to be shown when looting a boosted item.
+#
+
 StatBooster.AnnounceLoot = "You looted a boosted item."
+
+#
+#	StatBooster.AnnounceQuest
+#		Description: The chat message to be shown when receiving a boosted item from quest.
+#
+
 StatBooster.AnnounceQuest = "You received a boosted item."
+
+#
+#	StatBooster.AnnounceCraft
+#		Description: The chat message to be shown when crafting a boosted item.
+#
+
 StatBooster.AnnounceCraft = "You crafted a boosted item."
+
+########################################
