@@ -1,5 +1,5 @@
 # ![Azeroth Core](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Stat Booster
-⚠️ !! This module is not ready yet !! ⚠️
+⚠️ !! This module is not ready yet, however it is usable in its current state !! ⚠️
 ## About
 This is a module for [Azeroth Core](https://github.com/azerothcore/azerothcore-wotlk) inspired by the [RandomEnchants](https://github.com/azerothcore/mod-random-enchants) module. 
 The module will randomly enchant items with stats that compliment the item.
