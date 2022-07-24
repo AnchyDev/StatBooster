@@ -125,36 +125,33 @@ void StatBoosterWorld::LoadEnchantTables()
     {
         Field* fields = qResult->Fetch();
 
-        uint32 id = fields[0].Get<uint32>();
-        uint32 iLvlMin = fields[1].Get<uint32>();
-        uint32 iLvlMax = fields[2].Get<uint32>();
-        uint32 roleMask = fields[3].Get<uint32>();
-
         EnchantDefinition enchantDef;
-        enchantDef.Id = id;
-        enchantDef.ILvlMin = iLvlMin;
-        enchantDef.ILvlMax = iLvlMax;
+
+        enchantDef.Id = fields[0].Get<uint32>();
+        enchantDef.ILvlMin = fields[1].Get<uint32>();
+        enchantDef.ILvlMax = fields[2].Get<uint32>();
+        uint32 roleMask = fields[3].Get<uint32>();
 
 
         if ((roleMask & STAT_TYPE_TANK) == STAT_TYPE_TANK)
         {
             sBoostConfigMgr->TankEnchantPool.push_back(enchantDef);
-            LOG_INFO("module", "Loading Enchant ID {} with mask {} into TANK", id, roleMask);
+            LOG_INFO("module", "Loading Enchant ID {} with mask {} into TANK", enchantDef.Id, roleMask);
         }
         if ((roleMask & STAT_TYPE_PHYS) == STAT_TYPE_PHYS)
         {
             sBoostConfigMgr->PhysEnchantPool.push_back(enchantDef);
-            LOG_INFO("module", "Loading Enchant ID {} with mask {} into PHYS", id, roleMask);
+            LOG_INFO("module", "Loading Enchant ID {} with mask {} into PHYS", enchantDef.Id, roleMask);
         }
         if ((roleMask & STAT_TYPE_HYBRID) == STAT_TYPE_HYBRID)
         {
             sBoostConfigMgr->HybridEnchantPool.push_back(enchantDef);
-            LOG_INFO("module", "Loading Enchant ID {} with mask {} into HYBRID", id, roleMask);
+            LOG_INFO("module", "Loading Enchant ID {} with mask {} into HYBRID", enchantDef.Id, roleMask);
         }
         if ((roleMask & STAT_TYPE_SPELL) == STAT_TYPE_SPELL)
         {
             sBoostConfigMgr->SpellEnchantPool.push_back(enchantDef);
-            LOG_INFO("module", "Loading Enchant ID {} with mask {} into SPELL", id, roleMask);
+            LOG_INFO("module", "Loading Enchant ID {} with mask {} into SPELL", enchantDef.Id, roleMask);
         }
         if (roleMask == STAT_TYPE_NONE)
         {
@@ -162,7 +159,7 @@ void StatBoosterWorld::LoadEnchantTables()
             sBoostConfigMgr->PhysEnchantPool.push_back(enchantDef);
             sBoostConfigMgr->HybridEnchantPool.push_back(enchantDef);
             sBoostConfigMgr->SpellEnchantPool.push_back(enchantDef);
-            LOG_INFO("module", "Loading Enchant ID {} with mask {} into ALL", id, roleMask);
+            LOG_INFO("module", "Loading Enchant ID {} with mask {} into ALL", enchantDef.Id, roleMask);
         }
     } while (qResult->NextRow());
 
