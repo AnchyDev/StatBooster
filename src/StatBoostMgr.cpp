@@ -288,17 +288,12 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
     {
         return false;
     }
-
-    ChatHandler(player->GetSession()).SendSysMessage("BoostItem::IsEquipment=True");
-
-    ChatHandler(player->GetSession()).SendSysMessage("BoostItem::AnalyzeItem");
     //Fetch the type of stats that should be applied to the piece.
     StatType statType = AnalyzeItem(item);
 
     //Failed to find a stat type.
     if (statType == STAT_TYPE_NONE)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_NONE");
         statType = GetStatTypeFromSubClass(item);
 
         if (statType == STAT_TYPE_NONE)
@@ -314,22 +309,18 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
     switch (statType)
     {
     case STAT_TYPE_TANK:
-        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_TANK");
         enchantId = FetchEnchant(&sBoostConfigMgr->TankEnchantPool, itemLevel);
         break;
 
     case STAT_TYPE_PHYS:
-        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_PHYS");
         enchantId = FetchEnchant(&sBoostConfigMgr->PhysEnchantPool, itemLevel);
         break;
 
     case STAT_TYPE_HYBRID:
-        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_HYBRID");
         enchantId = FetchEnchant(&sBoostConfigMgr->HybridEnchantPool, itemLevel);
         break;
 
     case STAT_TYPE_SPELL:
-        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::STAT_TYPE_SPELL");
         enchantId = FetchEnchant(&sBoostConfigMgr->SpellEnchantPool, itemLevel);
         break;
     }
@@ -337,7 +328,6 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item)
     //Failed to find a valid enchant.
     if (!enchantId)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("BoostItem::ENCHANT_ID_0");
         return false;
     }
 
