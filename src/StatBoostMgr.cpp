@@ -78,7 +78,28 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
         switch (item->GetTemplate()->SubClass)
         {
         case ITEM_SUBCLASS_ARMOR_CLOTH:
-            return STAT_TYPE_SPELL;
+            switch (item->GetTemplate()->InventoryType)
+            {
+            case INVTYPE_CLOAK:
+                switch (urand(0, 3))
+                {
+                case 0:
+                    return STAT_TYPE_TANK;
+
+                case 1:
+                    return STAT_TYPE_PHYS;
+
+                case 2:
+                    return STAT_TYPE_HYBRID;
+
+                case 3:
+                    return STAT_TYPE_SPELL;
+                }
+
+            default:
+                return STAT_TYPE_SPELL;
+            }
+            break;
 
         case ITEM_SUBCLASS_ARMOR_LEATHER:
         case ITEM_SUBCLASS_ARMOR_MAIL:
