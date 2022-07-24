@@ -3,6 +3,8 @@
 StatBooster.Enable = 0
 
 StatBooster.OnLoginEnable = 1
+StatBooster.OnLoginMessage = "This server is running the StatBooster module."
+
 StatBooster.OnLootItemEnable = 1
 StatBooster.OnQuestRewardItemEnable = 1
 StatBooster.OnCraftItemEnable = 1

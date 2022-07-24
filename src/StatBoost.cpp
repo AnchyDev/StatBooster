@@ -17,7 +17,7 @@ void StatBoosterPlayer::OnLogin(Player* player)
 
 	if(sBoostConfigMgr->OnLoginEnable)
 	{
-		ChatHandler(player->GetSession()).SendSysMessage("This server is running the StatBooster module.");
+		ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->OnLoginMessage);
 	}
 }
 
@@ -130,6 +130,8 @@ void StatBoosterWorld::OnAfterConfigLoad(bool reload)
     sBoostConfigMgr->Enable = sConfigMgr->GetOption<bool>("StatBooster.Enable", false);
 
     sBoostConfigMgr->OnLoginEnable = sConfigMgr->GetOption<bool>("StatBooster.OnLoginEnable", true);
+    sBoostConfigMgr->OnLoginMessage = sConfigMgr->GetOption<std::string>("StatBooster.OnLoginMessage", "This server is running the StatBooster module.");
+
     sBoostConfigMgr->OnLootItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnLootItemEnable", true);
     sBoostConfigMgr->OnQuestRewardItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnQuestRewardItemEnable", true);
     sBoostConfigMgr->OnCraftItemEnable = sConfigMgr->GetOption<bool>("StatBooster.OnCraftItemEnable", true);

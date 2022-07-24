@@ -17,6 +17,8 @@ public:
     bool Enable;
 
     bool OnLoginEnable;
+    std::string OnLoginMessage;
+
     bool OnLootItemEnable;
     bool OnQuestRewardItemEnable;
     bool OnCraftItemEnable;
