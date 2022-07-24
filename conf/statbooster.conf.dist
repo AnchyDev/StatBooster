@@ -14,5 +14,10 @@ StatBooster.CraftItemChance = 100
 StatBooster.MinQuality = 2
 StatBooster.MaxQuality = 4
 
-StatBooster.PlaySound = 1
+StatBooster.PlaySoundEnable = 1
 StatBooster.SoundId = 120
+
+StatBooster.AnnounceBoostEnable = 1
+StatBooster.AnnounceLoot = "You looted a boosted item."
+StatBooster.AnnounceQuest = "You received a boosted item."
+StatBooster.AnnounceCraft = "You crafted a boosted item."

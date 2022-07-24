@@ -31,6 +31,11 @@ public:
     bool PlaySoundEnable;
     uint32 SoundId;
 
+    bool AnnounceBoostEnable;
+    std::string AnnounceLoot;
+    std::string AnnounceCraft;
+    std::string AnnounceQuest;
+
     std::vector<EnchantDefinition> TankEnchantPool;
     std::vector<EnchantDefinition> PhysEnchantPool;
     std::vector<EnchantDefinition> HybridEnchantPool;

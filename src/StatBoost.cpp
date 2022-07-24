@@ -34,7 +34,10 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
 
         if (result)
         {
-            ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+            if (sBoostConfigMgr->AnnounceBoostEnable)
+            {
+                ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->AnnounceLoot);
+            }
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
@@ -57,7 +60,10 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
 
         if (result)
         {
-            ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+            if (sBoostConfigMgr->AnnounceBoostEnable)
+            {
+                ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->AnnounceQuest);
+            }
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
@@ -80,7 +86,10 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
 
         if (result)
         {
-            ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+            if (sBoostConfigMgr->AnnounceBoostEnable)
+            {
+                ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->AnnounceCraft);
+            }
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
@@ -103,7 +112,10 @@ void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*co
 
         if (result)
         {
-            ChatHandler(player->GetSession()).SendSysMessage("Looted Boosted Item");
+            if (sBoostConfigMgr->AnnounceBoostEnable)
+            {
+                ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->AnnounceLoot);
+            }
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
@@ -131,6 +143,11 @@ void StatBoosterWorld::OnAfterConfigLoad(bool reload)
 
     sBoostConfigMgr->PlaySoundEnable = sConfigMgr->GetOption<bool>("StatBooster.PlaySoundEnable", true);
     sBoostConfigMgr->SoundId = sConfigMgr->GetOption<uint32>("StatBooster.SoundId", 120);
+
+    sBoostConfigMgr->AnnounceBoostEnable = sConfigMgr->GetOption<bool>("StatBooster.AnnounceBoostEnable", true);
+    sBoostConfigMgr->AnnounceLoot = sConfigMgr->GetOption<std::string>("StatBooster.AnnounceLoot", "You looted a boosted item.");
+    sBoostConfigMgr->AnnounceQuest = sConfigMgr->GetOption<std::string>("StatBooster.AnnounceQuest", "You received a boosted item.");
+    sBoostConfigMgr->AnnounceCraft = sConfigMgr->GetOption<std::string>("StatBooster.AnnounceCraft", "You crafted a boosted item.");
 
     LoadEnchantTables();
 }
