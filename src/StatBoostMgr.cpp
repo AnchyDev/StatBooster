@@ -6,13 +6,38 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
     {
         switch (item->GetTemplate()->SubClass)
         {
+        case ITEM_SUBCLASS_WEAPON_MACE2:
+        case ITEM_SUBCLASS_WEAPON_POLEARM:
+        case ITEM_SUBCLASS_WEAPON_SPEAR:
         case ITEM_SUBCLASS_WEAPON_GUN:
         case ITEM_SUBCLASS_WEAPON_BOW:
         case ITEM_SUBCLASS_WEAPON_CROSSBOW:
+            switch (urand(0, 2))
+            {
+            case 0:
+                return STAT_TYPE_TANK;
+
+            case 1:
+                return STAT_TYPE_PHYS;
+
+            case 2:
+                return STAT_TYPE_HYBRID;
+            }
+
         case ITEM_SUBCLASS_WEAPON_THROWN:
             return STAT_TYPE_PHYS;
 
         case ITEM_SUBCLASS_WEAPON_DAGGER:
+            switch (urand(0, 2))
+            {
+            case 0:
+                return STAT_TYPE_PHYS;
+            case 1:
+                return STAT_TYPE_HYBRID;
+            case 2:
+                return STAT_TYPE_SPELL;
+            }
+
         case ITEM_SUBCLASS_WEAPON_STAFF:
             switch (urand(0, 3))
             {
@@ -32,9 +57,6 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
         case ITEM_SUBCLASS_WEAPON_AXE:
         case ITEM_SUBCLASS_WEAPON_AXE2:
         case ITEM_SUBCLASS_WEAPON_MACE:
-        case ITEM_SUBCLASS_WEAPON_MACE2:
-        case ITEM_SUBCLASS_WEAPON_POLEARM:
-        case ITEM_SUBCLASS_WEAPON_SPEAR:
         case ITEM_SUBCLASS_WEAPON_SWORD:
         case ITEM_SUBCLASS_WEAPON_SWORD2:
         case ITEM_SUBCLASS_WEAPON_FIST:
