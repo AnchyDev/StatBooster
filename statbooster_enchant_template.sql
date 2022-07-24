@@ -33,7 +33,17 @@ INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMas
 	(66, 1, 20, 0, '+1 Stamina', 'ALL'),
 	(82, 1, 20, 8, '+1 Spirit', 'SPELL'),
 	(75, 10, 30, 7, '+2 Agility', 'TANK/PHYS/HYBRID'),
-	(69, 10, 30, 3, '+2 Strength', 'TANK/PHYS');
+	(69, 10, 30, 3, '+2 Strength', 'TANK/PHYS'),
+	(80, 10, 30, 12, '+2 Intellect', 'HYBRID/SPELL'),
+	(72, 10, 30, 0, '+2 Stamina', 'ALL'),
+	(83, 10, 30, 8, '+2 Spirit', 'SPELL'),
+	(207, 10, 30, 8, '+2 Spell Power', 'SPELL'),
+	(76, 20, 40, 7, '+3 Agility', 'TANK/PHYS/HYBRID'),
+	(81, 20, 40, 12, '+3 Intellect', 'HYBRID/SPELL'),
+	(73, 20, 40, 0, '+3 Stamina', 'ALL'),
+	(64, 20, 40, 8, '+3 Spirit', 'SPELL'),
+	(70, 20, 40, 3, '+3 Strength', 'TANK/PHYS'),
+	(2910, 20, 40, 8, '+3 Spell Power', 'SPELL');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
