@@ -310,6 +310,12 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         return false;
     }
 
+    if (item->GetTemplate()->Quality < sBoostConfigMgr->MinQuality ||
+        item->GetTemplate()->Quality > sBoostConfigMgr->MaxQuality)
+    {
+        return false;
+    }
+
     //Roll for the chance to upgrade.
     uint32 roll = urand(0, 100);
 
