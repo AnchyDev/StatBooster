@@ -169,7 +169,7 @@ StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
     auto itemTemplate = item->GetTemplate();
     auto subClass = itemTemplate->SubClass;
 
-    for (int i = 0; i < itemTemplate->StatsCount; i++)
+    for (uint32 i = 0; i < itemTemplate->StatsCount; i++)
     {
         auto stat = itemTemplate->ItemStat[i];
         uint32 statType = stat.ItemStatType;
@@ -237,11 +237,11 @@ StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
     //Sometimes stats are stored as additional spell effects and also need to be checked.
     if (hasAdditionalSpells)
     {
-        for (int i = 0; i < (sizeof(itemTemplate->Spells) / sizeof(itemTemplate->Spells[0])); i++)
+        for (auto spell : itemTemplate->Spells)
         {
-            if (itemTemplate->Spells[i].SpellId)
+            if (spell.SpellId)
             {
-                auto spellInfo = sSpellMgr->GetSpellInfo(itemTemplate->Spells[i].SpellId);
+                auto spellInfo = sSpellMgr->GetSpellInfo(spell.SpellId);
 
                 if (spellInfo->HasAura(SPELL_AURA_MOD_ATTACK_POWER))
                 {
@@ -262,11 +262,11 @@ StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
 
     //Tally up the results, the highest score is picked.
     auto winningScore = *scores[0];
-    for (int i = 0; i < (sizeof(scores) / sizeof(scores[0])) + 1; i++)
+    for (auto score : scores)
     {
-        if (scores[i]->Score > winningScore.Score)
+        if (score->Score > winningScore.Score)
         {
-            winningScore = *scores[i];
+            winningScore = *score;
         }
     }
 
@@ -286,9 +286,9 @@ StatType StatBoostMgr::AnalyzeItem(Item* item)
     //The spellids need to be checked because the Spells array is always allocated to a fixed size.
     //Thus we need to count how many VALID spells are in the array.
     uint32 spellsCount = 0;
-    for (int i = 0; i < (sizeof(itemTemplate->Spells) / sizeof(itemTemplate->Spells[0])); i++)
+    for (auto spell : itemTemplate->Spells)
     {
-        if (itemTemplate->Spells[i].SpellId)
+        if (spell.SpellId)
         {
             spellsCount++;
         }
