@@ -29,7 +29,7 @@ Example: https://wotlkdb.com/?enchantment=74 - Id = 74.
 The `iLvlMin` & `iLvlMax` columns are for stating the itemlevel range that your enchant can be applied onto. Both of these column values are inclusive.
 
 #### RoleMask
-When adding an entry to the enchant template table you have to provide a valie to the `RoleMask` column to appropriately assign enchants to items when analyzed.
+When adding an entry to the enchant template table you have to provide a value to the `RoleMask` column to appropriately assign enchants to items when analyzed.
 To create your RoleMask you need to create a sum of all the roles that are able to use the enchant.
 The values for each role are:
 
