@@ -14,7 +14,7 @@ public:
     void OnLootItem(Player* player, Item* item, uint32 /*count*/, ObjectGuid /*lootguid*/) override;
     void OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnCreateItem(Player* player, Item* item, uint32 /*count*/) override;
-    void OnRollRewardItem(Player* player, Item* item, uint32 /*count*/) override;
+    void OnRollRewardItem(Player* player, Item* item, uint32 /*count*/, RollVote /*rollVote*/, Roll* /*roll*/) override;
 
 private:
     StatBoostMgr statBoostMgr;

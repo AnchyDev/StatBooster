@@ -99,7 +99,7 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
     }
 }
 
-void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*count*/)
+void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*count*/, RollVote /*rollVote*/, Roll* /*roll*/)
 {
     if (!sBoostConfigMgr->Enable)
     {
