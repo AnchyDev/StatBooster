@@ -173,3 +173,18 @@ StatBooster.AnnounceQuest = "You received a boosted item."
 StatBooster.AnnounceCraft = "You crafted a boosted item."
 
 ########################################
+
+########################################
+#
+#	StatBooster.OverwriteEnchantEnable
+#		Description: Enable/Disable enchantment overwriting current enchantment when boosting item.
+#					0 - (Disabled)
+#		Default:	1 - (Enabled)
+#		Note: 	Enchantments on this module use the 'BONUS_ENCHANTMENT_SLOT' to achieve its bonus stats.
+#				Leaving this enabled will overwrite this slot if the item already populates it.
+#				There is a chance to lose enchants on items when gemming an item with a boosted stat.
+#
+
+StatBooster.OverwriteEnchantEnable = 1
+
+########################################

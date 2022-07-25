@@ -367,7 +367,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         return false;
     }
 
-    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchantId, true);
+    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchantId, sBoostConfigMgr->OverwriteEnchantEnable);
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)

@@ -38,6 +38,8 @@ public:
     std::string AnnounceCraft;
     std::string AnnounceQuest;
 
+    bool OverwriteEnchantEnable;
+
     std::vector<EnchantDefinition> TankEnchantPool;
     std::vector<EnchantDefinition> PhysEnchantPool;
     std::vector<EnchantDefinition> HybridEnchantPool;
