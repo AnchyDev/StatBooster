@@ -125,7 +125,7 @@ void StatBoosterPlayer::OnRollRewardItem(Player* player, Item* item, uint32 /*co
     }
 }
 
-void StatBoosterWorld::OnAfterConfigLoad(bool reload)
+void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
 {
     sBoostConfigMgr->Enable = sConfigMgr->GetOption<bool>("StatBooster.Enable", false);
 
