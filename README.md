@@ -21,7 +21,15 @@ The features I have planned for this module that differ from the original are:
 
 ## Notes
 ### Enchant Template Table
-When adding an entry to the enchant template table you have to provide a `RoleMask` to appropriately assign enchants to items when analyzed.
+#### Id
+The `Id` column is the enchantment id. You can find enchantment ids by visiting https://wotlkdb.com/?enchantments and selecting an enchant. Your id is visible in the url.
+
+Example: https://wotlkdb.com/?enchantment=74 - Id = 74.
+#### iLvlMin/Max
+The `iLvlMin` & `iLvlMax` columns are for stating the itemlevel range that your enchant can be applied onto. Both of these column values are inclusive.
+
+#### RoleMask
+When adding an entry to the enchant template table you have to provide a valie to the `RoleMask` column to appropriately assign enchants to items when analyzed.
 To create your RoleMask you need to create a sum of all the roles that are able to use the enchant.
 The values for each role are:
 
