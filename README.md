@@ -9,15 +9,31 @@ This is my first C++ project so any tips are appreciated and welcome! :)
 
 ## Features
 The features I have planned for this module that differ from the original are:
-- Stat Analysis - Items are analyzed and enchanted based on stats already on the item. (If there are no stats then it is analyzed based off class & subclass types.)
-- Expandable Enchant Pool - You can add enchant ids to your database table to expand your pool.
-- Item Level Based - You can assign item level ranges to enchants in the database table for each entry preventing high level enchants on low level items.
+- **Stat Analysis** - Items are analyzed and enchanted based on stats already on the item. (If there are no stats then it is analyzed based off class & subclass types.)
+- **Expandable Enchant Pool** - You can add enchant ids to your database table to expand your pool.
+- **Item Level Based** - You can assign item level ranges to enchants in the database table for each entry preventing high level enchants on low level items.
  
 ## Install
-1. Execute `statbooster_enchant_template.sql` on your world database to create the enchant entries.
-2. [Patch](https://git-scm.com/docs/git-apply) your core with `patch01.patch`.
-3. Place `statbooster.conf.dist` into your server `./configs/modules` directory.
-4. [Clone](https://git-scm.com/docs/git-clone) this repository into your `./azerothcore-wotlk/modules` folder. (Make sure to clone it into a subdirectory called StatBooster)
+1. **Execute** `statbooster_enchant_template.sql` on your world database to create the enchant entries.
+2. **[Patch](https://git-scm.com/docs/git-apply)** your core with `patch01.patch`.
+3. **Place** `statbooster.conf.dist` into your server `./configs/modules` directory.
+4. **[Clone](https://git-scm.com/docs/git-clone)** this repository into your `./azerothcore-wotlk/modules` folder. (Make sure to clone it into a subdirectory called StatBooster)
+
+## Notes
+### Enchant Template Table
+When adding an entry to the enchant template table you have to provide a `RoleMask` to appropriately assign enchants to items when analyzed.
+To create your RoleMask you need to create a sum of all the roles that are able to use the enchant.
+The values for each role are:
+
+- **All**: 0
+- **Tank**: 1
+- **Phys**: 2
+- **Hybrid**: 4
+- **Spell**: 8
+
+Example: `Tank + Phys + Hybrid = 7` `Hybrid + Spell = 12`
+
+To have all of the roles use the enchant, set the `RoleMask` to `0`.
 
 ## Example Items
 ![Item01](https://i.imgur.com/MYgpZKK.png)
