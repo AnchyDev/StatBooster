@@ -10,6 +10,8 @@ This is my first C++ project so any tips are appreciated and welcome! :)
 ## Features
 The features I have planned for this module that differ from the original are:
 - Stat Analysis - Items are analyzed and enchanted based on stats already on the item. (If there are no stats then it is analyzed based off class & subclass types.)
+- Expandable Enchant Pool - You can add enchant ids to your database table to expand your pool.
+- Item Level Based - You can assign item level ranges to enchants in the database table for each entry preventing high level enchants on low level items.
  
 ## Install
 1. Execute `statbooster_enchant_template.sql` on your world database to create the enchant entries.
