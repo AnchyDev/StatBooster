@@ -331,11 +331,6 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     if (statType == STAT_TYPE_NONE)
     {
         statType = GetStatTypeFromSubClass(item);
-
-        if (statType == STAT_TYPE_NONE)
-        {
-            return false;
-        }
     }
 
     uint32 enchantId = 0;
@@ -359,6 +354,9 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     case STAT_TYPE_SPELL:
         enchantId = FetchEnchant(&sBoostConfigMgr->SpellEnchantPool, itemLevel);
         break;
+
+    case STAT_TYPE_NONE:
+        return false;
     }
 
     //Failed to find a valid enchant.
