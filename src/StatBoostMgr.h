@@ -17,6 +17,13 @@ enum StatType
     STAT_TYPE_SPELL = 8
 };
 
+enum ClassType
+{
+    CLASS_TYPE_NONE = 0,
+    CLASS_TYPE_WEAPON = 1,
+    CLASS_TYPE_ARMOR = 2
+};
+
 class StatBoostMgr
 {
 public:
