@@ -42,6 +42,15 @@ Example: `Tank + Phys + Hybrid = 7` `Hybrid + Spell = 12`
 
 To have all of the roles use the enchant, set the `RoleMask` to `0`.
 
+#### ClassMask
+Like RoleMask you have to create a sum of all of the item classes able to use the enchant.
+
+- **All**: 0
+- **Weapon**: 2
+- **Armor**: 4
+
+To have all of the classes use the enchant, set the `ClassMask` to `0`.
+
 ## Example Items
 ![Item01](https://i.imgur.com/MYgpZKK.png)
 ![Item02](https://i.imgur.com/qCgx7XS.png)
