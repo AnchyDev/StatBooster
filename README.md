@@ -15,9 +15,8 @@ The features I have planned for this module that differ from the original are:
  
 ## Install
 1. **Execute** `statbooster_enchant_template.sql` on your world database to create the enchant entries.
-2. **[Patch](https://git-scm.com/docs/git-apply)** your core with `patch01.patch`.
-3. **Place** `statbooster.conf.dist` into your server `./configs/modules` directory.
-4. **[Clone](https://git-scm.com/docs/git-clone)** this repository into your `./azerothcore-wotlk/modules` folder. (Make sure to clone it into a subdirectory called StatBooster)
+2. **Place** `statbooster.conf.dist` into your server `./configs/modules` directory.
+3. **[Clone](https://git-scm.com/docs/git-clone)** this repository into your `./azerothcore-wotlk/modules` folder. (Make sure to clone it into a subdirectory called StatBooster)
 
 ## Notes
 ### Enchant Template Table
