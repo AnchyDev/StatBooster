@@ -1,98 +1,22 @@
 #include "StatBoostMgr.h"
 
-uint32 GetMaskFromClass(uint32 itemClass)
+uint32 StatBoostMgr::GetMaskFromEnum(uint32 enumValue)
 {
-    switch (itemClass)
-    {
-    case ITEM_CLASS_WEAPON:
-        return 1;
+    uint32 ret = enumValue;
 
-    case ITEM_CLASS_ARMOR:
-        return 2;
+    if (ret < 1)
+    {
+        return ret + 1;
     }
-
-    return 0;
-}
-
-uint32 GetMaskFromSubClass(uint32 itemClass, uint32 itemSubClass)
-{
-    switch (itemClass)
+    else
     {
-    case ITEM_CLASS_WEAPON:
-        switch (itemSubClass)
+        for (uint32 i = 0; i < enumValue; i++)
         {
-        case ITEM_SUBCLASS_WEAPON_AXE:
-            return 1;
-        case ITEM_SUBCLASS_WEAPON_AXE2:
-            return 2;
-        case ITEM_SUBCLASS_WEAPON_BOW:
-            return 4;
-        case ITEM_SUBCLASS_WEAPON_GUN:
-            return 8;
-        case ITEM_SUBCLASS_WEAPON_MACE:
-            return 16;
-        case ITEM_SUBCLASS_WEAPON_MACE2:
-            return 32;
-        case ITEM_SUBCLASS_WEAPON_POLEARM:
-            return 64;
-        case ITEM_SUBCLASS_WEAPON_SWORD:
-            return 128;
-        case ITEM_SUBCLASS_WEAPON_SWORD2:
-            return 256;
-        case ITEM_SUBCLASS_WEAPON_STAFF:
-            return 512;
-        case ITEM_SUBCLASS_WEAPON_EXOTIC:
-            return 1024;
-        case ITEM_SUBCLASS_WEAPON_EXOTIC2:
-            return 2048;
-        case ITEM_SUBCLASS_WEAPON_FIST:
-            return 4096;
-        case ITEM_SUBCLASS_WEAPON_MISC:
-            return 8192;
-        case ITEM_SUBCLASS_WEAPON_DAGGER:
-            return 16384;
-        case ITEM_SUBCLASS_WEAPON_THROWN:
-            return 32768;
-        case ITEM_SUBCLASS_WEAPON_SPEAR:
-            return 65536;
-        case ITEM_SUBCLASS_WEAPON_CROSSBOW:
-            return 131072;
-        case ITEM_SUBCLASS_WEAPON_WAND:
-            return 262144;
-        case ITEM_SUBCLASS_WEAPON_FISHING_POLE:
-            return 524288;
-        }
-        break;
-
-    case ITEM_CLASS_ARMOR:
-        switch (itemSubClass)
-        {
-        case ITEM_SUBCLASS_ARMOR_MISC:
-            return 1;
-        case ITEM_SUBCLASS_ARMOR_CLOTH:
-            return 2;
-        case ITEM_SUBCLASS_ARMOR_LEATHER:
-            return 4;
-        case ITEM_SUBCLASS_ARMOR_MAIL:
-            return 8;
-        case ITEM_SUBCLASS_ARMOR_PLATE:
-            return 16;
-        case ITEM_SUBCLASS_ARMOR_BUCKLER:
-            return 32;
-        case ITEM_SUBCLASS_ARMOR_SHIELD:
-            return 64;
-        case ITEM_SUBCLASS_ARMOR_LIBRAM:
-            return 128;
-        case ITEM_SUBCLASS_ARMOR_IDOL:
-            return 256;
-        case ITEM_SUBCLASS_ARMOR_TOTEM:
-            return 512;
-        case ITEM_SUBCLASS_ARMOR_SIGIL:
-            return 1024;
+            ret = ret * 2;
         }
     }
 
-    return 0;
+    return ret;
 }
 
 StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
@@ -417,14 +341,14 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     uint32 itemSubClass = item->GetTemplate()->SubClass;
     uint32 itemLevel = item->GetTemplate()->ItemLevel;
 
-    uint32 itemClassMask = GetMaskFromClass(itemClass);
+    uint32 itemClassMask = GetMaskFromEnum(itemClass);
 
     if (!itemClassMask)
     {
         return false;
     }
 
-    uint32 itemSubClassMask = GetMaskFromSubClass(itemClass, itemSubClass);
+    uint32 itemSubClassMask = GetMaskFromEnum(itemSubClass);
 
     if (!itemSubClassMask)
     {

@@ -29,6 +29,7 @@ private:
         uint32 Score;
     };
 
+    uint32 GetMaskFromEnum(uint32 enumValue);
     StatType GetStatTypeFromSubClass(Item* item);
     bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
     StatType ScoreItem(Item* item, bool hasAdditionalSpells = false);
