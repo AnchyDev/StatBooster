@@ -130,7 +130,7 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
     sBoostConfigMgr->Enable = sConfigMgr->GetOption<bool>("StatBooster.Enable", false);
 
     //No point loading all of this information if the module is not enabled.
-    if (!sBoostConfigMgr->Enable)
+    if (sBoostConfigMgr->Enable)
     {
         sBoostConfigMgr->OnLoginEnable = sConfigMgr->GetOption<bool>("StatBooster.OnLoginEnable", true);
         sBoostConfigMgr->OnLoginMessage = sConfigMgr->GetOption<std::string>("StatBooster.OnLoginMessage", "This server is running the StatBooster module.");
@@ -164,7 +164,7 @@ void StatBoosterWorld::LoadEnchantTables()
 {
     try
     {
-        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask FROM statbooster_enchant_template");
+        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask FROM statbooster_enchant_template");
 
         if (!qResult)
         {
@@ -183,37 +183,12 @@ void StatBoosterWorld::LoadEnchantTables()
             enchantDef.Id = fields[0].Get<uint32>();
             enchantDef.ILvlMin = fields[1].Get<uint32>();
             enchantDef.ILvlMax = fields[2].Get<uint32>();
-            uint32 roleMask = fields[3].Get<uint32>();
+            enchantDef.RoleMask = fields[3].Get<uint32>();
+            enchantDef.ClassMask = fields[4].Get<uint32>();
 
-
-            if ((roleMask & STAT_TYPE_TANK) == STAT_TYPE_TANK)
-            {
-                sBoostConfigMgr->TankEnchantPool.push_back(enchantDef);
-                LOG_INFO("module", "Loading Enchant ID {} with mask {} into TANK", enchantDef.Id, roleMask);
-            }
-            if ((roleMask & STAT_TYPE_PHYS) == STAT_TYPE_PHYS)
-            {
-                sBoostConfigMgr->PhysEnchantPool.push_back(enchantDef);
-                LOG_INFO("module", "Loading Enchant ID {} with mask {} into PHYS", enchantDef.Id, roleMask);
-            }
-            if ((roleMask & STAT_TYPE_HYBRID) == STAT_TYPE_HYBRID)
-            {
-                sBoostConfigMgr->HybridEnchantPool.push_back(enchantDef);
-                LOG_INFO("module", "Loading Enchant ID {} with mask {} into HYBRID", enchantDef.Id, roleMask);
-            }
-            if ((roleMask & STAT_TYPE_SPELL) == STAT_TYPE_SPELL)
-            {
-                sBoostConfigMgr->SpellEnchantPool.push_back(enchantDef);
-                LOG_INFO("module", "Loading Enchant ID {} with mask {} into SPELL", enchantDef.Id, roleMask);
-            }
-            if (roleMask == STAT_TYPE_NONE)
-            {
-                sBoostConfigMgr->TankEnchantPool.push_back(enchantDef);
-                sBoostConfigMgr->PhysEnchantPool.push_back(enchantDef);
-                sBoostConfigMgr->HybridEnchantPool.push_back(enchantDef);
-                sBoostConfigMgr->SpellEnchantPool.push_back(enchantDef);
-                LOG_INFO("module", "Loading Enchant ID {} with mask {} into ALL", enchantDef.Id, roleMask);
-            }
+            
+            sBoostConfigMgr->EnchantPool.Add(enchantDef);
+            LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {} and class mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask);
         } while (qResult->NextRow());
     }
     catch (std::exception ex)

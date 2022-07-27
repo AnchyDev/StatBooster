@@ -132,24 +132,7 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
     }
 
     return STAT_TYPE_NONE;
-}
-
-uint32 StatBoostMgr::FetchEnchant(std::vector<EnchantDefinition>* pool, uint32 iLvl)
-{
-    std::shuffle(std::begin(*pool), std::end(*pool), RandomEngine);
-
-    auto iterator = std::find_if(pool->begin(), pool->end(), [&](const EnchantDefinition& data)
-        {
-            return (iLvl >= data.ILvlMin && iLvl <= data.ILvlMax);
-        });
-
-    if (!(iterator == pool->end()))
-    {
-        return iterator->Id;
-    }
-
-    return 0;
-}
+}   
 
 StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
 {
@@ -333,39 +316,19 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         statType = GetStatTypeFromSubClass(item);
     }
 
-    uint32 enchantId = 0;
+    uint32 itemClass = item->GetTemplate()->Class;
     uint32 itemLevel = item->GetTemplate()->ItemLevel;
 
-    //Fetch an enchant from the appropriate pool.
-    switch (statType)
-    {
-    case STAT_TYPE_TANK:
-        enchantId = FetchEnchant(&sBoostConfigMgr->TankEnchantPool, itemLevel);
-        break;
-
-    case STAT_TYPE_PHYS:
-        enchantId = FetchEnchant(&sBoostConfigMgr->PhysEnchantPool, itemLevel);
-        break;
-
-    case STAT_TYPE_HYBRID:
-        enchantId = FetchEnchant(&sBoostConfigMgr->HybridEnchantPool, itemLevel);
-        break;
-
-    case STAT_TYPE_SPELL:
-        enchantId = FetchEnchant(&sBoostConfigMgr->SpellEnchantPool, itemLevel);
-        break;
-
-    case STAT_TYPE_NONE:
-        return false;
-    }
+    //Fetch an enchant from the enchant pool.
+    auto enchant = sBoostConfigMgr->EnchantPool.Get(statType, itemClass, itemLevel);
 
     //Failed to find a valid enchant.
-    if (!enchantId)
+    if (!enchant)
     {
         return false;
     }
 
-    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchantId, sBoostConfigMgr->OverwriteEnchantEnable);
+    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)

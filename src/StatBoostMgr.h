@@ -17,21 +17,12 @@ enum StatType
     STAT_TYPE_SPELL = 8
 };
 
-enum ClassType
-{
-    CLASS_TYPE_NONE = 0,
-    CLASS_TYPE_WEAPON = 1,
-    CLASS_TYPE_ARMOR = 2
-};
-
 class StatBoostMgr
 {
 public:
     bool BoostItem(Player* player, Item* item, uint32 chance);
 
 private:
-    std::default_random_engine RandomEngine;
-
     struct ScoreData
     {
         StatType StatType;

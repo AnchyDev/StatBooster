@@ -2,13 +2,19 @@
 #define MODULE_STAT_BOOST_CFG_MGR
 
 #include "Config.h"
+#include "Random.h"
+
 #include <vector>
+#include <random>
+#include <algorithm>
 
 struct EnchantDefinition
 {
     uint32 Id;
     uint32 ILvlMin;
     uint32 ILvlMax;
+    uint32 RoleMask;
+    uint32 ClassMask;
 };
 
 class StatBoosterConfig
@@ -40,10 +46,18 @@ public:
 
     bool OverwriteEnchantEnable;
 
-    std::vector<EnchantDefinition> TankEnchantPool;
-    std::vector<EnchantDefinition> PhysEnchantPool;
-    std::vector<EnchantDefinition> HybridEnchantPool;
-    std::vector<EnchantDefinition> SpellEnchantPool;
+    class EnchantPool
+    {
+    public:
+        void Add(EnchantDefinition definition);
+        EnchantDefinition* Get(uint32 roleMask, uint32 classMask, uint32 itemLevel);
+
+    private:
+        std::vector<EnchantDefinition> pool;
+        std::default_random_engine randomEngine;
+    };
+
+    EnchantPool EnchantPool;
 
     static StatBoosterConfig* GetInstance();
 
