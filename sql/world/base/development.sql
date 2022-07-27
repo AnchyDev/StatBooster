@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
 
 -- Dumping data for table acore_world.statbooster_enchant_template: ~18 rows (approximately)
 INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `Description`, `Note`) VALUES
-	(68, 1, 20, 3, 0, '+1 Strength', 'TANK/PHYS'),
+	(68, 1, 20, 3, 0, '+1 Strength', 'TANK/PHYS - ALL'),
 	(74, 1, 20, 7, 0, '+1 Agility', 'TANK/PHYS/HYBRID'),
 	(79, 1, 20, 12, 0, '+1 Intellect', 'HYBRID/SPELL'),
 	(206, 1, 20, 8, 0, '+1 Spell Power', 'SPELL'),
@@ -44,7 +44,9 @@ INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMas
 	(73, 20, 40, 0, 0, '+3 Stamina', 'ALL'),
 	(64, 20, 40, 8, 0, '+3 Spirit', 'SPELL'),
 	(70, 20, 40, 3, 0, '+3 Strength', 'TANK/PHYS'),
-	(2910, 20, 40, 8, 0, '+3 Spell Power', 'SPELL');
+	(2910, 20, 40, 8, 0, '+3 Spell Power', 'SPELL'),
+	(803, 50, 100, 0, 2, 'Fiery Weapon', 'ALL - WEAPON'),
+	(3832, 50, 100, 0, 4, '+10 All Stats', 'ALL - ARMOR');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
