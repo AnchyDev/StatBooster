@@ -164,7 +164,7 @@ void StatBoosterWorld::LoadEnchantTables()
 {
     try
     {
-        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask FROM statbooster_enchant_template");
+        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
 
         if (!qResult)
         {
@@ -185,10 +185,10 @@ void StatBoosterWorld::LoadEnchantTables()
             enchantDef.ILvlMax = fields[2].Get<uint32>();
             enchantDef.RoleMask = fields[3].Get<uint32>();
             enchantDef.ClassMask = fields[4].Get<uint32>();
+            enchantDef.SubClassMask = fields[5].Get<uint32>();
 
-            
             sBoostConfigMgr->EnchantPool.Add(enchantDef);
-            LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {} and class mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask);
+            LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
         } while (qResult->NextRow());
     }
     catch (std::exception ex)

@@ -15,6 +15,7 @@ struct EnchantDefinition
     uint32 ILvlMax;
     uint32 RoleMask;
     uint32 ClassMask;
+    uint32 SubClassMask;
 };
 
 class StatBoosterConfig
@@ -50,7 +51,7 @@ public:
     {
     public:
         void Add(EnchantDefinition definition);
-        EnchantDefinition* Get(uint32 roleMask, uint32 classMask, uint32 itemLevel);
+        EnchantDefinition* Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemLevel);
 
     private:
         std::vector<EnchantDefinition> pool;
