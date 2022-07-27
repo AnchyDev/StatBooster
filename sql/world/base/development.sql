@@ -16,11 +16,11 @@
 
 -- Dumping structure for table acore_world.statbooster_enchant_template
 CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
-  `Id` int DEFAULT NULL,
-  `iLvlMin` int DEFAULT NULL,
-  `iLvlMax` int DEFAULT NULL,
-  `RoleMask` int DEFAULT NULL,
-  `ClassMask` int DEFAULT NULL,
+  `Id` int unsigned DEFAULT NULL,
+  `iLvlMin` int unsigned DEFAULT NULL,
+  `iLvlMax` int unsigned DEFAULT NULL,
+  `RoleMask` int unsigned DEFAULT NULL,
+  `ClassMask` int unsigned DEFAULT NULL,
   `Description` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Note` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
