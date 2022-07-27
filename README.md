@@ -12,7 +12,7 @@ The features I have planned for this module that differ from the original are:
 - **Stat Analysis** - Items are analyzed and enchanted based on stats already on the item. (If there are no stats then it is analyzed based off class & subclass types.)
 - **Expandable Enchant Pool** - You can add enchant ids to your database table to expand your pool.
 - **Item Level Based** - You can assign item level ranges to enchants in the database table for each entry preventing high level enchants on low level items.
- 
+
 ## Install
 1. **[Clone](https://git-scm.com/docs/git-clone)** this repository into your `./azerothcore-wotlk/modules` folder. (Make sure to clone it into a subdirectory called StatBooster)
 2. **Execute** `./sql/world/base/development.sql` on your world database to create the enchant entries.
@@ -46,10 +46,51 @@ To have all of the roles use the enchant, set the `RoleMask` to `0`.
 Like RoleMask you have to create a sum of all of the item classes able to use the enchant.
 
 - **All**: 0
-- **Weapon**: 2
-- **Armor**: 4
+- **Weapon**: 1
+- **Armor**: 2
 
 To have all of the classes use the enchant, set the `ClassMask` to `0`.
+
+#### SubClassMask
+Same as above. However you must use the correct ClassMask in conjunction with the SubClassMask or you may experience issues.
+
+##### Weapon
+- **All**: 0
+- **Axe**: 1
+- **Axe2H**: 2
+- **Bow**: 4
+- **Gun**: 8
+- **Mace**: 16
+- **Mace2H**: 32
+- **Polearm**: 64
+- **Sword**: 128
+- **Sword2H**: 256
+- **Staff**: 512
+- **Exotic**: 1024
+- **Exotic2H**: 2048
+- **Fist**: 4096
+- **Misc**: 8192
+- **Dagger**: 16384
+- **Thrown**: 32768
+- **Spear**: 65536
+- **Crossbow**: 131072
+- **Wand**: 262144
+- **Fishing Pole**: 524288
+##### Armor
+- **All**: 0
+- **Misc**: 1
+- **Cloth**: 2
+- **Leather**: 4
+- **Mail**: 8
+- **Plate**: 16
+- **Buckler**: 32
+- **Shield**: 64
+- **Libram**: 128
+- **Idol**: 256
+- **Totem**: 512
+- **Sigil**: 1024
+
+Again to mark the item to use all subclasses, set the `SubClassMask` to `0`.
 
 ## Example Items
 ![Item01](https://i.imgur.com/MYgpZKK.png)
