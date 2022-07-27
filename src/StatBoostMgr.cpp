@@ -32,8 +32,10 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
             {
             case 0:
                 return STAT_TYPE_PHYS;
+
             case 1:
                 return STAT_TYPE_HYBRID;
+
             case 2:
                 return STAT_TYPE_SPELL;
             }
