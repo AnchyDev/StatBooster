@@ -58,7 +58,6 @@ Same as above. However you must use the correct ClassMask in conjunction with th
 
 | Weapon  | Armor |
 | ------------ | ------------|
-| ALL = 0 | ALL = 0 |
 | AXE = 1 | MISC = 1 |
 | AXE2H = 2 | CLOTH = 2 |
 | BOW = 4 | LEATHER = 4 |
@@ -76,10 +75,10 @@ Same as above. However you must use the correct ClassMask in conjunction with th
 | MISC = 16384 | - |
 | DAGGER = 32768 | - |
 | THROWN = 65536 | - |
-| SPEAR = 65536 | - |
-| CROSSBOW = 131072 | - |
-| WAND = 262144 | - |
-| FISHING POLE = 524288 | - |
+| SPEAR = 131072 | - |
+| CROSSBOW = 262144 | - |
+| WAND = 524288 | - |
+| FISHING POLE = 1048576 | - |
 
 Again to mark the item to use all subclasses, set the `SubClassMask` to `0`.
 
