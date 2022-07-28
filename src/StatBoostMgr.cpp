@@ -2,7 +2,7 @@
 
 uint32 StatBoostMgr::GetMaskFromEnum(uint32 enumValue)
 {
-    uint32 ret = enumValue;
+    uint32 ret = 1;
 
     if (ret < 1)
     {
@@ -314,11 +314,15 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         return false;
     }
 
+    ChatHandler(player->GetSession()).SendSysMessage("Passed Equipment Check");
+
     if (item->GetTemplate()->Quality < sBoostConfigMgr->MinQuality ||
         item->GetTemplate()->Quality > sBoostConfigMgr->MaxQuality)
     {
         return false;
     }
+
+    ChatHandler(player->GetSession()).SendSysMessage("Passed Quality Check");
 
     //Roll for the chance to upgrade.
     uint32 roll = urand(0, 100);
@@ -328,6 +332,8 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         return false;
     }
 
+    ChatHandler(player->GetSession()).SendSysMessage("Passed Roll Check");
+
     //Fetch the type of stats that should be applied to the piece.
     StatType statType = AnalyzeItem(item);
 
@@ -336,6 +342,8 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     {
         statType = GetStatTypeFromSubClass(item);
     }
+
+    ChatHandler(player->GetSession()).SendSysMessage("Passed Analyze Check");
 
     uint32 itemClass = item->GetTemplate()->Class;
     uint32 itemSubClass = item->GetTemplate()->SubClass;
@@ -348,6 +356,8 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         return false;
     }
 
+    ChatHandler(player->GetSession()).SendSysMessage("Passed ItemClass Check");
+
     uint32 itemSubClassMask = GetMaskFromEnum(itemSubClass);
 
     if (!itemSubClassMask)
@@ -355,14 +365,19 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         return false;
     }
 
+    ChatHandler(player->GetSession()).SendSysMessage("Passed ItemSubClass Check");
+
+    LOG_INFO("module", ">> Trying to get enchant with role mask {}, class {}, subClass {}, and itemlevel {} from pool.", statType, itemClass, itemSubClass, itemLevel);
     //Fetch an enchant from the enchant pool.
     auto enchant = sBoostConfigMgr->EnchantPool.Get(statType, itemClassMask, itemSubClassMask, itemLevel);
 
     //Failed to find a valid enchant.
     if (!enchant)
-    {
+    {              
         return false;
     }
+
+    ChatHandler(player->GetSession()).SendSysMessage("Passed Enchant Check");
 
     return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
 }
