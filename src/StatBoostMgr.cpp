@@ -4,9 +4,9 @@ uint32 StatBoostMgr::GetMaskFromEnum(uint32 enumValue)
 {
     uint32 ret = 1;
 
-    if (ret < 1)
+    if (enumValue < 1)
     {
-        return ret + 1;
+        return ret;
     }
     else
     {
