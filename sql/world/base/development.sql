@@ -21,32 +21,34 @@ CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
   `iLvlMax` int unsigned DEFAULT NULL,
   `RoleMask` int unsigned DEFAULT NULL,
   `ClassMask` int unsigned DEFAULT NULL,
+  `SubClassMask` int unsigned DEFAULT NULL,
   `Description` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Note` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table acore_world.statbooster_enchant_template: ~18 rows (approximately)
-INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `Description`, `Note`) VALUES
-	(68, 1, 20, 3, 0, '+1 Strength', 'TANK/PHYS - ALL'),
-	(74, 1, 20, 7, 0, '+1 Agility', 'TANK/PHYS/HYBRID'),
-	(79, 1, 20, 12, 0, '+1 Intellect', 'HYBRID/SPELL'),
-	(206, 1, 20, 8, 0, '+1 Spell Power', 'SPELL'),
-	(66, 1, 20, 0, 0, '+1 Stamina', 'ALL'),
-	(82, 1, 20, 8, 0, '+1 Spirit', 'SPELL'),
-	(75, 10, 30, 7, 0, '+2 Agility', 'TANK/PHYS/HYBRID'),
-	(69, 10, 30, 3, 0, '+2 Strength', 'TANK/PHYS'),
-	(80, 10, 30, 12, 0, '+2 Intellect', 'HYBRID/SPELL'),
-	(72, 10, 30, 0, 0, '+2 Stamina', 'ALL'),
-	(83, 10, 30, 8, 0, '+2 Spirit', 'SPELL'),
-	(207, 10, 30, 8, 0, '+2 Spell Power', 'SPELL'),
-	(76, 20, 40, 7, 0, '+3 Agility', 'TANK/PHYS/HYBRID'),
-	(81, 20, 40, 12, 0, '+3 Intellect', 'HYBRID/SPELL'),
-	(73, 20, 40, 0, 0, '+3 Stamina', 'ALL'),
-	(64, 20, 40, 8, 0, '+3 Spirit', 'SPELL'),
-	(70, 20, 40, 3, 0, '+3 Strength', 'TANK/PHYS'),
-	(2910, 20, 40, 8, 0, '+3 Spell Power', 'SPELL'),
-	(803, 50, 100, 0, 2, 'Fiery Weapon', 'ALL - WEAPON'),
-	(3832, 50, 100, 0, 4, '+10 All Stats', 'ALL - ARMOR');
+-- Dumping data for table acore_world.statbooster_enchant_template: ~20 rows (approximately)
+INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask`, `Description`, `Note`) VALUES
+	(68, 1, 20, 3, 0, 0, '+1 Strength', 'TANK/PHYS - ALL'),
+	(74, 1, 20, 7, 0, 0, '+1 Agility', 'TANK/PHYS/HYBRID'),
+	(79, 1, 20, 12, 0, 0, '+1 Intellect', 'HYBRID/SPELL'),
+	(206, 1, 20, 8, 0, 0, '+1 Spell Power', 'SPELL'),
+	(66, 1, 20, 0, 0, 0, '+1 Stamina', 'ALL'),
+	(82, 1, 20, 8, 0, 0, '+1 Spirit', 'SPELL'),
+	(75, 10, 30, 7, 0, 0, '+2 Agility', 'TANK/PHYS/HYBRID'),
+	(69, 10, 30, 3, 0, 0, '+2 Strength', 'TANK/PHYS'),
+	(80, 10, 30, 12, 0, 0, '+2 Intellect', 'HYBRID/SPELL'),
+	(72, 10, 30, 0, 0, 0, '+2 Stamina', 'ALL'),
+	(83, 10, 30, 8, 0, 0, '+2 Spirit', 'SPELL'),
+	(207, 10, 30, 8, 0, 0, '+2 Spell Power', 'SPELL'),
+	(76, 20, 40, 7, 0, 0, '+3 Agility', 'TANK/PHYS/HYBRID'),
+	(81, 20, 40, 12, 0, 0, '+3 Intellect', 'HYBRID/SPELL'),
+	(73, 20, 40, 0, 0, 0, '+3 Stamina', 'ALL'),
+	(64, 20, 40, 8, 0, 0, '+3 Spirit', 'SPELL'),
+	(70, 20, 40, 3, 0, 0, '+3 Strength', 'TANK/PHYS'),
+	(2910, 20, 40, 8, 0, 0, '+3 Spell Power', 'SPELL'),
+	(803, 1, 500, 0, 4, 32768, 'TEST Fiery Weapon', 'ALL - WEAPON - DAGGER'),
+	(3832, 1, 500, 0, 16, 0, 'TEST +10 All Stats', 'ALL - ARMOR - ALL'),
+	(30, 1, 500, 0, 4, 262156, 'TEST +1 Scope', 'ALL - WEAPON - BOW/GUN/CROSSBOW');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
