@@ -3,6 +3,8 @@
 
 #include "Config.h"
 #include "Random.h"
+#include "Log.h"
+#include "DatabaseEnv.h"
 
 #include <vector>
 #include <random>
@@ -52,6 +54,8 @@ public:
     public:
         void Add(EnchantDefinition definition);
         EnchantDefinition* Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemLevel);
+        bool Load();
+        void Clear();
 
     private:
         std::vector<EnchantDefinition> pool;

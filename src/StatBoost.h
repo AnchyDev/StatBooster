@@ -5,6 +5,9 @@
 #include "ScriptMgr.h"
 #include "Chat.h"
 #include "Group.h"
+#include "Spell.h"
+
+using namespace Acore::ChatCommands;
 
 class StatBoosterPlayer : public PlayerScript
 {
@@ -16,6 +19,7 @@ public:
     void OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnCreateItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnGroupRollRewardItem(Player* player, Item* item, uint32 /*count*/, RollVote /*voteType*/, Roll* /*roll*/) override;
+    void OnSpellCast(Player* player, Spell* spell, bool skipCheck) override;
 
 private:
     StatBoostMgr statBoostMgr;
@@ -30,4 +34,12 @@ public:
     void LoadEnchantTables();
 };
 
+class StatBoosterCommands : public CommandScript
+{
+public:
+    StatBoosterCommands() : CommandScript("StatBoosterCommands") { }
+
+    ChatCommandTable GetCommands() const override;
+    static bool HandleSBReloadCommand(ChatHandler* handler);
+};
 #endif

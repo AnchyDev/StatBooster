@@ -156,49 +156,44 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
 
         sBoostConfigMgr->OverwriteEnchantEnable = sConfigMgr->GetOption<bool>("StatBooster.OverwriteEnchantEnable", true);
 
-        LoadEnchantTables();
+        sBoostConfigMgr->EnchantPool.Load();
     }
 }
 
-void StatBoosterWorld::LoadEnchantTables()
+void StatBoosterPlayer::OnSpellCast(Player* player, Spell* spell, bool skipCheck)
 {
-    try
+    if (!spell)
+        return;
+
+    auto spellInfo = spell->m_spellInfo;
+
+    if ((spellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_MOVEMENT) == SPELL_INTERRUPT_FLAG_MOVEMENT)
     {
-        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
-
-        if (!qResult)
-        {
-            LOG_INFO("module", "Failed to load StatBooster enchant definitions from 'statbooster_enchant_template' table.");
-            return;
-        }
-
-        LOG_INFO("module", "Loading StatBooster enchants from 'statbooster_enchant_template' table.");
-
-        do
-        {
-            Field* fields = qResult->Fetch();
-
-            EnchantDefinition enchantDef;
-
-            enchantDef.Id = fields[0].Get<uint32>();
-            enchantDef.ILvlMin = fields[1].Get<uint32>();
-            enchantDef.ILvlMax = fields[2].Get<uint32>();
-            enchantDef.RoleMask = fields[3].Get<uint32>();
-            enchantDef.ClassMask = fields[4].Get<uint32>();
-            enchantDef.SubClassMask = fields[5].Get<uint32>();
-
-            sBoostConfigMgr->EnchantPool.Add(enchantDef);
-            LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
-        } while (qResult->NextRow());
+        spellInfo->InterruptFlags -= SPELL_INTERRUPT_FLAG_MOVEMENT;
     }
-    catch (std::exception ex)
+}
+
+ChatCommandTable StatBoosterCommands::GetCommands() const
+{
+    static ChatCommandTable gmCommandTable =
     {
-        LOG_INFO("module", "Failed to load enchant table with message: {}", ex.what());
-        LOG_INFO("module", "Disabling StatBooster module.");
-        sBoostConfigMgr->Enable = false;
-    }
+        { "reload", HandleSBReloadCommand, SEC_GAMEMASTER, Console::Yes  }
+    };
 
-    LOG_INFO("module", ">> Done loading enchants.");
+    static ChatCommandTable commandTable =
+    {
+        { "sb", gmCommandTable }
+    };
+
+    return commandTable;
+}
+
+bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
+{
+    handler->SendSysMessage("Reloading database..");
+    sBoostConfigMgr->EnchantPool.Load();
+    handler->SendSysMessage("Reload complete.");
+    return true;
 }
 
 void AddSCStatBoosterScripts()

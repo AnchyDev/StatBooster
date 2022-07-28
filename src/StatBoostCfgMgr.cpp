@@ -1,5 +1,4 @@
 #include "StatBoostCfgMgr.h"
-#include "Log.h"
 
 StatBoosterConfig* StatBoosterConfig::GetInstance()
 {
@@ -41,4 +40,54 @@ EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 c
     }
 
     return 0;
+}
+
+bool StatBoosterConfig::EnchantPool::Load()
+{
+    try
+    {
+        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
+
+        if (!qResult)
+        {
+            LOG_INFO("module", "Failed to load StatBooster enchant definitions from 'statbooster_enchant_template' table.");
+            return;
+        }
+
+        LOG_INFO("module", "Loading StatBooster enchants from 'statbooster_enchant_template' table.");
+
+        sBoostConfigMgr->EnchantPool.Clear();
+
+        do
+        {
+            Field* fields = qResult->Fetch();
+
+            EnchantDefinition enchantDef;
+
+            enchantDef.Id = fields[0].Get<uint32>();
+            enchantDef.ILvlMin = fields[1].Get<uint32>();
+            enchantDef.ILvlMax = fields[2].Get<uint32>();
+            enchantDef.RoleMask = fields[3].Get<uint32>();
+            enchantDef.ClassMask = fields[4].Get<uint32>();
+            enchantDef.SubClassMask = fields[5].Get<uint32>();
+
+            sBoostConfigMgr->EnchantPool.Add(enchantDef);
+            LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
+        } while (qResult->NextRow());
+    }
+    catch (std::exception ex)
+    {
+        LOG_INFO("module", "Failed to load enchant table with message: {}", ex.what());
+        LOG_INFO("module", "Disabling StatBooster module.");
+        sBoostConfigMgr->Enable = false;
+        return false;
+    }
+
+    LOG_INFO("module", ">> Done loading enchants.");
+    return true;
+}
+
+void StatBoosterConfig::EnchantPool::Clear()
+{
+    pool.clear();
 }
