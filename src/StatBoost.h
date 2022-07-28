@@ -2,6 +2,7 @@
 #define MODULE_STAT_BOOST
 
 #include "StatBoostMgr.h"
+#include "StatBoostConfigMgr.h"
 #include "ScriptMgr.h"
 #include "Chat.h"
 #include "Group.h"
