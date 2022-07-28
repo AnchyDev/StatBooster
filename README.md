@@ -46,49 +46,40 @@ To have all of the roles use the enchant, set the `RoleMask` to `0`.
 Like RoleMask you have to create a sum of all of the item classes able to use the enchant.
 
 - **All**: 0
-- **Weapon**: 1
-- **Armor**: 2
+- **Weapon**: 2
+- **Armor**: 4
 
 To have all of the classes use the enchant, set the `ClassMask` to `0`.
 
 #### SubClassMask
 Same as above. However you must use the correct ClassMask in conjunction with the SubClassMask or you may experience issues.
 
-##### Weapon
-- **All**: 0
-- **Axe**: 1
-- **Axe2H**: 2
-- **Bow**: 4
-- **Gun**: 8
-- **Mace**: 16
-- **Mace2H**: 32
-- **Polearm**: 64
-- **Sword**: 128
-- **Sword2H**: 256
-- **Staff**: 512
-- **Exotic**: 1024
-- **Exotic2H**: 2048
-- **Fist**: 4096
-- **Misc**: 8192
-- **Dagger**: 16384
-- **Thrown**: 32768
-- **Spear**: 65536
-- **Crossbow**: 131072
-- **Wand**: 262144
-- **Fishing Pole**: 524288
-##### Armor
-- **All**: 0
-- **Misc**: 1
-- **Cloth**: 2
-- **Leather**: 4
-- **Mail**: 8
-- **Plate**: 16
-- **Buckler**: 32
-- **Shield**: 64
-- **Libram**: 128
-- **Idol**: 256
-- **Totem**: 512
-- **Sigil**: 1024
+
+
+| Weapon  | Armor |
+| ------------ | ------------|
+| ALL = 0 | ALL = 0 |
+| AXE = 1 | MISC = 1 |
+| AXE2H = 2 | CLOTH = 2 |
+| BOW = 4 | LEATHER = 4 |
+| GUN = 8 | MAIL = 8 |
+| MACE = 16 | PLATE = 16 |
+| MACE2H = 32 | BUCKLER = 32 |
+| POLEARM = 64 | SHIELD = 64 |
+| SWORD = 128 | LIBRAM = 128 |
+| SWORD2H = 256 | IDOL = 256 |
+| OBSOLETE = 512 | TOTEM = 512 |
+| STAFF = 1024 | SIGIL = 1024 |
+| EXOTIC = 2048 | - |
+| EXOTIC2H = 4096 | - |
+| FIST = 8192 | - |
+| MISC = 16384 | - |
+| DAGGER = 32768 | - |
+| THROWN = 65536 | - |
+| SPEAR = 65536 | - |
+| CROSSBOW = 131072 | - |
+| WAND = 262144 | - |
+| FISHING POLE = 524288 | - |
 
 Again to mark the item to use all subclasses, set the `SubClassMask` to `0`.
 
