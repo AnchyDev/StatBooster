@@ -45,52 +45,45 @@ bool StatBoosterConfig::EnchantPool::Load()
 {
     try
     {
-        using std::chrono::high_resolution_clock;
-        using std::chrono::duration_cast;
-        using std::chrono::duration;
-        using std::chrono::milliseconds;
-
-        auto t1 = high_resolution_clock::now();
-
-        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
-
-        if (!qResult)
-        {
-            LOG_INFO("module", "Failed to load StatBooster enchant definitions from statbooster_enchant_template table.");
-            return false;
-        }
-
-        LOG_INFO("module", "Loading StatBooster enchants from statbooster_enchant_template...");
-
-        sBoostConfigMgr->EnchantPool.Clear();
         uint32 enchantCount = 0;
-
-        do
+        uint32 executionTimeMS = StatBoostCommon::MeasureExecution([&]()
         {
-            Field* fields = qResult->Fetch();
+            QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
 
-            EnchantDefinition enchantDef;
-
-            enchantDef.Id = fields[0].Get<uint32>();
-            enchantDef.ILvlMin = fields[1].Get<uint32>();
-            enchantDef.ILvlMax = fields[2].Get<uint32>();
-            enchantDef.RoleMask = fields[3].Get<uint32>();
-            enchantDef.ClassMask = fields[4].Get<uint32>();
-            enchantDef.SubClassMask = fields[5].Get<uint32>();
-
-            enchantCount++;
-            sBoostConfigMgr->EnchantPool.Add(enchantDef);
-
-            if (sBoostConfigMgr->VerboseEnable)
+            if (!qResult)
             {
-                LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
+                LOG_INFO("module", "Failed to load StatBooster enchant definitions from statbooster_enchant_template table.");
+                return;
             }
-        } while (qResult->NextRow());
 
-        auto t2 = high_resolution_clock::now();
+            LOG_INFO("module", "Loading StatBooster enchants from statbooster_enchant_template...");
 
-        auto ms_int = duration_cast<milliseconds>(t2 - t1);
-        LOG_INFO("module", std::format(">> Loaded {} stat booster enchant definitions in {}ms", enchantCount, ms_int.count()));
+            sBoostConfigMgr->EnchantPool.Clear();
+
+            do
+            {
+                Field* fields = qResult->Fetch();
+
+                EnchantDefinition enchantDef;
+
+                enchantDef.Id = fields[0].Get<uint32>();
+                enchantDef.ILvlMin = fields[1].Get<uint32>();
+                enchantDef.ILvlMax = fields[2].Get<uint32>();
+                enchantDef.RoleMask = fields[3].Get<uint32>();
+                enchantDef.ClassMask = fields[4].Get<uint32>();
+                enchantDef.SubClassMask = fields[5].Get<uint32>();
+
+                enchantCount++;
+                sBoostConfigMgr->EnchantPool.Add(enchantDef);
+
+                if (sBoostConfigMgr->VerboseEnable)
+                {
+                    LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
+                }
+            } while (qResult->NextRow());
+        });
+
+        LOG_INFO("module", std::format(">> Loaded {} stat booster enchant definitions in {}ms", enchantCount, executionTimeMS));
 
     }
     catch (std::exception ex)

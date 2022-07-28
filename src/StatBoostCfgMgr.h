@@ -5,6 +5,7 @@
 #include "Random.h"
 #include "Log.h"
 #include "DatabaseEnv.h"
+#include "StatBoostCommon.h"
 
 #include <vector>
 #include <random>
