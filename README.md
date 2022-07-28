@@ -46,8 +46,8 @@ To have all of the roles use the enchant, set the `RoleMask` to `0`.
 Like RoleMask you have to create a sum of all of the item classes able to use the enchant.
 
 - **All**: 0
-- **Weapon**: 2
-- **Armor**: 4
+- **Weapon**: 4
+- **Armor**: 16
 
 To have all of the classes use the enchant, set the `ClassMask` to `0`.
 
