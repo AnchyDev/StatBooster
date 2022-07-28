@@ -18,6 +18,8 @@ The features I have planned for this module that differ from the original are:
 2. **Execute** `./sql/world/base/development.sql` on your world database to create the enchant entries.
 3. **Place** `statbooster.conf.dist` into your server `./configs/modules` directory.
 
+Visit the [WIKI](https://github.com/AnchyDev/StatBooster/wiki/Enchant%20Template) if you require help with setting up enchants in the database.
+
 ## Example Items
 ![Item01](https://i.imgur.com/MYgpZKK.png)
 ![Item02](https://i.imgur.com/qCgx7XS.png)
