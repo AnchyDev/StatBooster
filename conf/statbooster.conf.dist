@@ -11,6 +11,17 @@
 
 StatBooster.Enable = 0
 
+#
+#	StatBooster.VerboseEnable
+#		Description: Enables debug messages in chat and server console.
+#		Default:	0 - (Disabled)
+#					1 - (Enabled)
+#		Note: Only enable this for debugging purposes as this setting has
+#			  a performance hit when run in expensive hooks.
+#
+
+StatBooster.VerboseEnable = 0
+
 ########################################
 
 ########################################

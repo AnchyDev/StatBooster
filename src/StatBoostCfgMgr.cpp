@@ -18,7 +18,6 @@ void StatBoosterConfig::EnchantPool::Add(EnchantDefinition definition)
 EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemLevel)
 {
     std::shuffle(std::begin(pool), std::end(pool), randomEngine);
-    LOG_INFO("module", ">> Trying to get enchant with role mask {}, classMask {}, subClassMask {}, and itemlevel {} from pool.", roleMask, classMask, subClassMask, itemLevel);
 
     if (roleMask == 0 && classMask == 0 && subClassMask == 0)
     {

@@ -132,6 +132,7 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
     //No point loading all of this information if the module is not enabled.
     if (sBoostConfigMgr->Enable)
     {
+        sBoostConfigMgr->VerboseEnable = sConfigMgr->GetOption<bool>("StatBooster.VerboseEnable", false);
         sBoostConfigMgr->OnLoginEnable = sConfigMgr->GetOption<bool>("StatBooster.OnLoginEnable", true);
         sBoostConfigMgr->OnLoginMessage = sConfigMgr->GetOption<std::string>("StatBooster.OnLoginMessage", "This server is running the StatBooster module.");
 

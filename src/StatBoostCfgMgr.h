@@ -24,6 +24,7 @@ class StatBoosterConfig
 {
 public:
     bool Enable;
+    bool VerboseEnable;
 
     bool OnLoginEnable;
     std::string OnLoginMessage;
