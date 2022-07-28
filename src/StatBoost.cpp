@@ -165,7 +165,8 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
 {
     static ChatCommandTable gmCommandTable =
     {
-        { "reload", HandleSBReloadCommand, SEC_GAMEMASTER, Console::Yes  }
+        { "reload", HandleSBReloadCommand, SEC_GAMEMASTER, Console::Yes  },
+        { "additem", HandleSBAddItemCommand, SEC_GAMEMASTER, Console::No }
     };
 
     static ChatCommandTable commandTable =
@@ -181,6 +182,52 @@ bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
     handler->SendSysMessage("Reloading database..");
     sBoostConfigMgr->EnchantPool.Load();
     handler->SendSysMessage("Reload complete.");
+    return true;
+}
+
+bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count)
+{
+    ItemTemplate const* itemTemp = sObjectMgr->GetItemTemplate(itemId);
+
+    if (!itemTemp)
+    {
+        handler->SendSysMessage("Invalid Item ID!");
+        return false;
+    }
+
+    Player* player = handler->GetPlayer();
+
+    if (!player)
+    {
+        return false;
+    }
+
+    uint32 noSpaceForCount = 0;
+    ItemPosCountVec dest;
+    InventoryResult msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, itemId, count, &noSpaceForCount);
+    
+    if (msg != EQUIP_ERR_OK)
+    {
+        count -= noSpaceForCount;
+    }
+
+    if (count == 0 || dest.empty())
+    {
+        return false;
+    }
+
+    Item* item = player->StoreNewItem(dest, itemId, true);
+
+    StatBoostMgr statBoostMgr;
+    bool result = statBoostMgr.BoostItem(player, item, 100);
+
+    if (!item || !result)
+    {
+        return false;
+    }
+
+    player->SendNewItem(item, count, true, false, false, true);
+
     return true;
 }
 

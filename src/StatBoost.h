@@ -6,6 +6,7 @@
 #include "Chat.h"
 #include "Group.h"
 #include "Spell.h"
+#include "Player.h"
 
 using namespace Acore::ChatCommands;
 
@@ -30,7 +31,6 @@ public:
     StatBoosterWorld() : WorldScript("StatBoosterWorld") { }
 
     void OnAfterConfigLoad(bool reload) override;
-    void LoadEnchantTables();
 };
 
 class StatBoosterCommands : public CommandScript
@@ -40,5 +40,7 @@ public:
 
     ChatCommandTable GetCommands() const override;
     static bool HandleSBReloadCommand(ChatHandler* handler);
+    static bool HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count);
 };
+
 #endif
