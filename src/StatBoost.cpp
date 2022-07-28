@@ -160,19 +160,6 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
     }
 }
 
-void StatBoosterPlayer::OnSpellCast(Player* player, Spell* spell, bool skipCheck)
-{
-    if (!spell)
-        return;
-
-    auto spellInfo = spell->m_spellInfo;
-
-    if ((spellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_MOVEMENT) == SPELL_INTERRUPT_FLAG_MOVEMENT)
-    {
-        spellInfo->InterruptFlags -= SPELL_INTERRUPT_FLAG_MOVEMENT;
-    }
-}
-
 ChatCommandTable StatBoosterCommands::GetCommands() const
 {
     static ChatCommandTable gmCommandTable =
@@ -198,6 +185,7 @@ bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
 
 void AddSCStatBoosterScripts()
 {
+    new StatBoosterCommands();
     new StatBoosterWorld();
     new StatBoosterPlayer();
 }

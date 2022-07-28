@@ -19,7 +19,6 @@ public:
     void OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnCreateItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnGroupRollRewardItem(Player* player, Item* item, uint32 /*count*/, RollVote /*voteType*/, Roll* /*roll*/) override;
-    void OnSpellCast(Player* player, Spell* spell, bool skipCheck) override;
 
 private:
     StatBoostMgr statBoostMgr;
