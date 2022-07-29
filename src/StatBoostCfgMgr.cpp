@@ -52,7 +52,7 @@ bool StatBoosterConfig::EnchantPool::Load()
         if (!qResult)
         {
             LOG_INFO("module", "Failed to load StatBooster enchant definitions from statbooster_enchant_template table.");
-            return;
+            return false;
         }
 
         LOG_INFO("module", "Loading StatBooster enchants from statbooster_enchant_template...");
