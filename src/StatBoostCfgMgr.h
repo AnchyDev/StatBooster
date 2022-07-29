@@ -1,14 +1,10 @@
 #ifndef MODULE_STAT_BOOST_CFG_MGR
 #define MODULE_STAT_BOOST_CFG_MGR
 
-#include "Config.h"
-#include "Random.h"
-#include "Log.h"
-#include "DatabaseEnv.h"
-
-#include <vector>
 #include <random>
 #include <algorithm>
+
+#include "StatBoostCommon.h"
 
 struct EnchantDefinition
 {

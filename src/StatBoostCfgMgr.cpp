@@ -45,13 +45,8 @@ bool StatBoosterConfig::EnchantPool::Load()
 {
     try
     {
-        using std::chrono::high_resolution_clock;
-        using std::chrono::duration_cast;
-        using std::chrono::duration;
-        using std::chrono::milliseconds;
-
-        auto t1 = high_resolution_clock::now();
-
+        uint32 enchantCount = 0;
+        
         QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
 
         if (!qResult)
@@ -63,7 +58,6 @@ bool StatBoosterConfig::EnchantPool::Load()
         LOG_INFO("module", "Loading StatBooster enchants from statbooster_enchant_template...");
 
         sBoostConfigMgr->EnchantPool.Clear();
-        uint32 enchantCount = 0;
 
         do
         {
@@ -87,10 +81,7 @@ bool StatBoosterConfig::EnchantPool::Load()
             }
         } while (qResult->NextRow());
 
-        auto t2 = high_resolution_clock::now();
-
-        auto ms_int = duration_cast<milliseconds>(t2 - t1);
-        LOG_INFO("module", std::format(">> Loaded {} stat booster enchant definitions in {}ms", enchantCount, ms_int.count()));
+        LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant definitions", enchantCount));
 
     }
     catch (std::exception ex)
