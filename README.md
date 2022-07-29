@@ -1,4 +1,4 @@
-# ![Azeroth Core](https://i.imgur.com/fQwb8m3.png) Stat Booster ![Build Status](https://github.com/anchydev/statbooster/actions/workflows/core-build.yml/badge.svg)
+# ![Azeroth Core](https://i.imgur.com/fQwb8m3.png) Stat Booster ![Build Status](https://github.com/anchydev/statbooster/actions/workflows/core-build.yml/badge.svg?branch=master)
 ⚠️ !! This module is not ready yet, however it is usable in its current state !! ⚠️
 ## About
 This is a module for [Azeroth Core](https://github.com/azerothcore/azerothcore-wotlk) inspired by the [RandomEnchants](https://github.com/azerothcore/mod-random-enchants) module. 
