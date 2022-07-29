@@ -2,6 +2,8 @@
 #ifndef MODULE_STAT_BOOST_COMMON
 #define MODULE_STAT_BOOST_COMMON
 
+#include <format>
+
 #include "Chat.h"
 #include "Define.h"
 #include "Player.h"
