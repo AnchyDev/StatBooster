@@ -241,7 +241,7 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     //Sometimes stats are stored as additional spell effects and also need to be checked.
     if (hasAdditionalSpells)
     {
-        for (auto spell : itemTemplate->Spells)
+        for (_Spell const &spell : itemTemplate->Spells)
         {
             if (spell.SpellId)
             {
