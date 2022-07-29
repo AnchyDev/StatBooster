@@ -83,7 +83,7 @@ bool StatBoosterConfig::EnchantPool::Load()
             } while (qResult->NextRow());
         });
 
-        LOG_INFO("module", std::format(">> Loaded {} stat booster enchant definitions in {}ms", enchantCount, executionTimeMS));
+        LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant definitions in {}ms", enchantCount, executionTimeMS));
 
     }
     catch (std::exception ex)
