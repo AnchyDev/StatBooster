@@ -1,13 +1,5 @@
 #include "StatBoost.h"
 
-void PlaySoundForPlayer(Player* player, uint32 soundId)
-{
-    uint32 enhanceSound = soundId;
-    WorldPacket soundPacket(SMSG_PLAY_SOUND, 4);
-    soundPacket << enhanceSound;
-    player->GetSession()->SendPacket(&soundPacket);
-}
-
 void StatBoosterPlayer::OnLogin(Player* player)
 {
     if (!sBoostConfigMgr->Enable)
@@ -41,7 +33,7 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
-                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+                player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
         }
     }
@@ -67,7 +59,7 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
-                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+                player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
         }
     }
@@ -93,7 +85,7 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
-                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+                player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
         }
     }
@@ -119,7 +111,7 @@ void StatBoosterPlayer::OnGroupRollRewardItem(Player* player, Item* item, uint32
 
             if (sBoostConfigMgr->PlaySoundEnable)
             {
-                PlaySoundForPlayer(player, sBoostConfigMgr->SoundId);
+                player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
         }
     }

@@ -1,13 +1,11 @@
 #ifndef MODULE_STAT_BOOST
 #define MODULE_STAT_BOOST
 
-#include "ScriptMgr.h"
-#include "Chat.h"
-#include "Group.h"
-#include "Spell.h"
-#include "Player.h"
+#include "ChatCommand.h"
+#include "Config.h"
 
 #include "StatBoostCommon.h"
+#include "StatBoostMgr.h"
 
 using namespace Acore::ChatCommands;
 

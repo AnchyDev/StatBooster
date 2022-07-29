@@ -1,13 +1,7 @@
 #ifndef MODULE_STAT_BOOST_MGR
 #define MODULE_STAT_BOOST_MGR
 
-#include "Player.h"
-#include "Chat.h"
-
 #include "StatBoostCommon.h"
-
-#include <random>
-#include <algorithm>
 
 class StatBoostMgr
 {
@@ -15,6 +9,15 @@ public:
     bool BoostItem(Player* player, Item* item, uint32 chance);
 
 private:
+    enum StatType
+    {
+        STAT_TYPE_NONE = 0,
+        STAT_TYPE_TANK = 1,
+        STAT_TYPE_PHYS = 2,
+        STAT_TYPE_HYBRID = 4,
+        STAT_TYPE_SPELL = 8
+    };
+
     struct ScoreData
     {
         StatType StatType;

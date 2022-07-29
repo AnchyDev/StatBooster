@@ -19,7 +19,7 @@ uint32 StatBoostMgr::GetMaskFromEnum(uint32 enumValue)
     return ret;
 }
 
-StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
+StatBoostMgr::StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
 {
     if (item->GetTemplate()->Class == ITEM_CLASS_WEAPON)
     {
@@ -155,7 +155,7 @@ StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
     return STAT_TYPE_NONE;
 }   
 
-StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
+StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
 {
     ScoreData tankScore { STAT_TYPE_TANK, 0 },
         physScore { STAT_TYPE_PHYS, 0 },
@@ -283,7 +283,7 @@ StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpells)
     return winningScore.StatType;
 }
 
-StatType StatBoostMgr::AnalyzeItem(Item* item)
+StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
 {
     auto itemTemplate = item->GetTemplate();
 

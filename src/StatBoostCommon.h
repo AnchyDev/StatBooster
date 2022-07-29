@@ -2,22 +2,30 @@
 #ifndef MODULE_STAT_BOOST_COMMON
 #define MODULE_STAT_BOOST_COMMON
 
+#include "Chat.h"
 #include "Define.h"
+#include "Player.h"
+#include "ScriptMgr.h"
 
 #include "StatBoostCfgMgr.h"
-#include "StatBoostMgr.h"
-
+/*
 #include <chrono>
+#include <vector>
 #include <format>
+#include <random>
+#include <algorithm>
 
-enum StatType
-{
-    STAT_TYPE_NONE = 0,
-    STAT_TYPE_TANK = 1,
-    STAT_TYPE_PHYS = 2,
-    STAT_TYPE_HYBRID = 4,
-    STAT_TYPE_SPELL = 8
-};
+#include "Define.h"
+#include "Config.h"
+#include "Log.h"
+#include "Random.h"
+#include "Player.h"
+#include "Chat.h"
+#include "DatabaseEnv.h"
+#include "ScriptMgr.h"
+
+#include "StatBoostCfgMgr.h"
+#include "StatBoostMgr.h"*/
 
 class StatBoostCommon
 {
