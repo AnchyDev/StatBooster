@@ -4,7 +4,19 @@
 
 #include "Define.h"
 
+#include "StatBoostCfgMgr.h"
+#include "StatBoostMgr.h"
+
 #include <chrono>
+
+enum StatType
+{
+    STAT_TYPE_NONE = 0,
+    STAT_TYPE_TANK = 1,
+    STAT_TYPE_PHYS = 2,
+    STAT_TYPE_HYBRID = 4,
+    STAT_TYPE_SPELL = 8
+};
 
 class StatBoostCommon
 {
