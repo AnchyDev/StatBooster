@@ -46,44 +46,42 @@ bool StatBoosterConfig::EnchantPool::Load()
     try
     {
         uint32 enchantCount = 0;
-        uint32 executionTimeMS = StatBoostCommon::MeasureExecution([&]()
+        
+        QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
+
+        if (!qResult)
         {
-            QueryResult qResult = WorldDatabase.Query("SELECT Id, iLvlMin, iLvlMax, RoleMask, ClassMask, SubClassMask FROM statbooster_enchant_template");
+            LOG_INFO("module", "Failed to load StatBooster enchant definitions from statbooster_enchant_template table.");
+            return;
+        }
 
-            if (!qResult)
+        LOG_INFO("module", "Loading StatBooster enchants from statbooster_enchant_template...");
+
+        sBoostConfigMgr->EnchantPool.Clear();
+
+        do
+        {
+            Field* fields = qResult->Fetch();
+
+            EnchantDefinition enchantDef;
+
+            enchantDef.Id = fields[0].Get<uint32>();
+            enchantDef.ILvlMin = fields[1].Get<uint32>();
+            enchantDef.ILvlMax = fields[2].Get<uint32>();
+            enchantDef.RoleMask = fields[3].Get<uint32>();
+            enchantDef.ClassMask = fields[4].Get<uint32>();
+            enchantDef.SubClassMask = fields[5].Get<uint32>();
+
+            enchantCount++;
+            sBoostConfigMgr->EnchantPool.Add(enchantDef);
+
+            if (sBoostConfigMgr->VerboseEnable)
             {
-                LOG_INFO("module", "Failed to load StatBooster enchant definitions from statbooster_enchant_template table.");
-                return;
+                LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
             }
+        } while (qResult->NextRow());
 
-            LOG_INFO("module", "Loading StatBooster enchants from statbooster_enchant_template...");
-
-            sBoostConfigMgr->EnchantPool.Clear();
-
-            do
-            {
-                Field* fields = qResult->Fetch();
-
-                EnchantDefinition enchantDef;
-
-                enchantDef.Id = fields[0].Get<uint32>();
-                enchantDef.ILvlMin = fields[1].Get<uint32>();
-                enchantDef.ILvlMax = fields[2].Get<uint32>();
-                enchantDef.RoleMask = fields[3].Get<uint32>();
-                enchantDef.ClassMask = fields[4].Get<uint32>();
-                enchantDef.SubClassMask = fields[5].Get<uint32>();
-
-                enchantCount++;
-                sBoostConfigMgr->EnchantPool.Add(enchantDef);
-
-                if (sBoostConfigMgr->VerboseEnable)
-                {
-                    LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
-                }
-            } while (qResult->NextRow());
-        });
-
-        LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant definitions in {}ms", enchantCount, executionTimeMS));
+        LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant definitions", enchantCount));
 
     }
     catch (std::exception ex)

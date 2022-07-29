@@ -9,6 +9,7 @@
 #include "StringFormat.h"
 
 #include "StatBoostCfgMgr.h"
+
 /*
 #include <chrono>
 #include <vector>
@@ -27,12 +28,5 @@
 
 #include "StatBoostCfgMgr.h"
 #include "StatBoostMgr.h"*/
-
-class StatBoostCommon
-{
-public:
-    template<typename T>
-    static uint32 MeasureExecution(T&& func);
-};
 
 #endif
