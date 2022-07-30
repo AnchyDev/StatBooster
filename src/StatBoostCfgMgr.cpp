@@ -21,7 +21,7 @@ EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 c
 
     if (roleMask == 0 && classMask == 0 && subClassMask == 0)
     {
-        uint32 randItem = urand(0, (sizeof(pool) / sizeof(pool[0])));
+        uint32 randItem = urand(0, pool.size());
         return &pool[randItem];
     }
 
@@ -77,7 +77,7 @@ bool StatBoosterConfig::EnchantPool::Load()
 
             if (sBoostConfigMgr->VerboseEnable)
             {
-                LOG_INFO("module", ">> Loaded Enchant ID {} with role mask {}, class mask {}, and subclass mask {} into enchant pool.", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
+                LOG_INFO("module", ">> Loaded enchant id {} with role mask {}, class mask {}, and subclass mask {}", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
             }
         } while (qResult->NextRow());
 
