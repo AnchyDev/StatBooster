@@ -40,7 +40,7 @@ public:
     ChatCommandTable GetCommands() const override;
     static bool HandleSBReloadCommand(ChatHandler* handler);
     static bool HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId = 0, uint32 count = 0);
-    static bool HandleSBConfSetCommand(ChatHandler* handler, const char* args);
+    static bool HandleSBConfSetCommand(ChatHandler* handler);
 };
 
 #endif
