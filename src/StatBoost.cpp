@@ -252,7 +252,7 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     return true;
 }
 
-bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* handler)
+bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* /*handler*/)
 {
     return true;
 }
