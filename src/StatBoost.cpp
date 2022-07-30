@@ -242,9 +242,9 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     return true;
 }
 
-bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* handler, const char* args...)
+bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* handler, const char* args)
 {
-    
+    return true;
 }
 
 void AddSCStatBoosterScripts()
