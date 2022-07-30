@@ -189,6 +189,7 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     {
         handler->SendSysMessage("Invalid arguments, you must supply a valid itemId and count.");
         handler->SendSysMessage("Ex: '.sb additem <itemId> <count>'");
+        handler->SetSentErrorMessage(true);
         return false;
     }
 
@@ -197,6 +198,7 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     if (!itemTemp)
     {
         handler->SendSysMessage("Item template could not be found. Is this a valid item id?");
+        handler->SetSentErrorMessage(true);
         return false;
     }
 
