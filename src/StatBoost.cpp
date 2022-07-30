@@ -231,12 +231,20 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     StatBoostMgr statBoostMgr;
     bool result = statBoostMgr.BoostItem(player, item, 100);
 
-    if (!item || !result)
+    if (!item)
     {
         return false;
     }
 
-    handler->SendSysMessage(Acore::StringFormatFmt("Added boosted item '{}' to '{}'.", itemId, player->GetPlayerName()));
+    if (result)
+    {
+        handler->SendSysMessage(Acore::StringFormatFmt("Added boosted item '{}' to '{}'.", itemId, player->GetPlayerName()));
+    }
+    else
+    {
+        handler->SendSysMessage(Acore::StringFormatFmt("Added item '{}' to '{}'.", itemId, player->GetPlayerName()));
+    }
+    
     player->SendNewItem(item, count, true, false, false, true);
 
     return true;
