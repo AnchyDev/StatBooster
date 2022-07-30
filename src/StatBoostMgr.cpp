@@ -1,24 +1,5 @@
 #include "StatBoostMgr.h"
 
-uint32 StatBoostMgr::GetMaskFromEnum(uint32 enumValue)
-{
-    uint32 ret = 1;
-
-    if (enumValue < 1)
-    {
-        return ret;
-    }
-    else
-    {
-        for (uint32 i = 0; i < enumValue; i++)
-        {
-            ret = ret * 2;
-        }
-    }
-
-    return ret;
-}
-
 StatBoostMgr::StatType StatBoostMgr::GetStatTypeFromSubClass(Item* item)
 {
     if (item->GetTemplate()->Class == ITEM_CLASS_WEAPON)
@@ -361,7 +342,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     uint32 itemSubClass = item->GetTemplate()->SubClass;
     uint32 itemLevel = item->GetTemplate()->ItemLevel;
 
-    uint32 itemClassMask = GetMaskFromEnum(itemClass);
+    uint32 itemClassMask = 1 << itemClass;
 
     if (!itemClassMask)
     {
@@ -373,7 +354,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         ChatHandler(player->GetSession()).SendSysMessage("Passed ItemClass Check");
     }
 
-    uint32 itemSubClassMask = GetMaskFromEnum(itemSubClass);
+    uint32 itemSubClassMask = 1 << itemSubClass;
 
     if (!itemSubClassMask)
     {
