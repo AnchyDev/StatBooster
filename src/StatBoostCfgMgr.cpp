@@ -19,12 +19,6 @@ EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 c
 {
     std::shuffle(std::begin(pool), std::end(pool), randomEngine);
 
-    if (roleMask == 0 && classMask == 0 && subClassMask == 0)
-    {
-        uint32 randItem = urand(0, pool.size());
-        return &pool[randItem];
-    }
-
     auto iterator = std::find_if(pool.begin(), pool.end(), [&](const EnchantDefinition& data)
     {
             return ((data.RoleMask & roleMask) == roleMask || data.RoleMask == 0) &&
