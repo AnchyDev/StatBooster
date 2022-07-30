@@ -13,6 +13,9 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb', '4', 'Syntax: .sb - type .sb to list subcommands.');
+INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb reload', '4', 'Syntax: .sb reload - reloads the statbooster_enchant_template table.');
+INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb additem', '4', 'Syntax: .sb additem <itemid> <count> - tries to add an enchanted item to targeted player.');
 
 -- Dumping structure for table acore_world.statbooster_enchant_template
 CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
