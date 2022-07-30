@@ -157,13 +157,13 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
 {
     static ChatCommandTable sbConfCommandTable =
     {
-        { "set", HandleSBConfSetCommand, SEC_GAMEMASTER, Console::Yes }
+        { "set", HandleSBConfSetCommand, SEC_ADMINISTRATOR, Console::Yes }
     };
 
     static ChatCommandTable sbCommandTable =
     {
-        { "reload", HandleSBReloadCommand, SEC_GAMEMASTER, Console::Yes  },
-        { "additem", HandleSBAddItemCommand, SEC_GAMEMASTER, Console::No },
+        { "reload", HandleSBReloadCommand, SEC_ADMINISTRATOR, Console::Yes  },
+        { "additem", HandleSBAddItemCommand, SEC_ADMINISTRATOR, Console::No },
         { "config", sbConfCommandTable }
     };
 
