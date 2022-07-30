@@ -155,15 +155,21 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
 
 ChatCommandTable StatBoosterCommands::GetCommands() const
 {
-    static ChatCommandTable gmCommandTable =
+    static ChatCommandTable sbConfCommandTable =
+    {
+        { "set", HandleSBConfSetCommand, SEC_GAMEMASTER, Console::Yes }
+    };
+
+    static ChatCommandTable sbCommandTable =
     {
         { "reload", HandleSBReloadCommand, SEC_GAMEMASTER, Console::Yes  },
-        { "additem", HandleSBAddItemCommand, SEC_GAMEMASTER, Console::No }
+        { "additem", HandleSBAddItemCommand, SEC_GAMEMASTER, Console::No },
+        { "config", sbConfCommandTable }
     };
 
     static ChatCommandTable commandTable =
     {
-        { "sb", gmCommandTable }
+        { "sb", sbCommandTable }
     };
 
     return commandTable;
@@ -171,7 +177,7 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
 
 bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
 {
-    handler->SendSysMessage("Reloading database..");
+    handler->SendSysMessage("Reloading `statbooster_enchant_template`..");
     sBoostConfigMgr->EnchantPool.Load();
     handler->SendSysMessage("Reload complete.");
     return true;
@@ -179,11 +185,18 @@ bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
 
 bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count)
 {
+    if (!itemId || !count)
+    {
+        handler->SendSysMessage("Invalid arguments, you must supply a valid itemId and count.");
+        handler->SendSysMessage("Ex: '.sb additem <itemId> <count>'");
+        return false;
+    }
+
     ItemTemplate const* itemTemp = sObjectMgr->GetItemTemplate(itemId);
 
     if (!itemTemp)
     {
-        handler->SendSysMessage("Invalid Item ID!");
+        handler->SendSysMessage("Item template could not be found. Is this a valid item id?");
         return false;
     }
 
@@ -192,6 +205,11 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     if (!player)
     {
         return false;
+    }
+
+    if (player->GetTarget() && player->GetTarget().IsPlayer())
+    {
+        player = ObjectAccessor::FindPlayer(player->GetTarget());
     }
 
     uint32 noSpaceForCount = 0;
@@ -203,7 +221,7 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
         count -= noSpaceForCount;
     }
 
-    if (count == 0 || dest.empty())
+    if (dest.empty())
     {
         return false;
     }
@@ -218,9 +236,15 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
         return false;
     }
 
+    handler->SendSysMessage(Acore::StringFormatFmt("Added boosted item '{}' to '{}'.", itemId, player->GetPlayerName()));
     player->SendNewItem(item, count, true, false, false, true);
 
     return true;
+}
+
+bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* handler)
+{
+
 }
 
 void AddSCStatBoosterScripts()
