@@ -6,7 +6,7 @@
 class StatBoostMgr
 {
 public:
-    bool BoostItem(Player* player, Item* item, uint32 chance);
+    static bool BoostItem(Player* player, Item* item, uint32 chance);
 
 private:
     enum StatType
@@ -24,11 +24,11 @@ private:
         uint32 Score;
     };
 
-    StatType GetStatTypeFromSubClass(Item* item);
-    bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
-    StatType ScoreItem(Item* item, bool hasAdditionalSpells = false);
-    StatType AnalyzeItem(Item* item);
-    bool IsEquipment(Item* item);
+    static StatType GetStatTypeFromSubClass(Item* item);
+    static bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
+    static StatType ScoreItem(Item* item, bool hasAdditionalSpells = false);
+    static StatType AnalyzeItem(Item* item);
+    static bool IsEquipment(Item* item);
 };
 
 #endif

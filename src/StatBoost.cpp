@@ -22,7 +22,7 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
 
     if (sBoostConfigMgr->OnLootItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->LootItemChance);
+        bool result = StatBoostMgr::BoostItem(player, item, sBoostConfigMgr->LootItemChance);
 
         if (result)
         {
@@ -48,7 +48,7 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
 
     if (sBoostConfigMgr->OnQuestRewardItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->QuestRewardChance);
+        bool result = StatBoostMgr::BoostItem(player, item, sBoostConfigMgr->QuestRewardChance);
 
         if (result)
         {
@@ -74,7 +74,7 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
 
     if (sBoostConfigMgr->OnCraftItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->CraftItemChance);
+        bool result = StatBoostMgr::BoostItem(player, item, sBoostConfigMgr->CraftItemChance);
 
         if (result)
         {
@@ -100,7 +100,7 @@ void StatBoosterPlayer::OnGroupRollRewardItem(Player* player, Item* item, uint32
 
     if (sBoostConfigMgr->OnLootItemEnable)
     {
-        bool result = statBoostMgr.BoostItem(player, item, sBoostConfigMgr->LootItemChance);
+        bool result = StatBoostMgr::BoostItem(player, item, sBoostConfigMgr->LootItemChance);
 
         if (result)
         {

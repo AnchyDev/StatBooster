@@ -19,9 +19,6 @@ public:
     void OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnCreateItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnGroupRollRewardItem(Player* player, Item* item, uint32 /*count*/, RollVote /*voteType*/, Roll* /*roll*/) override;
-
-private:
-    StatBoostMgr statBoostMgr;
 };
 
 class StatBoosterWorld : public WorldScript
