@@ -271,7 +271,7 @@ StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
     //The spellids need to be checked because the Spells array is always allocated to a fixed size.
     //Thus we need to count how many VALID spells are in the array.
     uint32 spellsCount = 0;
-    for (auto spell : itemTemplate->Spells)
+    for (const auto& spell : itemTemplate->Spells)
     {
         if (spell.SpellId)
         {
