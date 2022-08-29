@@ -246,22 +246,28 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     }
 
     //Tally up the results, the highest score is picked.
-    auto winningScore = *scores[0];
-    for (auto score : scores)
-    {
-        if (score->Score > winningScore.Score)
-        {
-            winningScore = *score;
-        }
-    }
+    auto winningScore = scores[0];
 
-    //No stats on the items could be scored.
-    if (winningScore.Score < 1)
+    if (!winningScore)
     {
         return STAT_TYPE_NONE;
     }
 
-    return winningScore.StatType;
+    for (auto score : scores)
+    {
+        if (score->Score > winningScore->Score)
+        {
+            winningScore = score;
+        }
+    }
+
+    //No stats on the items could be scored.
+    if (winningScore->Score < 1)
+    {
+        return STAT_TYPE_NONE;
+    }
+
+    return winningScore->StatType;
 }
 
 StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
