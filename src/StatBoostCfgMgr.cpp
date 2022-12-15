@@ -10,6 +10,25 @@ void StatBoosterConfig::EnchantScorePool::Clear()
     scores.clear();
 }
 
+void StatBoosterConfig::EnchantScorePool::Evaluate(uint32 modType, uint32 modId, uint32 subclass, uint32& tankScore, uint32& physScore, uint32& spellScore, uint32& hybridScore)
+{
+    auto scoreIter = std::find_if(scores.begin(), scores.end(), [modType, modId, subclass](EnchantScore& enchantScore)
+    {
+        if (enchantScore.modType == modType && enchantScore.modId == modId && enchantScore.subclass == subclass)
+        {
+            return true;
+        }
+    });
+
+    if (scoreIter != scores.end())
+    {
+        tankScore += scoreIter->tankScore;
+        physScore += scoreIter->physScore;
+        spellScore += scoreIter->spellScore;
+        hybridScore += scoreIter->hybridScore;
+    }
+}
+
 bool StatBoosterConfig::EnchantScorePool::Load()
 {
     try

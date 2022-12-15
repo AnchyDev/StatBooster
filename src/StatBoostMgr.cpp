@@ -159,6 +159,7 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         auto stat = itemTemplate->ItemStat[i];
         uint32 statType = stat.ItemStatType;
 
+        sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
         switch (statType)
         {
         case ITEM_MOD_ARMOR_PENETRATION_RATING:
