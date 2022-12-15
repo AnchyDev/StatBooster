@@ -171,7 +171,7 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
             {
                 auto spellInfo = sSpellMgr->GetSpellInfo(spell.SpellId);
                 auto scores = sBoostConfigMgr->EnchantScores.Get();
-                for (auto score : *scores)
+                for (auto const &score : *scores)
                 {
                     if (score.modType == 1)
                     {
