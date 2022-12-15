@@ -73,6 +73,62 @@ INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMas
 	(101, 60, 80, 8, 0, 0, '+7 Spirit', 'SPELL - ALL - ALL'),
 	(109, 60, 80, 3, 0, 0, '+7 Strength', 'TANK/PHYS - ALL - ALL'),
 	(211, 60, 80, 8, 0, 0, '+7 Spell Power', 'SPELL - ALL - ALL');
+	
+	-- --------------------------------------------------------
+-- Host:                         explain-saturn.bnr.la
+-- Server version:               10.3.37-MariaDB-0ubuntu0.20.04.1 - Ubuntu 20.04
+-- Server OS:                    debian-linux-gnu
+-- HeidiSQL Version:             12.0.0.6468
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Dumping structure for table acore_world.statbooster_enchant_scores
+CREATE TABLE IF NOT EXISTS `statbooster_enchant_scores` (
+  `mod_type` int(11) DEFAULT NULL,
+  `mod_id` int(11) DEFAULT NULL,
+  `subclass` int(11) DEFAULT NULL,
+  `tank_score` int(11) DEFAULT NULL,
+  `phys_score` int(11) DEFAULT NULL,
+  `spell_score` int(11) DEFAULT NULL,
+  `hybrid_score` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table acore_world.statbooster_enchant_scores: ~4 rows (approximately)
+INSERT INTO `statbooster_enchant_scores` (`mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hybrid_score`) VALUES
+	(0, 44, 0, 1, 2, 0, 1),
+	(0, 38, 0, 1, 2, 0, 1),
+	(0, 4, 0, 1, 2, 0, 1),
+	(0, 3, 0, 1, 2, 0, 1),
+	(0, 5, 1, 0, 0, 1, 0),
+	(0, 5, 2, 0, 0, 1, 1),
+	(0, 5, 3, 1, 0, 1, 1),
+	(0, 5, 4, 1, 0, 1, 0),
+	(0, 5, 0, 1, 0, 3, 2),
+	(0, 6, 0, 0, 0, 1, 0),
+	(0, 43, 0, 0, 0, 1, 0),
+	(0, 41, 0, 0, 0, 1, 0),
+	(0, 45, 0, 0, 0, 1, 0),
+	(0, 47, 0, 0, 0, 1, 0),
+	(0, 42, 0, 0, 0, 1, 0),
+	(0, 14, 0, 3, 0, 0, 0),
+	(0, 13, 0, 3, 0, 0, 0),
+	(0, 12, 0, 3, 0, 0, 0),
+	(0, 15, 0, 3, 0, 0, 0);
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
