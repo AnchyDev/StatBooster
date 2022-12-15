@@ -150,6 +150,7 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
         sBoostConfigMgr->OverwriteEnchantEnable = sConfigMgr->GetOption<bool>("StatBooster.OverwriteEnchantEnable", true);
 
         sBoostConfigMgr->EnchantPool.Load();
+        sBoostConfigMgr->EnchantScores.Load();
     }
 }
 
