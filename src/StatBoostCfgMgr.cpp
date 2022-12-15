@@ -14,10 +14,7 @@ void StatBoosterConfig::EnchantScorePool::Evaluate(uint32 modType, uint32 modId,
 {
     auto scoreIter = std::find_if(scores.begin(), scores.end(), [modType, modId, subclass](EnchantScore& enchantScore)
     {
-        if (enchantScore.modType == modType && enchantScore.modId == modId && enchantScore.subclass == subclass)
-        {
-            return true;
-        }
+            return (enchantScore.modType == modType && enchantScore.modId == modId && enchantScore.subclass == subclass);
     });
 
     if (scoreIter != scores.end())
