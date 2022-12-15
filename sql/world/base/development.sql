@@ -13,9 +13,11 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb', 4, 'Syntax: .sb - type .sb to list subcommands.');
-INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb reload', 4, 'Syntax: .sb reload - reloads the statbooster_enchant_template table.');
-INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb additem', 4, 'Syntax: .sb additem <itemid> <count> - tries to add an enchanted item to targeted player.');
+DELETE FROM `acore_world`.`command` WHERE name = 'sb';
+INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb', 3, 'Syntax: .sb - type .sb to list subcommands.');
+
+DELETE FROM `acore_world`.`command` WHERE name = "sb additem";
+INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb additem', 3, 'Syntax: .sb additem <itemid> <count> - tries to add an enchanted item to targeted player.');
 
 -- Dumping structure for table acore_world.statbooster_enchant_template
 CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
@@ -29,8 +31,9 @@ CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
   `Note` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DELETE FROM `acore_world`.`statbooster_enchant_template`;
 -- Dumping data for table acore_world.statbooster_enchant_template: ~20 rows (approximately)
-INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask`, `Description`, `Note`) VALUES
+INSERT INTO `acore_world`.`statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask`, `Description`, `Note`) VALUES
 	(68, 1, 20, 3, 0, 0, '+1 Strength', 'TANK/PHYS - ALL - ALL'),
 	(74, 1, 20, 7, 0, 0, '+1 Agility', 'TANK/PHYS/HYBRID - ALL - ALL'),
 	(79, 1, 20, 12, 0, 0, '+1 Intellect', 'HYBRID/SPELL - ALL - ALL'),
@@ -101,8 +104,9 @@ CREATE TABLE IF NOT EXISTS `statbooster_enchant_scores` (
   `hybrid_score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DELETE FROM `acore_world`.`statbooster_enchant_scores`;
 -- Dumping data for table acore_world.statbooster_enchant_scores: ~4 rows (approximately)
-INSERT INTO `statbooster_enchant_scores` (`mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hybrid_score`) VALUES
+INSERT INTO `acore_world`.`statbooster_enchant_scores` (`mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hybrid_score`) VALUES
 	(0, 44, 0, 1, 2, 0, 1),
 	(0, 38, 0, 1, 2, 0, 1),
 	(0, 4, 0, 1, 2, 0, 1),
@@ -121,7 +125,11 @@ INSERT INTO `statbooster_enchant_scores` (`mod_type`, `mod_id`, `subclass`, `tan
 	(0, 14, 0, 3, 0, 0, 0),
 	(0, 13, 0, 3, 0, 0, 0),
 	(0, 12, 0, 3, 0, 0, 0),
-	(0, 15, 0, 3, 0, 0, 0);
+	(0, 15, 0, 3, 0, 0, 0),
+	(1, 99, 0, 1, 2, 0, 1),
+	(1, 135, 0, 0, 0, 0, 1),
+	(1, 85, 0, 0, 0, 0, 1),
+	(1, 13, 0, 0, 0, 0, 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
