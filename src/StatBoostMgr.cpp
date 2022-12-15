@@ -339,7 +339,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         ChatHandler(player->GetSession()).SendSysMessage("Passed Enchant Check");
     }
 
-    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+    return EnchantItem(player, item, TEMP_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)
