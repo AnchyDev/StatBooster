@@ -157,7 +157,6 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
 {
     static ChatCommandTable sbCommandTable =
     {
-        { "reload", HandleSBReloadCommand, SEC_ADMINISTRATOR, Console::Yes  },
         { "additem", HandleSBAddItemCommand, SEC_ADMINISTRATOR, Console::No }
     };
 
@@ -167,14 +166,6 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
     };
 
     return commandTable;
-}
-
-bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
-{
-    handler->SendSysMessage("Reloading `statbooster_enchant_template`..");
-    sBoostConfigMgr->EnchantPool.Load();
-    handler->SendSysMessage("Reload complete.");
-    return true;
 }
 
 bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count)
