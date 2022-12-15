@@ -1,5 +1,10 @@
 #include "StatBoostCfgMgr.h"
 
+std::vector<StatBoosterConfig::EnchantScore>* StatBoosterConfig::EnchantScorePool::Get()
+{
+    return &scores;
+}
+
 void StatBoosterConfig::EnchantScorePool::Add(EnchantScore score)
 {
     scores.push_back(score);

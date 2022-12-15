@@ -160,64 +160,6 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         uint32 statType = stat.ItemStatType;
 
         sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
-        /*switch (statType)
-        {
-        case ITEM_MOD_ARMOR_PENETRATION_RATING:
-        case ITEM_MOD_ATTACK_POWER:
-        case ITEM_MOD_STRENGTH:
-        case ITEM_MOD_AGILITY:
-            tankScore.Score += 1;
-            physScore.Score += 2;
-            hybridScore.Score += 1;
-            break;
-
-        case ITEM_MOD_INTELLECT:
-            switch (subClass)
-            {
-            case ITEM_SUBCLASS_ARMOR_CLOTH:
-                spellScore.Score += 1;
-                break;
-
-            case ITEM_SUBCLASS_ARMOR_LEATHER:
-                hybridScore.Score += 1;
-                spellScore.Score += 1;
-                break;
-
-            case ITEM_SUBCLASS_ARMOR_MAIL:
-                tankScore.Score += 1;
-                hybridScore.Score += 1;
-                spellScore.Score += 1;
-                break;
-
-            case ITEM_SUBCLASS_ARMOR_PLATE:
-                tankScore.Score += 1;
-                spellScore.Score += 1;
-                break;
-
-            default:
-                tankScore.Score += 1;
-                hybridScore.Score += 2;
-                spellScore.Score += 3;
-                break;
-            }
-            break;
-
-        case ITEM_MOD_SPIRIT:
-        case ITEM_MOD_MANA_REGENERATION:
-        case ITEM_MOD_SPELL_HEALING_DONE:
-        case ITEM_MOD_SPELL_POWER:
-        case ITEM_MOD_SPELL_PENETRATION:
-        case ITEM_MOD_SPELL_DAMAGE_DONE:
-            spellScore.Score += 1;
-            break;
-
-        case ITEM_MOD_BLOCK_RATING:
-        case ITEM_MOD_PARRY_RATING:
-        case ITEM_MOD_DODGE_RATING:
-        case ITEM_MOD_DEFENSE_SKILL_RATING:
-            tankScore.Score += 3;
-            break;
-        }*/
     }
 
     //Sometimes stats are stored as additional spell effects and also need to be checked.
@@ -228,19 +170,17 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
             if (spell.SpellId)
             {
                 auto spellInfo = sSpellMgr->GetSpellInfo(spell.SpellId);
-
-                if (spellInfo->HasAura(SPELL_AURA_MOD_ATTACK_POWER))
+                auto scores = sBoostConfigMgr->EnchantScores.Get();
+                for (auto score : *scores)
                 {
-                    tankScore.Score += 1;
-                    physScore.Score += 2;
-                    hybridScore.Score += 1;
-                }
+                    if (score.modType == 1)
+                    {
+                        if (spellInfo->HasAura(static_cast<AuraType>(score.modId)))
+                        {
+                            sBoostConfigMgr->EnchantScores.Evaluate(1, score.modId, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
 
-                if (spellInfo->HasAura(SPELL_AURA_MOD_HEALING_DONE) ||
-                    spellInfo->HasAura(SPELL_AURA_MOD_POWER_REGEN) ||
-                    spellInfo->HasAura(SPELL_AURA_MOD_DAMAGE_DONE))
-                {
-                    spellScore.Score += 1;
+                        }
+                    }
                 }
             }
         }

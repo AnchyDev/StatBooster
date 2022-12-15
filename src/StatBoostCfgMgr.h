@@ -76,6 +76,7 @@ public:
     class EnchantScorePool
     {
     public:
+        std::vector<EnchantScore>* Get();
         void Add(EnchantScore score);
         bool Load();
         void Clear();
