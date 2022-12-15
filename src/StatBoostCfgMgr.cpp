@@ -16,7 +16,7 @@ bool StatBoosterConfig::EnchantScorePool::Load()
     {
         uint32 enchantCount = 0;
 
-        QueryResult qResult = WorldDatabase.Query("SELECT `mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hyrbid_score` FROM `statbooster_enchant_scores`");
+        QueryResult qResult = WorldDatabase.Query("SELECT `mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hybrid_score` FROM `statbooster_enchant_scores`");
 
         if (!qResult)
         {
