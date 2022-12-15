@@ -155,16 +155,10 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
 
 ChatCommandTable StatBoosterCommands::GetCommands() const
 {
-    static ChatCommandTable sbConfCommandTable =
-    {
-        { "set", HandleSBConfSetCommand, SEC_ADMINISTRATOR, Console::Yes }
-    };
-
     static ChatCommandTable sbCommandTable =
     {
         { "reload", HandleSBReloadCommand, SEC_ADMINISTRATOR, Console::Yes  },
-        { "additem", HandleSBAddItemCommand, SEC_ADMINISTRATOR, Console::No },
-        { "config", sbConfCommandTable }
+        { "additem", HandleSBAddItemCommand, SEC_ADMINISTRATOR, Console::No }
     };
 
     static ChatCommandTable commandTable =
@@ -249,11 +243,6 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     
     player->SendNewItem(item, count, true, false, false, true);
 
-    return true;
-}
-
-bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* /*handler*/)
-{
     return true;
 }
 
