@@ -160,7 +160,7 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         uint32 statType = stat.ItemStatType;
 
         sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
-        switch (statType)
+        /*switch (statType)
         {
         case ITEM_MOD_ARMOR_PENETRATION_RATING:
         case ITEM_MOD_ATTACK_POWER:
@@ -217,7 +217,7 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         case ITEM_MOD_DEFENSE_SKILL_RATING:
             tankScore.Score += 3;
             break;
-        }
+        }*/
     }
 
     //Sometimes stats are stored as additional spell effects and also need to be checked.
