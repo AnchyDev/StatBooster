@@ -61,6 +61,31 @@ public:
 
     EnchantPool EnchantPool;
 
+    struct EnchantScore
+    {
+        uint32 modType;
+        uint32 modId;
+        uint32 subclass;
+
+        uint32 tankScore;
+        uint32 physScore;
+        uint32 spellScore;
+        uint32 hybridScore;
+    };
+
+    class EnchantScorePool
+    {
+    public:
+        void Add(EnchantScore score);
+        bool Load();
+        void Clear();
+
+    private:
+        std::vector<EnchantScore> scores;
+    };
+
+    EnchantScorePool EnchantScores;
+
     static StatBoosterConfig* GetInstance();
 
 private:
