@@ -165,13 +165,14 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     //Sometimes stats are stored as additional spell effects and also need to be checked.
     if (hasAdditionalSpells)
     {
+        auto scores = sBoostConfigMgr->EnchantScores.Get();
+
         for (_Spell const &spell : itemTemplate->Spells)
         {
             if (spell.SpellId)
             {
                 auto spellInfo = sSpellMgr->GetSpellInfo(spell.SpellId);
-                auto scores = sBoostConfigMgr->EnchantScores.Get();
-
+                
                 if (!spellInfo || !scores)
                 {
                     continue;
