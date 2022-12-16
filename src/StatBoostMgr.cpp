@@ -220,8 +220,13 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
 
 void StatBoostMgr::MakeSoulbound(Item* item, Player* player)
 {
-    item->SetState(ITEM_CHANGED, player);
-    item->SetBinding(true);
+    auto itemTemplate = item->GetTemplate();
+
+    if (itemTemplate->Bonding == BIND_WHEN_EQUIPED)
+    {
+        item->SetState(ITEM_CHANGED, player);
+        item->SetBinding(true);
+    }
 }
 
 StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
