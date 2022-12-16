@@ -340,7 +340,12 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     }
 
     EnchantmentSlot enchantSlot = GetEnchantSlotForItem(item);
-    return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+    if (enchantSlot != MAX_ENCHANTMENT_SLOT)
+    {
+        return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+    }
+
+    return false;
 }
 
 EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
@@ -366,7 +371,7 @@ EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
         return SOCK_ENCHANTMENT_SLOT_3;
     }
 
-    return TEMP_ENCHANTMENT_SLOT;
+    return MAX_ENCHANTMENT_SLOT;
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)
