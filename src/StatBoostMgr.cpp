@@ -348,7 +348,25 @@ EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
     auto itemTemplate = item->GetTemplate();
     uint32 itemClass = itemTemplate->Class;
 
-    return itemClass == ITEM_CLASS_WEAPON ? PRISMATIC_ENCHANTMENT_SLOT : TEMP_ENCHANTMENT_SLOT;
+    if (itemClass != ITEM_CLASS_WEAPON)
+    {
+        return TEMP_ENCHANTMENT_SLOT;
+    }
+
+    if (!itemTemplate->Socket[0].Color)
+    {
+        return SOCK_ENCHANTMENT_SLOT;
+    }
+    if (!itemTemplate->Socket[1].Color)
+    {
+        return SOCK_ENCHANTMENT_SLOT_2;
+    }
+    if (!itemTemplate->Socket[2].Color)
+    {
+        return SOCK_ENCHANTMENT_SLOT_3;
+    }
+
+    return TEMP_ENCHANTMENT_SLOT;
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)
