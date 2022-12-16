@@ -159,87 +159,35 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         auto stat = itemTemplate->ItemStat[i];
         uint32 statType = stat.ItemStatType;
 
-        switch (statType)
-        {
-        case ITEM_MOD_ARMOR_PENETRATION_RATING:
-        case ITEM_MOD_ATTACK_POWER:
-        case ITEM_MOD_STRENGTH:
-        case ITEM_MOD_AGILITY:
-            tankScore.Score += 1;
-            physScore.Score += 2;
-            hybridScore.Score += 1;
-            break;
-
-        case ITEM_MOD_INTELLECT:
-            switch (subClass)
-            {
-            case ITEM_SUBCLASS_ARMOR_CLOTH:
-                spellScore.Score += 1;
-                break;
-
-            case ITEM_SUBCLASS_ARMOR_LEATHER:
-                hybridScore.Score += 1;
-                spellScore.Score += 1;
-                break;
-
-            case ITEM_SUBCLASS_ARMOR_MAIL:
-                tankScore.Score += 1;
-                hybridScore.Score += 1;
-                spellScore.Score += 1;
-                break;
-
-            case ITEM_SUBCLASS_ARMOR_PLATE:
-                tankScore.Score += 1;
-                spellScore.Score += 1;
-                break;
-
-            default:
-                tankScore.Score += 1;
-                hybridScore.Score += 2;
-                spellScore.Score += 3;
-                break;
-            }
-            break;
-
-        case ITEM_MOD_SPIRIT:
-        case ITEM_MOD_MANA_REGENERATION:
-        case ITEM_MOD_SPELL_HEALING_DONE:
-        case ITEM_MOD_SPELL_POWER:
-        case ITEM_MOD_SPELL_PENETRATION:
-        case ITEM_MOD_SPELL_DAMAGE_DONE:
-            spellScore.Score += 1;
-            break;
-
-        case ITEM_MOD_BLOCK_RATING:
-        case ITEM_MOD_PARRY_RATING:
-        case ITEM_MOD_DODGE_RATING:
-        case ITEM_MOD_DEFENSE_SKILL_RATING:
-            tankScore.Score += 3;
-            break;
-        }
+        sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
     }
 
     //Sometimes stats are stored as additional spell effects and also need to be checked.
     if (hasAdditionalSpells)
     {
+        auto scores = sBoostConfigMgr->EnchantScores.Get();
+
         for (_Spell const &spell : itemTemplate->Spells)
         {
             if (spell.SpellId)
             {
                 auto spellInfo = sSpellMgr->GetSpellInfo(spell.SpellId);
-
-                if (spellInfo->HasAura(SPELL_AURA_MOD_ATTACK_POWER))
+                
+                if (!spellInfo || !scores)
                 {
-                    tankScore.Score += 1;
-                    physScore.Score += 2;
-                    hybridScore.Score += 1;
+                    continue;
                 }
 
-                if (spellInfo->HasAura(SPELL_AURA_MOD_HEALING_DONE) ||
-                    spellInfo->HasAura(SPELL_AURA_MOD_POWER_REGEN) ||
-                    spellInfo->HasAura(SPELL_AURA_MOD_DAMAGE_DONE))
+                for (auto const &score : *scores)
                 {
-                    spellScore.Score += 1;
+                    if (score.modType == 1)
+                    {
+                        if (spellInfo->HasAura(static_cast<AuraType>(score.modId)))
+                        {
+                            sBoostConfigMgr->EnchantScores.Evaluate(1, score.modId, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
+
+                        }
+                    }
                 }
             }
         }
@@ -268,6 +216,17 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     }
 
     return winningScore->StatType;
+}
+
+void StatBoostMgr::MakeSoulbound(Item* item, Player* player)
+{
+    auto itemTemplate = item->GetTemplate();
+
+    if (itemTemplate->Bonding == BIND_WHEN_EQUIPED)
+    {
+        item->SetState(ITEM_CHANGED, player);
+        item->SetBinding(true);
+    }
 }
 
 StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
@@ -391,7 +350,39 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         ChatHandler(player->GetSession()).SendSysMessage("Passed Enchant Check");
     }
 
-    return EnchantItem(player, item, BONUS_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+    EnchantmentSlot enchantSlot = GetEnchantSlotForItem(item);
+    if (enchantSlot != MAX_ENCHANTMENT_SLOT)
+    {
+        return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+    }
+
+    return false;
+}
+
+EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
+{
+    auto itemTemplate = item->GetTemplate();
+    uint32 itemClass = itemTemplate->Class;
+
+    if (itemClass != ITEM_CLASS_WEAPON)
+    {
+        return TEMP_ENCHANTMENT_SLOT;
+    }
+
+    if (!itemTemplate->Socket[0].Color)
+    {
+        return SOCK_ENCHANTMENT_SLOT;
+    }
+    if (!itemTemplate->Socket[1].Color)
+    {
+        return SOCK_ENCHANTMENT_SLOT_2;
+    }
+    if (!itemTemplate->Socket[2].Color)
+    {
+        return SOCK_ENCHANTMENT_SLOT_3;
+    }
+
+    return MAX_ENCHANTMENT_SLOT;
 }
 
 bool StatBoostMgr::IsEquipment(Item* item)

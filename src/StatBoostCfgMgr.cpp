@@ -1,5 +1,91 @@
 #include "StatBoostCfgMgr.h"
 
+std::vector<StatBoosterConfig::EnchantScore>* StatBoosterConfig::EnchantScorePool::Get()
+{
+    return &scores;
+}
+
+void StatBoosterConfig::EnchantScorePool::Add(EnchantScore score)
+{
+    scores.push_back(score);
+}
+
+void StatBoosterConfig::EnchantScorePool::Clear()
+{
+    scores.clear();
+}
+
+void StatBoosterConfig::EnchantScorePool::Evaluate(uint32 modType, uint32 modId, uint32 subclass, uint32& tankScore, uint32& physScore, uint32& spellScore, uint32& hybridScore)
+{
+    auto scoreIter = std::find_if(scores.begin(), scores.end(), [modType, modId, subclass](EnchantScore& enchantScore)
+    {
+            return (enchantScore.modType == modType && enchantScore.modId == modId && enchantScore.subclass == subclass);
+    });
+
+    if (scoreIter != scores.end())
+    {
+        tankScore += scoreIter->tankScore;
+        physScore += scoreIter->physScore;
+        spellScore += scoreIter->spellScore;
+        hybridScore += scoreIter->hybridScore;
+    }
+}
+
+bool StatBoosterConfig::EnchantScorePool::Load()
+{
+    try
+    {
+        uint32 enchantCount = 0;
+
+        QueryResult qResult = WorldDatabase.Query("SELECT `mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hybrid_score` FROM `statbooster_enchant_scores`");
+
+        if (!qResult)
+        {
+            LOG_INFO("module", "Failed to load StatBooster enchant scores from statbooster_enchant_scores table.");
+            return false;
+        }
+
+        LOG_INFO("module", "Loading StatBooster enchant scores from statbooster_enchant_scores...");
+
+        sBoostConfigMgr->EnchantScores.Clear();
+
+        do
+        {
+            Field* fields = qResult->Fetch();
+
+            EnchantScore enchantScore;
+
+            enchantScore.modType = fields[0].Get<uint32>();
+            enchantScore.modId = fields[1].Get<uint32>();
+            enchantScore.subclass = fields[2].Get<uint32>();
+            enchantScore.tankScore = fields[3].Get<uint32>();
+            enchantScore.physScore = fields[4].Get<uint32>();
+            enchantScore.spellScore = fields[5].Get<uint32>();
+            enchantScore.hybridScore = fields[6].Get<uint32>();
+
+            enchantCount++;
+            sBoostConfigMgr->EnchantScores.Add(enchantScore);
+
+            if (sBoostConfigMgr->VerboseEnable)
+            {
+                LOG_INFO("module", ">> Loaded enchant score type {} with id {} subclass {} with scores {}, {}, {}, {}",
+                    enchantScore.modType, enchantScore.modId, enchantScore.subclass, enchantScore.tankScore, enchantScore.physScore, enchantScore.spellScore, enchantScore.hybridScore);
+            }
+        } while (qResult->NextRow());
+
+        LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant scores", enchantCount));
+
+    }
+    catch (std::exception ex)
+    {
+        LOG_INFO("module", "Failed to load enchant scores with message: {}", ex.what());
+        LOG_INFO("module", "Disabling StatBooster module.");
+        sBoostConfigMgr->Enable = false;
+        return false;
+    }
+    return true;
+}
+
 StatBoosterConfig* StatBoosterConfig::GetInstance()
 {
     if (!instance)

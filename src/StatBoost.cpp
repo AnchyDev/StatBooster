@@ -35,6 +35,11 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantLoot && !item->IsSoulBound())
+            {
+                StatBoostMgr::MakeSoulbound(item, player);
+            }
         }
     }
 }
@@ -60,6 +65,11 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
             if (sBoostConfigMgr->PlaySoundEnable)
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
+            }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantQuest && !item->IsSoulBound())
+            {
+                StatBoostMgr::MakeSoulbound(item, player);
             }
         }
     }
@@ -87,6 +97,11 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantCraft && !item->IsSoulBound())
+            {
+                StatBoostMgr::MakeSoulbound(item, player);
+            }
         }
     }
 }
@@ -112,6 +127,11 @@ void StatBoosterPlayer::OnGroupRollRewardItem(Player* player, Item* item, uint32
             if (sBoostConfigMgr->PlaySoundEnable)
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
+            }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantRoll && !item->IsSoulBound())
+            {
+                StatBoostMgr::MakeSoulbound(item, player);
             }
         }
     }
@@ -142,6 +162,11 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
         sBoostConfigMgr->PlaySoundEnable = sConfigMgr->GetOption<bool>("StatBooster.PlaySoundEnable", true);
         sBoostConfigMgr->SoundId = sConfigMgr->GetOption<uint32>("StatBooster.SoundId", 120);
 
+        sBoostConfigMgr->SoulbindOnEnchantRoll = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantRoll", false);
+        sBoostConfigMgr->SoulbindOnEnchantLoot = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantLoot", false);
+        sBoostConfigMgr->SoulbindOnEnchantQuest = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantQuest", false);
+        sBoostConfigMgr->SoulbindOnEnchantCraft = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantCraft", false);
+
         sBoostConfigMgr->AnnounceBoostEnable = sConfigMgr->GetOption<bool>("StatBooster.AnnounceBoostEnable", true);
         sBoostConfigMgr->AnnounceLoot = sConfigMgr->GetOption<std::string>("StatBooster.AnnounceLoot", "You looted a boosted item.");
         sBoostConfigMgr->AnnounceQuest = sConfigMgr->GetOption<std::string>("StatBooster.AnnounceQuest", "You received a boosted item.");
@@ -150,21 +175,15 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
         sBoostConfigMgr->OverwriteEnchantEnable = sConfigMgr->GetOption<bool>("StatBooster.OverwriteEnchantEnable", true);
 
         sBoostConfigMgr->EnchantPool.Load();
+        sBoostConfigMgr->EnchantScores.Load();
     }
 }
 
 ChatCommandTable StatBoosterCommands::GetCommands() const
 {
-    static ChatCommandTable sbConfCommandTable =
-    {
-        { "set", HandleSBConfSetCommand, SEC_ADMINISTRATOR, Console::Yes }
-    };
-
     static ChatCommandTable sbCommandTable =
     {
-        { "reload", HandleSBReloadCommand, SEC_ADMINISTRATOR, Console::Yes  },
-        { "additem", HandleSBAddItemCommand, SEC_ADMINISTRATOR, Console::No },
-        { "config", sbConfCommandTable }
+        { "additem", HandleSBAddItemCommand, SEC_ADMINISTRATOR, Console::No }
     };
 
     static ChatCommandTable commandTable =
@@ -173,14 +192,6 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
     };
 
     return commandTable;
-}
-
-bool StatBoosterCommands::HandleSBReloadCommand(ChatHandler* handler)
-{
-    handler->SendSysMessage("Reloading `statbooster_enchant_template`..");
-    sBoostConfigMgr->EnchantPool.Load();
-    handler->SendSysMessage("Reload complete.");
-    return true;
 }
 
 bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count)
@@ -249,11 +260,6 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     
     player->SendNewItem(item, count, true, false, false, true);
 
-    return true;
-}
-
-bool StatBoosterCommands::HandleSBConfSetCommand(ChatHandler* /*handler*/)
-{
     return true;
 }
 

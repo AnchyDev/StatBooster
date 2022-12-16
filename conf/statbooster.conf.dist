@@ -153,6 +153,45 @@ StatBooster.SoundId = 120
 
 ########################################
 #
+#	StatBooster.SoulbindOnEnchantRoll
+#		Description: Enable/Disable binding enchanted item when won through a roll.
+#		Default:	0 - (Disabled)
+#		            1 - (Enabled)
+#
+
+StatBooster.SoulbindOnEnchantRoll = 0
+
+#
+#	StatBooster.SoulbindOnEnchantLoot
+#		Description: Enable/Disable binding enchanted item looted
+#		Default:	0 - (Disabled)
+#		            1 - (Enabled)
+#
+
+StatBooster.SoulbindOnEnchantLoot = 0
+
+#
+#	StatBooster.SoulbindOnEnchantQuest
+#		Description: Enable/Disable binding enchanted item received from quest
+#		Default:	0 - (Disabled)
+#		            1 - (Enabled)
+#
+
+StatBooster.SoulbindOnEnchantQuest = 0
+
+#
+#	StatBooster.SoulbindOnEnchantCraft
+#		Description: Enable/Disable binding enchanted item crafted
+#		Default:	0 - (Disabled)
+#		            1 - (Enabled)
+#
+
+StatBooster.SoulbindOnEnchantCraft = 0
+
+########################################
+
+########################################
+#
 #	StatBooster.AnnounceBoostEnable
 #		Description: Enable/Disable announcement when receiving a boosted item.
 #					0 - (Disabled)
