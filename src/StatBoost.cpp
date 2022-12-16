@@ -38,7 +38,7 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
 
             if (sBoostConfigMgr->SoulbindOnEnchantLoot && !item->IsSoulBound())
             {
-                item->SetBinding(true);
+                StatBoostMgr::MakeSoulbound(item, player);
             }
         }
     }
@@ -69,7 +69,7 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
 
             if (sBoostConfigMgr->SoulbindOnEnchantQuest && !item->IsSoulBound())
             {
-                item->SetBinding(true);
+                StatBoostMgr::MakeSoulbound(item, player);
             }
         }
     }
@@ -100,7 +100,7 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
 
             if (sBoostConfigMgr->SoulbindOnEnchantCraft && !item->IsSoulBound())
             {
-                item->SetBinding(true);
+                StatBoostMgr::MakeSoulbound(item, player);
             }
         }
     }
@@ -131,7 +131,7 @@ void StatBoosterPlayer::OnGroupRollRewardItem(Player* player, Item* item, uint32
 
             if (sBoostConfigMgr->SoulbindOnEnchantRoll && !item->IsSoulBound())
             {
-                item->SetBinding(true);
+                StatBoostMgr::MakeSoulbound(item, player);
             }
         }
     }
