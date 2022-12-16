@@ -372,7 +372,6 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
 {
     auto itemTemplate = item->GetTemplate();
-    uint32 itemClass = itemTemplate->Class;
 
     if (!itemTemplate->Socket[0].Color)
     {
