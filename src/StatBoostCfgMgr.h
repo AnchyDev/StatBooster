@@ -39,6 +39,11 @@ public:
     bool PlaySoundEnable;
     uint32 SoundId;
 
+    bool SoulbindOnEnchantRoll;
+    bool SoulbindOnEnchantCraft;
+    bool SoulbindOnEnchantLoot;
+    bool SoulbindOnEnchantQuest;
+
     bool AnnounceBoostEnable;
     std::string AnnounceLoot;
     std::string AnnounceCraft;

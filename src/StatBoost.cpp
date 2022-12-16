@@ -35,6 +35,11 @@ void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/,
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantLoot && !item->IsSoulBound())
+            {
+                item->SetBinding(true);
+            }
         }
     }
 }
@@ -60,6 +65,11 @@ void StatBoosterPlayer::OnQuestRewardItem(Player* player, Item* item, uint32 /*c
             if (sBoostConfigMgr->PlaySoundEnable)
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
+            }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantQuest && !item->IsSoulBound())
+            {
+                item->SetBinding(true);
             }
         }
     }
@@ -87,6 +97,11 @@ void StatBoosterPlayer::OnCreateItem(Player* player, Item* item, uint32 /*count*
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
             }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantCraft && !item->IsSoulBound())
+            {
+                item->SetBinding(true);
+            }
         }
     }
 }
@@ -112,6 +127,11 @@ void StatBoosterPlayer::OnGroupRollRewardItem(Player* player, Item* item, uint32
             if (sBoostConfigMgr->PlaySoundEnable)
             {
                 player->PlayDirectSound(sBoostConfigMgr->SoundId);
+            }
+
+            if (sBoostConfigMgr->SoulbindOnEnchantRoll && !item->IsSoulBound())
+            {
+                item->SetBinding(true);
             }
         }
     }
@@ -141,6 +161,11 @@ void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
 
         sBoostConfigMgr->PlaySoundEnable = sConfigMgr->GetOption<bool>("StatBooster.PlaySoundEnable", true);
         sBoostConfigMgr->SoundId = sConfigMgr->GetOption<uint32>("StatBooster.SoundId", 120);
+
+        sBoostConfigMgr->SoulbindOnEnchantRoll = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantRoll", false);
+        sBoostConfigMgr->SoulbindOnEnchantLoot = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantLoot", false);
+        sBoostConfigMgr->SoulbindOnEnchantQuest = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantQuest", false);
+        sBoostConfigMgr->SoulbindOnEnchantCraft = sConfigMgr->GetOption<bool>("StatBooster.SoulbindOnEnchantCraft", false);
 
         sBoostConfigMgr->AnnounceBoostEnable = sConfigMgr->GetOption<bool>("StatBooster.AnnounceBoostEnable", true);
         sBoostConfigMgr->AnnounceLoot = sConfigMgr->GetOption<std::string>("StatBooster.AnnounceLoot", "You looted a boosted item.");
