@@ -20,7 +20,7 @@ DELETE FROM `acore_world`.`command` WHERE name = "sb additem";
 INSERT INTO `acore_world`.`command`(`name`, `security`, `help`) VALUES ('sb additem', 3, 'Syntax: .sb additem <itemid> <count> - tries to add an enchanted item to targeted player.');
 
 -- Dumping structure for table acore_world.statbooster_enchant_template
-CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
+CREATE TABLE IF NOT EXISTS `acore_world`.`statbooster_enchant_template` (
   `Id` int unsigned DEFAULT NULL,
   `iLvlMin` int unsigned DEFAULT NULL,
   `iLvlMax` int unsigned DEFAULT NULL,
@@ -94,7 +94,7 @@ INSERT INTO `acore_world`.`statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvl
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Dumping structure for table acore_world.statbooster_enchant_scores
-CREATE TABLE IF NOT EXISTS `statbooster_enchant_scores` (
+CREATE TABLE IF NOT EXISTS `acore_world`.`statbooster_enchant_scores` (
   `mod_type` int(11) DEFAULT NULL,
   `mod_id` int(11) DEFAULT NULL,
   `subclass` int(11) DEFAULT NULL,
