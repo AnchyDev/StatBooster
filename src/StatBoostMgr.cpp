@@ -350,10 +350,20 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         ChatHandler(player->GetSession()).SendSysMessage("Passed Enchant Check");
     }
 
-    EnchantmentSlot enchantSlot = GetEnchantSlotForItem(item);
-    if (enchantSlot != MAX_ENCHANTMENT_SLOT)
+    
+    if (itemClass != ITEM_CLASS_WEAPON)
     {
-        return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+        return EnchantItem(player, item, TEMP_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+    }
+    else
+    {
+        EnchantmentSlot enchantSlot = GetEnchantSlotForItem(item);
+
+        if (enchantSlot != MAX_ENCHANTMENT_SLOT)
+        {
+            return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable) &&
+                EnchantItem(player, item, PRISMATIC_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+        }
     }
 
     return false;
@@ -363,11 +373,6 @@ EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
 {
     auto itemTemplate = item->GetTemplate();
     uint32 itemClass = itemTemplate->Class;
-
-    if (itemClass != ITEM_CLASS_WEAPON)
-    {
-        return TEMP_ENCHANTMENT_SLOT;
-    }
 
     if (!itemTemplate->Socket[0].Color)
     {
