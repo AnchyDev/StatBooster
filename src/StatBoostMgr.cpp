@@ -361,8 +361,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
         if (enchantSlot != MAX_ENCHANTMENT_SLOT)
         {
-            return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable) &&
-                EnchantItem(player, item, PRISMATIC_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
+            return EnchantItem(player, item, enchantSlot, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
         }
     }
 
