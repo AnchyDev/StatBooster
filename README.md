@@ -20,9 +20,7 @@ The features I have planned for this module that differ from the original are:
 
 ## Install
 1. **[Clone](https://git-scm.com/docs/git-clone)** this repository into your `./azerothcore-wotlk/modules` folder. (Make sure to clone it into a subdirectory called StatBooster)
-2. **Edit** the `./sql/world/base/development.sql` file and replace the `acore_world` database strings with the name of your world database.
-3. **Execute** `./sql/world/base/development.sql` on your world database to create the enchant entries.
-4. **Place** `statbooster.conf.dist` into your server `./configs/modules` directory.
+2. **Place** `statbooster.conf.dist` into your server `./configs/modules` directory.
 
 Visit the [Wiki](https://github.com/AnchyDev/StatBooster/wiki/Enchant%20Template) if you require help with setting up enchants in the database.
 
