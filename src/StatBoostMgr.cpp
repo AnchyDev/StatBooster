@@ -254,6 +254,11 @@ StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
 
 bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 {
+    if (!item)
+    {
+        return false;
+    }
+
     //Is not weapon or armor.
     if (!IsEquipment(item))
     {
