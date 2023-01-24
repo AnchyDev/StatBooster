@@ -128,7 +128,7 @@ bool StatBoosterConfig::EnchantPool::Load()
     {
         uint32 enchantCount = 0;
 
-        QueryResult qResult = WorldDatabase.Query("SELECT `Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask` FROM `statbooster_enchant_template`");
+        QueryResult qResult = WorldDatabase.Query("SELECT `Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask`, `ItemTypeMask` FROM `statbooster_enchant_template`");
 
         if (!qResult)
         {
