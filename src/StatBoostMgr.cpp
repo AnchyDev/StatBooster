@@ -310,6 +310,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     uint32 itemClass = item->GetTemplate()->Class;
     uint32 itemSubClass = item->GetTemplate()->SubClass;
+    uint32 itemType = item->GetTemplate()->InventoryType;
     uint32 itemLevel = item->GetTemplate()->ItemLevel;
 
     uint32 itemClassMask = 1 << itemClass;
@@ -336,13 +337,25 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
         ChatHandler(player->GetSession()).SendSysMessage("Passed ItemSubClass Check");
     }
 
+    uint32 itemTypeMask = 1 << itemType;
+
+    if (!itemTypeMask)
+    {
+        return false;
+    }
+
     if (sBoostConfigMgr->VerboseEnable)
     {
-        LOG_INFO("module", ">> Trying to get enchant with role mask {}, class {}, subClass {}, and itemlevel {} from pool.", statType, itemClassMask, itemSubClassMask, itemLevel);
+        ChatHandler(player->GetSession()).SendSysMessage("Passed ItemType Check");
+    }
+
+    if (sBoostConfigMgr->VerboseEnable)
+    {
+        LOG_INFO("module", ">> Trying to get enchant with role mask {}, class {}, subClass {}, itemType {}, and itemlevel {} from pool.", statType, itemClassMask, itemSubClassMask, itemTypeMask, itemLevel);
     }
 
     //Fetch an enchant from the enchant pool.
-    auto enchant = sBoostConfigMgr->EnchantPool.Get(statType, itemClassMask, itemSubClassMask, itemLevel);
+    auto enchant = sBoostConfigMgr->EnchantPool.Get(statType, itemClassMask, itemSubClassMask, itemTypeMask, itemLevel);
 
     //Failed to find a valid enchant.
     if (!enchant)

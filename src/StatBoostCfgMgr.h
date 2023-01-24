@@ -14,6 +14,7 @@ struct EnchantDefinition
     uint32 RoleMask;
     uint32 ClassMask;
     uint32 SubClassMask;
+    uint32 ItemTypeMask;
 };
 
 class StatBoosterConfig
@@ -55,7 +56,7 @@ public:
     {
     public:
         void Add(EnchantDefinition definition);
-        EnchantDefinition* Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemLevel);
+        EnchantDefinition* Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemTypeMask, uint32 itemLevel);
         bool Load();
         void Clear();
 
