@@ -375,7 +375,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     }
     else
     {
-        EnchantmentSlot enchantSlot = GetEnchantSlotForItem(item);
+        EnchantmentSlot enchantSlot = GetFreeSocketSlotForItem(item);
 
         if (enchantSlot != MAX_ENCHANTMENT_SLOT)
         {
@@ -387,7 +387,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     return false;
 }
 
-EnchantmentSlot StatBoostMgr::GetEnchantSlotForItem(Item* item)
+EnchantmentSlot StatBoostMgr::GetFreeSocketSlotForItem(Item* item)
 {
     auto itemTemplate = item->GetTemplate();
 
