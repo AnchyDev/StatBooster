@@ -19,6 +19,8 @@ private:
         STAT_TYPE_SPELL = 8
     };
 
+    static constexpr uint32 ENCHANT_DUMMY = 2814; // Scaling stat, used due to enchanting weirdness.
+
     struct ScoreData
     {
         StatType StatType;
