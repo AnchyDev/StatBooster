@@ -267,7 +267,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed Equipment Check");
+        LOG_INFO("module", "Passed Equipment Check");
     }
 
     if (item->GetTemplate()->Quality < sBoostConfigMgr->MinQuality ||
@@ -278,7 +278,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed Quality Check");
+        LOG_INFO("module", "Passed Quality Check. Quality({})", item->GetTemplate()->Quality);
     }
 
     //Roll for the chance to upgrade.
@@ -291,7 +291,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed Roll Check");
+        LOG_INFO("module", "Passed Roll Check. Roll({})", roll);
     }
 
     //Fetch the type of stats that should be applied to the piece.
@@ -301,11 +301,16 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
     if (statType == STAT_TYPE_NONE)
     {
         statType = GetStatTypeFromSubClass(item);
+
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "No stat type found, got from subclass.");
+        }
     }
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed Analyze Check");
+        LOG_INFO("module", "Passed Analyze Check. StatType({})", statType);
     }
 
     uint32 itemClass = item->GetTemplate()->Class;
@@ -322,7 +327,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed ItemClass Check");
+        LOG_INFO("module", "Passed ItemClass Check");
     }
 
     uint32 itemSubClassMask = 1 << itemSubClass;
@@ -334,7 +339,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed ItemSubClass Check");
+        LOG_INFO("module", "Passed ItemSubClass Check");
     }
 
     uint32 itemTypeMask = 1 << itemType;
@@ -346,7 +351,7 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed ItemType Check");
+        LOG_INFO("module", "Passed ItemType Check");
     }
 
     if (sBoostConfigMgr->VerboseEnable)
@@ -359,16 +364,20 @@ bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 
     //Failed to find a valid enchant.
     if (!enchant)
-    {              
+    {
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "Failed Enchant Check.");
+        }
+
         return false;
     }
 
     if (sBoostConfigMgr->VerboseEnable)
     {
-        ChatHandler(player->GetSession()).SendSysMessage("Passed Enchant Check");
+        LOG_INFO("module", "Passed Enchant Check. Enchant({})", enchant->Id);
     }
 
-    
     if (itemClass != ITEM_CLASS_WEAPON)
     {
         return EnchantItem(player, item, TEMP_ENCHANTMENT_SLOT, enchant->Id, sBoostConfigMgr->OverwriteEnchantEnable);
