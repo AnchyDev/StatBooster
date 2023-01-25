@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `statbooster_enchant_scores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `statbooster_enchant_scores` (`mod_type`, `mod_id`, `subclass`, `tank_score`, `phys_score`, `spell_score`, `hybrid_score`, `note`) VALUES
-	(0, 44, 0, 1, 2, 0, 1, 'ITEM_MOD_ARMOR_PENETRATION_RATING- ALL'),
+	(0, 44, 0, 1, 2, 0, 1, 'ITEM_MOD_ARMOR_PENETRATION_RATING - ALL'),
 	(0, 38, 0, 1, 2, 0, 1, 'ITEM_MOD_ATTACK_POWER - ALL'),
 	(0, 4, 0, 1, 2, 0, 1, 'ITEM_MOD_STRENGTH - ALL'),
 	(0, 3, 0, 1, 2, 0, 1, 'ITEM_MOD_AGILITY - ALL'),
