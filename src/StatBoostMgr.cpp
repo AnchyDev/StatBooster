@@ -185,7 +185,6 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
                         if (spellInfo->HasAura(static_cast<AuraType>(score.modId)))
                         {
                             sBoostConfigMgr->EnchantScores.Evaluate(1, score.modId, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
-
                         }
                     }
                 }
@@ -213,6 +212,11 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     if (winningScore->Score < 1)
     {
         return STAT_TYPE_NONE;
+    }
+
+    if (sBoostConfigMgr->VerboseEnable)
+    {
+        LOG_INFO("module", "Passed Scoring with scores: Tank({}), Phys({}), Spell({}), Hybrid({})", tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
     }
 
     return winningScore->StatType;
