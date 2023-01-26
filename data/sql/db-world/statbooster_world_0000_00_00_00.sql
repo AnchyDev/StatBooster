@@ -1,7 +1,10 @@
+DELETE FROM `command` WHERE name='sb';
 INSERT INTO `command`(`name`, `security`, `help`) VALUES ('sb', 3, 'Syntax: .sb - type .sb to list subcommands.');
 
+DELETE FROM `command` WHERE name='sb additem';
 INSERT INTO `command`(`name`, `security`, `help`) VALUES ('sb additem', 3, 'Syntax: .sb additem <itemid> <count> - tries to add an enchanted item to targeted player.');
 
+DROP TABLE `statbooster_enchant_template`;
 CREATE TABLE IF NOT EXISTS `statbooster_enchant_template` (
   `Id` int unsigned DEFAULT NULL,
   `iLvlMin` int unsigned DEFAULT NULL,
@@ -57,6 +60,7 @@ INSERT INTO `statbooster_enchant_template` (`Id`, `iLvlMin`, `iLvlMax`, `RoleMas
 	(109, 60, 80, 3, 0, 0, '+7 Strength', 'TANK/PHYS - ALL - ALL'),
 	(211, 60, 80, 8, 0, 0, '+7 Spell Power', 'SPELL - ALL - ALL');
 	
+DROP TABLE `statbooster_enchant_scores`;
 CREATE TABLE IF NOT EXISTS `statbooster_enchant_scores` (
   `mod_type` int(11) DEFAULT NULL,
   `mod_id` int(11) DEFAULT NULL,
