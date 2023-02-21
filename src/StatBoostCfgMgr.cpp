@@ -74,7 +74,6 @@ bool StatBoosterConfig::EnchantScorePool::Load()
         } while (qResult->NextRow());
 
         LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant scores", enchantCount));
-
     }
     catch (std::exception ex)
     {
@@ -101,7 +100,7 @@ void StatBoosterConfig::EnchantPool::Add(EnchantDefinition definition)
     pool.push_back(definition);
 }
 
-EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemLevel)
+EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 classMask, uint32 subClassMask, uint32 itemTypeMask, uint32 itemLevel)
 {
     std::shuffle(std::begin(pool), std::end(pool), randomEngine);
 
@@ -110,6 +109,7 @@ EnchantDefinition* StatBoosterConfig::EnchantPool::Get(uint32 roleMask, uint32 c
             return ((data.RoleMask & roleMask) == roleMask || data.RoleMask == 0) &&
                 ((data.ClassMask & classMask) == classMask || data.ClassMask == 0) &&
                 ((data.SubClassMask & subClassMask) == subClassMask || data.SubClassMask == 0) &&
+                ((data.ItemTypeMask & itemTypeMask) == itemTypeMask || data.ItemTypeMask == 0) &&
                 (itemLevel >= data.ILvlMin && itemLevel <= data.ILvlMax);
     });
 
@@ -127,7 +127,7 @@ bool StatBoosterConfig::EnchantPool::Load()
     {
         uint32 enchantCount = 0;
 
-        QueryResult qResult = WorldDatabase.Query("SELECT `Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask` FROM `statbooster_enchant_template`");
+        QueryResult qResult = WorldDatabase.Query("SELECT `Id`, `iLvlMin`, `iLvlMax`, `RoleMask`, `ClassMask`, `SubClassMask`, `ItemTypeMask` FROM `statbooster_enchant_template`");
 
         if (!qResult)
         {
@@ -151,18 +151,18 @@ bool StatBoosterConfig::EnchantPool::Load()
             enchantDef.RoleMask = fields[3].Get<uint32>();
             enchantDef.ClassMask = fields[4].Get<uint32>();
             enchantDef.SubClassMask = fields[5].Get<uint32>();
+            enchantDef.ItemTypeMask = fields[6].Get<uint32>();
 
             enchantCount++;
             sBoostConfigMgr->EnchantPool.Add(enchantDef);
 
             if (sBoostConfigMgr->VerboseEnable)
             {
-                LOG_INFO("module", ">> Loaded enchant id {} with role mask {}, class mask {}, and subclass mask {}", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask);
+                LOG_INFO("module", ">> Loaded enchant id {} with role mask {}, class mask {}, subclass mask {}, and type mask {}", enchantDef.Id, enchantDef.RoleMask, enchantDef.ClassMask, enchantDef.SubClassMask, enchantDef.ItemTypeMask);
             }
         } while (qResult->NextRow());
 
         LOG_INFO("module", Acore::StringFormatFmt(">> Loaded {} stat booster enchant definitions", enchantCount));
-
     }
     catch (std::exception ex)
     {
@@ -172,7 +172,6 @@ bool StatBoosterConfig::EnchantPool::Load()
         return false;
     }
 
-    
     return true;
 }
 

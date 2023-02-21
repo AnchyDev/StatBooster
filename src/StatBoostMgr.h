@@ -19,6 +19,8 @@ private:
         STAT_TYPE_SPELL = 8
     };
 
+    static constexpr uint32 ENCHANT_DUMMY = 2814; // Scaling stat, used due to enchanting weirdness.
+
     struct ScoreData
     {
         StatType StatType;
@@ -26,7 +28,7 @@ private:
     };
 
     static StatType GetStatTypeFromSubClass(Item* item);
-    static EnchantmentSlot GetEnchantSlotForItem(Item* item);
+    static EnchantmentSlot GetFreeSocketSlotForItem(Item* item);
     static bool EnchantItem(Player* player, Item* item, EnchantmentSlot slot, uint32 enchantId, bool overwrite = false);
     static StatType ScoreItem(Item* item, bool hasAdditionalSpells = false);
     static StatType AnalyzeItem(Item* item);

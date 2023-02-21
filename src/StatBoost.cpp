@@ -7,10 +7,10 @@ void StatBoosterPlayer::OnLogin(Player* player)
         return;
     }
 
-	if(sBoostConfigMgr->OnLoginEnable)
-	{
-		ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->OnLoginMessage);
-	}
+    if(sBoostConfigMgr->OnLoginEnable)
+    {
+        ChatHandler(player->GetSession()).SendSysMessage(sBoostConfigMgr->OnLoginMessage);
+    }
 }
 
 void StatBoosterPlayer::OnLootItem(Player* player, Item* item, uint32 /*count*/, ObjectGuid /*lootguid*/)
