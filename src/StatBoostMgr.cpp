@@ -144,20 +144,30 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         spellScore { STAT_TYPE_SPELL, 0 };
 
     //Store the scores in a vector so I can order by highest for a winner.
-    std::vector<ScoreData*> scores;
-    scores.push_back(&tankScore);
-    scores.push_back(&physScore);
-    scores.push_back(&hybridScore);
-    scores.push_back(&spellScore);
+    std::vector<ScoreData*> roleScores;
+    roleScores.push_back(&tankScore);
+    roleScores.push_back(&physScore);
+    roleScores.push_back(&hybridScore);
+    roleScores.push_back(&spellScore);
 
     //TODO: IMPLEMENT SCORING
     auto itemTemplate = item->GetTemplate();
     auto subClass = itemTemplate->SubClass;
 
+    if (sBoostConfigMgr->VerboseEnable)
+    {
+        LOG_INFO("module", "Found {} stats on item.", itemTemplate->StatsCount);
+    }
+
     for (uint32 i = 0; i < itemTemplate->StatsCount; i++)
     {
         auto stat = itemTemplate->ItemStat[i];
         uint32 statType = stat.ItemStatType;
+
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "StatType: {}, StatValue: {}", stat.ItemStatType, stat.ItemStatValue);
+        }
 
         sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
     }
@@ -166,6 +176,11 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     if (hasAdditionalSpells)
     {
         auto scores = sBoostConfigMgr->EnchantScores.Get();
+
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "Found {} spells on item.", itemTemplate->StatsCount);
+        }
 
         for (_Spell const &spell : itemTemplate->Spells)
         {
@@ -176,6 +191,11 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
                 if (!spellInfo || !scores)
                 {
                     continue;
+                }
+
+                if (sBoostConfigMgr->VerboseEnable)
+                {
+                    LOG_INFO("module", "SpellId: {}", spell.SpellId);
                 }
 
                 for (auto const &score : *scores)
@@ -193,15 +213,29 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     }
 
     //Tally up the results, the highest score is picked.
-    auto winningScore = scores[0];
+    auto winningScore = roleScores[0];
 
     if (!winningScore)
     {
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "No winning score found.");
+        }
+
         return STAT_TYPE_NONE;
     }
 
-    for (auto score : scores)
+    if (sBoostConfigMgr->VerboseEnable)
     {
+        LOG_INFO("module", "Finding winning score.");
+    }
+    for (auto score : roleScores)
+    {
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "Score: {}, Type: {}", score->Score, score->StatType);
+        }
+
         if (score->Score > winningScore->Score)
         {
             winningScore = score;
@@ -211,6 +245,11 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
     //No stats on the items could be scored.
     if (winningScore->Score < 1)
     {
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "No stats were scored.");
+        }
+
         return STAT_TYPE_NONE;
     }
 

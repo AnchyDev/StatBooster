@@ -17,13 +17,23 @@ void StatBoosterConfig::EnchantScorePool::Clear()
 
 void StatBoosterConfig::EnchantScorePool::Evaluate(uint32 modType, uint32 modId, uint32 subclass, uint32& tankScore, uint32& physScore, uint32& spellScore, uint32& hybridScore)
 {
+    if (sBoostConfigMgr->VerboseEnable)
+    {
+        LOG_INFO("module", "Finding scores for ModType: {}, ModId: {}, Subclass: {}", modType, modId, subclass);
+    }
+
     auto scoreIter = std::find_if(scores.begin(), scores.end(), [modType, modId, subclass](EnchantScore& enchantScore)
     {
-            return (enchantScore.modType == modType && enchantScore.modId == modId && enchantScore.subclass == subclass);
+            return (enchantScore.modType == modType && enchantScore.modId == modId && (enchantScore.subclass == subclass || enchantScore.subclass == 0));
     });
 
     if (scoreIter != scores.end())
     {
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "Scoring Item: Tank({}), Phys({}), Spell({}), Hybrid({})", scoreIter->tankScore, scoreIter->physScore, scoreIter->spellScore, scoreIter->hybridScore);
+        }
+
         tankScore += scoreIter->tankScore;
         physScore += scoreIter->physScore;
         spellScore += scoreIter->spellScore;
