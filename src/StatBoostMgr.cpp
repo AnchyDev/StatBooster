@@ -212,6 +212,49 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
         }
     }
 
+    if (item->GetItemRandomPropertyId() != 0)
+    {
+        for (uint32 enchantSlot = PROP_ENCHANTMENT_SLOT_0; enchantSlot != PROP_ENCHANTMENT_SLOT_4; ++enchantSlot)
+        {
+            auto enchantmentId = item->GetEnchantmentId(static_cast<EnchantmentSlot>(enchantSlot));
+            if (enchantmentId == 0)
+            {
+                continue;
+            }
+
+            auto spellItemEntry = sSpellItemEnchantmentStore.LookupEntry(enchantmentId);
+            if (!spellItemEntry)
+            {
+                continue;
+            }
+
+            if (spellItemEntry->type[0] != ITEM_ENCHANTMENT_TYPE_STAT)
+            {
+                continue;
+            }
+
+            auto statType = spellItemEntry->spellid[0];
+            if (statType == 0)
+            {
+                continue;
+            }
+
+            if (sBoostConfigMgr->VerboseEnable)
+            {
+                LOG_INFO("module", "Found random enchant {} with statType {}", enchantmentId, statType);
+            }
+
+            sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
+        }
+    }
+    else
+    {
+        if (sBoostConfigMgr->VerboseEnable)
+        {
+            LOG_INFO("module", "No random enchants found.");
+        }
+    }
+
     //Tally up the results, the highest score is picked.
     auto winningScore = roleScores[0];
 
@@ -287,7 +330,7 @@ StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
         }
     }
 
-    if (itemTemplate->StatsCount < 1 && spellsCount < 1)
+    if (itemTemplate->StatsCount < 1 && spellsCount < 1 && item->GetItemRandomPropertyId() == 0)
     {
         return GetStatTypeFromSubClass(item);
     }
