@@ -194,12 +194,12 @@ ChatCommandTable StatBoosterCommands::GetCommands() const
     return commandTable;
 }
 
-bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count)
+bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 itemId, uint32 count, Optional<uint32> suffixId)
 {
     if (!itemId || !count)
     {
         handler->SendSysMessage("Invalid arguments, you must supply a valid itemId and count.");
-        handler->SendSysMessage("Ex: '.sb additem <itemId> <count>'");
+        handler->SendSysMessage("Ex: '.sb additem <itemId> <count> [suffixId]'");
         handler->SetSentErrorMessage(true);
         return false;
     }
@@ -247,6 +247,11 @@ bool StatBoosterCommands::HandleSBAddItemCommand(ChatHandler* handler, uint32 it
     if (!item)
     {
         return false;
+    }
+
+    if (suffixId.has_value())
+    {
+        item->SetItemRandomProperties(suffixId.value());
     }
 
     if (result)
