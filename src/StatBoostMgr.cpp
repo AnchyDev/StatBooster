@@ -214,9 +214,43 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
 
     if (item->GetItemRandomPropertyId() != 0)
     {
-        for (uint32 enchantSlot = PROP_ENCHANTMENT_SLOT_0; enchantSlot != PROP_ENCHANTMENT_SLOT_4; ++enchantSlot)
+        auto propId = item->GetItemRandomPropertyId();
+
+        if (sBoostConfigMgr->VerboseEnable)
         {
-            auto enchantmentId = item->GetEnchantmentId(static_cast<EnchantmentSlot>(enchantSlot));
+            LOG_INFO("module", "Found random property {}.", propId);
+        }
+
+        uint32 enchantIds[5];
+
+        if (propId > 0)
+        {
+            auto propStoreEntry = sItemRandomPropertiesStore.LookupEntry(propId);
+            if (propStoreEntry)
+            {
+                enchantIds[0] = propStoreEntry->Enchantment[0];
+                enchantIds[1] = propStoreEntry->Enchantment[1];
+                enchantIds[2] = propStoreEntry->Enchantment[2];
+                enchantIds[3] = propStoreEntry->Enchantment[3];
+                enchantIds[4] = propStoreEntry->Enchantment[4];
+            }
+        }
+        else if (propId < 0)
+        {
+            auto suffixStoreEntry = sItemRandomSuffixStore.LookupEntry(-propId);
+            if (suffixStoreEntry)
+            {
+                enchantIds[0] = suffixStoreEntry->Enchantment[0];
+                enchantIds[1] = suffixStoreEntry->Enchantment[1];
+                enchantIds[2] = suffixStoreEntry->Enchantment[2];
+                enchantIds[3] = suffixStoreEntry->Enchantment[3];
+                enchantIds[4] = suffixStoreEntry->Enchantment[4];
+            }
+        }
+
+        for (uint32 i = 0; i < 5; i++)
+        {
+            auto enchantmentId = enchantIds[i];
             if (enchantmentId == 0)
             {
                 continue;
@@ -241,7 +275,7 @@ StatBoostMgr::StatType StatBoostMgr::ScoreItem(Item* item, bool hasAdditionalSpe
 
             if (sBoostConfigMgr->VerboseEnable)
             {
-                LOG_INFO("module", "Found random enchant {} with statType {}", enchantmentId, statType);
+                LOG_INFO("module", "Found random enchant {} with statType {}", spellItemEntry->description[0], statType);
             }
 
             sBoostConfigMgr->EnchantScores.Evaluate(0, statType, subClass, tankScore.Score, physScore.Score, spellScore.Score, hybridScore.Score);
