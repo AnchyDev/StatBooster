@@ -1,0 +1,1 @@
+UPDATE item_template SET name = "Attribute Recalibrator", AllowableClass = -1, ItemLevel = 1, RequiredLevel = 1, RequiredSkill = 0, RequiredSkillRank = 0, spellid_1 = 10694, spelltrigger_1 = 0, description = "|cff00ff00Use: Adds or re-rolls an extra stat on to an item.|n|n|cffff0000WARNING: This will replace any extra stats with a new one." WHERE entry = 41605;

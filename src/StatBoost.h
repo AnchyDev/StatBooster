@@ -3,6 +3,7 @@
 
 #include "ChatCommand.h"
 #include "Config.h"
+#include "Spell.h"
 
 #include "StatBoostCommon.h"
 #include "StatBoostMgr.h"
@@ -19,6 +20,7 @@ public:
     void OnQuestRewardItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnCreateItem(Player* player, Item* item, uint32 /*count*/) override;
     void OnGroupRollRewardItem(Player* player, Item* item, uint32 /*count*/, RollVote /*voteType*/, Roll* /*roll*/) override;
+    bool CanCastItemUseSpell(Player* /*player*/, Item* /*item*/, SpellCastTargets const& /*targets*/, uint8 /*cast_count*/, uint32 /*glyphIndex*/) override;
 };
 
 class StatBoosterWorld : public WorldScript

@@ -238,3 +238,24 @@ StatBooster.AnnounceCraft = "You crafted a boosted item."
 StatBooster.OverwriteEnchantEnable = 1
 
 ########################################
+
+########################################
+#
+#    StatBooster.Reroll.VisualId
+#        Description: The spell id for the visual when an item is successfully re-rolled.
+#        Default:     62015 - Test Visual
+#
+
+StatBooster.Reroll.VisualId = 62015
+
+#
+#    StatBooster.Reroll.AllowOwnedItemsOnly
+#        Description: Enable/disable the re-rolling of owned items only.
+#        Note: This avoids players being able to re-roll other players items.
+#                     0 - Disabled
+#        Default:     1 - Enabled
+#
+
+StatBooster.Reroll.AllowOwnedItemsOnly = 1
+
+########################################

@@ -137,6 +137,59 @@ void StatBoosterPlayer::OnGroupRollRewardItem(Player* player, Item* item, uint32
     }
 }
 
+bool StatBoosterPlayer::CanCastItemUseSpell(Player* player, Item* item, SpellCastTargets const& targets, uint8 /*cast_count*/, uint32 /*glyphIndex*/)
+{
+    if (!item)
+    {
+        return true;
+    }
+
+    auto itemTemplate = item->GetTemplate();
+    if (!itemTemplate)
+    {
+        return true;
+    }
+
+    if (itemTemplate->ItemId != 41605)
+    {
+        return true;
+    }
+
+    if (!sBoostConfigMgr->Enable)
+    {
+        ChatHandler(player->GetSession()).SendSysMessage("This item is disabled.");
+        return false;
+    }
+
+    auto targetItem = targets.GetItemTarget();
+    if (!targetItem)
+    {
+        return false;
+    }
+
+    if (sConfigMgr->GetOption<bool>("StatBooster.Reroll.AllowOwnedItemsOnly", true) &&
+        targetItem->GetOwner()->GetGUID() != player->GetGUID())
+    {
+        ChatHandler(player->GetSession()).SendSysMessage("You cannot re-roll items other than your own.");
+        return false;
+    }
+
+    if (StatBoostMgr::BoostItem(player, targetItem, 100))
+    {
+        player->DestroyItemCount(itemTemplate->ItemId, 1, true);
+
+        uint32 visualId = sConfigMgr->GetOption<uint32>("StatBooster.Reroll.VisualId", 62015);
+        player->CastSpell(player, visualId);
+        //player->HandleEmoteCommand(EMOTE_ONESHOT_LOOT);
+    }
+    else
+    {
+        ChatHandler(player->GetSession()).SendSysMessage("You cannot re-roll this item.");
+    }
+
+    return false;
+}
+
 void StatBoosterWorld::OnAfterConfigLoad(bool /*reload*/)
 {
     sBoostConfigMgr->Enable = sConfigMgr->GetOption<bool>("StatBooster.Enable", false);
