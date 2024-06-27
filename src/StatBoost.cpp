@@ -174,6 +174,15 @@ bool StatBoosterPlayer::CanCastItemUseSpell(Player* player, Item* item, SpellCas
         return false;
     }
 
+    if (sConfigMgr->GetOption<bool>("StatBooster.Reroll.AllowBoostedItemsOnly", false))
+    {
+        if (!StatBoostMgr::IsBoosted(targetItem))
+        {
+            ChatHandler(player->GetSession()).SendSysMessage("You cannot re-roll items that do not have a boosted stat.");
+            return false;
+        }
+    }
+
     if (StatBoostMgr::BoostItem(player, targetItem, 100))
     {
         player->DestroyItemCount(itemTemplate->ItemId, 1, true);

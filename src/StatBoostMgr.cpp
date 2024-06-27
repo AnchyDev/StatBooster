@@ -372,6 +372,11 @@ StatBoostMgr::StatType StatBoostMgr::AnalyzeItem(Item* item)
     return ScoreItem(item, spellsCount);
 }
 
+bool StatBoostMgr::IsBoosted(Item* item)
+{
+    return item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_UNK26);
+}
+
 bool StatBoostMgr::BoostItem(Player* player, Item* item, uint32 chance)
 {
     if (!item)
@@ -559,6 +564,8 @@ bool StatBoostMgr::EnchantItem(Player* player, Item* item, EnchantmentSlot slot,
     player->ApplyEnchantment(item, false);
     item->SetEnchantment(EnchantmentSlot(slot), enchantId, 0, 0);
     player->ApplyEnchantment(item, true);
+
+    item->SetFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_UNK26);
 
     return true;
 }

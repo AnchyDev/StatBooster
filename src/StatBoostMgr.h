@@ -7,6 +7,7 @@ class StatBoostMgr
 {
 public:
     static bool BoostItem(Player* player, Item* item, uint32 chance);
+    static bool IsBoosted(Item* item);
     static void MakeSoulbound(Item* item, Player* player);
 
 private:

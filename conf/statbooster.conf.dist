@@ -258,4 +258,13 @@ StatBooster.Reroll.VisualId = 62015
 
 StatBooster.Reroll.AllowOwnedItemsOnly = 1
 
+#
+#    StatBooster.Reroll.AllowBoostedItemsOnly
+#        Description: Enable/disable the re-rolling of already boosted items only.
+#        Default:     0 - Disabled
+#                     1 - Enabled
+#
+
+StatBooster.Reroll.AllowBoostedItemsOnly = 0
+
 ########################################
