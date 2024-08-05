@@ -5,6 +5,7 @@
 #include "Define.h"
 #include "Player.h"
 #include "ScriptMgr.h"
+#include "SpellMgr.h"
 #include "StringFormat.h"
 
 #include "StatBoostCfgMgr.h"
